@@ -5,6 +5,7 @@
 <title><?php echo $title; ?> | Content Management System</title>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/admin-stylesheet.css'); ?>" />
 <script type="text/javascript" src="<?php echo base_url('js/jquery-1.10.2.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('js/admin/global.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/admin/form.js'); ?>"></script>
 </head>

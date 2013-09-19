@@ -40,6 +40,47 @@ class Model_security extends CI_Model {
 			return NULL;
 		}
 	}
+	
+	public function get_menu()
+	{
+		$menu = array();
+		
+		$condition = array(
+			'module_parent'	=> 0,
+			'flag'			=> 1
+		);
+		
+		$query = $this->db->select('unique_id, module_name, module_url')->where($condition)->get('module');
+		
+		foreach ($query->result_array() as $parent_menu)
+		{					
+			$submenu_condition = array(
+				'module_parent'	=> $parent_menu['unique_id'],
+				'flag'			=> 1
+			);
+			
+			$submenu_query = $this->db->select('unique_id, module_name, module_parent, module_url')->where($submenu_condition)->get('module');
+			
+			if ($submenu_query->num_rows() > 0)
+			{
+				$parent_menu['submenu'] = array();
+				$parent_menu['has_submenu'] = 1;
+			}
+			else
+			{
+				$parent_menu['has_submenu'] = 0;
+			}
+			
+			foreach ($submenu_query->result_array() as $child_menu)
+			{
+				array_push($parent_menu['submenu'], $child_menu);
+			}
+			
+			$menu[] = $parent_menu;
+		}
+		
+		return $menu;
+	}
 }
 
 /* End of file model_security.php */
