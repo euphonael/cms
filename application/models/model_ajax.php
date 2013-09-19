@@ -21,7 +21,18 @@ class Model_ajax extends CI_Model {
 		$this->db->where('unique_id', $this->input->post('unique_id'));
 		$this->db->update($this->input->post('db_table'), $data);
 	}
+	
+	public function delete_row()
+	{		
+		$data = array(
+			'flag'	=> 3
+		);
+		
+		$this->db->where('unique_id', $this->input->post('unique_id'));
+		$this->db->update($this->input->post('db_table'), $data);
+	}
 }
+
 
 /* End of file model_ajax.php */
 /* Location: ./application/models/model_ajax.php */

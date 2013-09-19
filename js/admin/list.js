@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	
+	$('table.table-data').dataTable();
 
 	$('table.table-data tbody tr td span.flag').click(function(){
 		
@@ -39,6 +41,42 @@ $(document).ready(function(){
 		$(this).find('td span.action').css({ visibility: 'visible' });
 	}, function(){
 		$(this).find('td span.action').css({ visibility: 'hidden' });
+	});
+	
+	$('table.table-data tbody tr td.del input[type=checkbox]').change(function(){
+		$(this).toggleClass('checked');
+	});
+	
+	$('div#action-wrapper button.delete').click(function(){
+
+		var table_id = $(this).attr('id').replace('delete-', '');
+		
+		if ($('table#' + table_id + ' tbody tr td.del input[type=checkbox].checked').length > 0)
+		{
+			var confirmation = confirm("Are you sure you want to delete the selected items?");
+			if (confirmation == true)
+			{			
+				$('table#' + table_id + ' tbody tr td.del input[type=checkbox]').each(function(){
+					if ($(this).hasClass('checked'))
+					{
+						var row = $(this).closest('tr');
+						var db_table = $(this).closest('table.table-data').attr('id');
+						var unique_id = $(this).closest('tr').attr('id').replace(db_table + '-', '');
+						
+						$.ajax({
+							type : 'POST',
+							data : { db_table : db_table, unique_id : unique_id },
+							url : base_url + 'admin/ajax/delete_row',
+							success: function(html)
+							{
+								$(row).fadeOut().remove();
+								$('table.table-data').dataTable();
+							}
+						});
+					}
+				});
+			}
+		}
 	});
 	
 });
