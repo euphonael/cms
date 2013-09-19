@@ -7,17 +7,18 @@ $(document).ready(function(){
 		var current_status = $(this).attr('class').replace('flag ', '');
 		var ajax_loader = $(this).siblings('img');
 		var flag = $(this);
+		var notes = $(this).closest('td').siblings('td.memo');
+		
+		var memo = prompt("Reason:");
 		
 		$(ajax_loader).fadeIn();
 		
 		$.ajax({
 			type : 'POST',
-			data : { db_table : db_table, unique_id : unique_id, current_status : current_status },
+			data : { db_table : db_table, unique_id : unique_id, current_status : current_status, memo : memo },
 			url : base_url + 'admin/ajax/toggle_status',
 			success: function(html)
-			{
-				$(ajax_loader).fadeOut();
-				
+			{				
 				if (current_status == 'active')
 				{
 					$(flag).removeClass('active').addClass('inactive');
@@ -26,8 +27,18 @@ $(document).ready(function(){
 				{
 					$(flag).removeClass('inactive').addClass('active');
 				}
+				
+				$(notes).html(memo);
+				
+				$(ajax_loader).fadeOut();
 			}
 		});
+	});
+	
+	$('table.table-data tbody tr').hover(function(){
+		$(this).find('td span.action').css({ visibility: 'visible' });
+	}, function(){
+		$(this).find('td span.action').css({ visibility: 'hidden' });
 	});
 	
 });

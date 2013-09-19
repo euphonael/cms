@@ -14,7 +14,8 @@ class Model_ajax extends CI_Model {
 		}
 		
 		$data = array(
-			'flag'	=> $new_status
+			'flag'	=> $new_status,
+			'memo'	=> $this->input->post('memo')
 		);
 		
 		$this->db->where('unique_id', $this->input->post('unique_id'));

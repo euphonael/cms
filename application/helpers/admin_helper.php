@@ -42,7 +42,7 @@ if ( ! function_exists('table_end'))
 		}
 		
 		echo '<td class="status"><span class="flag ' . $class . '"></span><img src="' . base_url('images/ajax-loader.gif') . '" /></td>';
-        echo '<td>' . $row['memo'] . '</td>';
+        echo '<td class="memo">' . $row['memo'] . '</td>';
 	}
 }
 

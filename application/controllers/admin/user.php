@@ -3,7 +3,7 @@
 class User extends MY_Controller {
 
 	var $title = 'User';
-	var $suffix = 'user';
+	var $url = 'user';
 	var $db_table = 'admin';
 	
 	public function __construct()
@@ -25,7 +25,7 @@ class User extends MY_Controller {
 		
 		$data['result'] = $db_query;
 
-		$this->show('admin/' . $this->suffix . '/list_' . $this->suffix, $data);
+		$this->show('admin/' . $this->url . '/list_' . $this->url, $data);
 	}
 }
 
