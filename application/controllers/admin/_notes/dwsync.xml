@@ -3,4 +3,6 @@
 <file name="login.php" server="C:/xampp/htdocs/cms/" local="130239553700000000" remote="130239553700000000" />
 <file name="dashboard.php" server="C:/xampp/htdocs/cms/" local="130240474514102000" remote="130240474510000000" />
 <file name="logout.php" server="C:/xampp/htdocs/cms/" local="130239859950662000" remote="130239859950000000" />
+<file name="user.php" server="C:/xampp/htdocs/cms/" local="130240510530000000" remote="130240510530000000" />
+<file name="ajax.php" server="C:/xampp/htdocs/cms/" local="130240510530000000" remote="130240510530000000" />
 </dwsync>

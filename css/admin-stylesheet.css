@@ -45,3 +45,11 @@ ul#main-menu > li > ul > li { line-height:normal; }
 ul#main-menu > li > ul > li > a { color:#000; font-size:13px; display:block; text-decoration:none; font-weight:bold; display:block; padding:5px 30px 5px 15px; }
 ul#main-menu > li > ul > li > a:hover { background:#F0F0F0; }
 ul#main-menu > li.top-right { float:right; margin-right:10px; }
+
+div.dataTables_wrapper { margin:25px; }
+
+table.table-data > tbody > tr > td:first-child, table.table-data > tbody > tr > td.status { text-align:center; }
+table.table-data > tbody > tr > td.status > img { position:absolute; margin-left:10px; margin-top:2px; display:none; }
+table.table-data > tbody > tr > td.status > span.flag { width:15px; height:15px; display:inline-block; text-align:center; cursor:pointer; }
+table.table-data > tbody > tr > td.status > span.inactive { background:#F00; }
+table.table-data > tbody > tr > td.status > span.active { background:#0C0; }
