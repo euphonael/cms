@@ -5,7 +5,7 @@ body { font-size:12px; font-family:Arial; color:#000; }
 
 input[type=submit], input[type=password], input[type=text] { padding:3px; border:1px solid #999; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
 input[type=submit] { background:#F8F8F8; border:1px solid #CCC; color:#222; cursor:pointer; }
-input[type=submit]:hover { background:#F1F1F1; }
+input[type=submit]:hover { background:#E0E0E0; }
 form p label.error { color:red; width:auto; display:block; text-align:right; font-size:11px; }
 
 form#login { width:275px; margin:25px auto 0; border:1px solid #999; }
