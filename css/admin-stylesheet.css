@@ -6,8 +6,8 @@ input::-moz-focus-inner { border:0; }
 
 div.clear { clear:both; }
 
-a.button { text-decoration:none; width:100px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; }
-button.delete { padding:2px; margin-left:5px; }
+form#process-data div#action-wrapper > button, form#process-data input[type=submit], a.button { text-decoration:none; width:100px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
+button.delete { padding:2px; margin-left:15px; }
 input:focus, a.button:focus, button:focus { border-color:#333 !important; }
 input[type=submit], input[type=password], input[type=text], a.button, button { padding:3px; border:1px solid #CCC; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
 input[type=submit], a.button, button { border:1px solid #CCC; color:#444; cursor:pointer; border:1px solid rgba(0, 0, 0, 0.1); }
@@ -49,7 +49,11 @@ ul#main-menu > li > ul > li > a:hover { background:#F0F0F0; }
 ul#main-menu > li.top-right { float:right; margin-right:10px; }
 
 div#container { margin:25px; }
-div#action-wrapper a, div#action-wrapper button { float:left; }
+
+div#content-heading { border-bottom:3px solid #DFDFDF; padding-bottom:15px; }
+div#content-heading > h2 { float:left; font-size:22px; margin:7px 0 0 0; }
+div#action-wrapper { float:right; }
+div#action-wrapper > a, div#action-wrapper > button { float:left; }
 
 div.dataTables_wrapper { margin-top:25px; }
 div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter { margin-bottom:10px; }
@@ -70,3 +74,10 @@ table.table-data > tbody > tr > td.status > span.inactive { background:#F00; }
 table.table-data > tbody > tr > td.status > span.active { background:#0C0; }
 table.table-data > tbody > tr:last-child > td { border-bottom:1px solid #000; }
 table.table-data > tbody > tr > td:last-child { text-align:center; }
+
+form#process-data div#action-wrapper > input[type=submit] { height:33px; float:left; }
+form#process-data div#action-wrapper > button { height:33px; float:left; }
+form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
+
+div#form-content { margin-top:15px; }
+div#form-content fieldset { border-color:#BBB; }
