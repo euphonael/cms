@@ -1,4 +1,6 @@
 $(document).ready(function(){
+		
+	alertify.set({ buttonReverse: true });
 	
 	$('table.table-data').dataTable();
 
@@ -20,9 +22,7 @@ $(document).ready(function(){
 			var change_to = 'active';
 		}
 		
-		alertify.set({ buttonReverse: true });
-		
-		alertify.prompt("Changing status to " + change_to.toUpperCase() + ". Reason:", function(e, memo){
+		alertify.prompt("Changing status to <strong>" + change_to.toUpperCase() + "</strong>. Reason:", function(e, memo){
 			if (e)
 			{
 				$(ajax_loader).fadeIn();
@@ -38,11 +38,11 @@ $(document).ready(function(){
 						
 						if (change_to == 'active')
 						{
-							alertify.success("Status changed to " + change_to.toUpperCase());
+							alertify.success("Status changed to <strong>" + change_to.toUpperCase() + "</strong>");
 						}
 						else if (change_to == 'inactive')
 						{
-							alertify.error("Status changed to " + change_to.toUpperCase());
+							alertify.error("Status changed to <strong>" + change_to.toUpperCase() + "</strong>");
 						}
 					}
 				});
