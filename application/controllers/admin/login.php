@@ -17,8 +17,8 @@ class Login extends CI_Controller {
 			'js'	=> array()
 		);
 		
-		$this->form_validation->set_rules('admin-username', 'username', 'trim|required');
-		$this->form_validation->set_rules('admin-password', 'password', 'required|md5');
+		$this->form_validation->set_rules('admin_username', 'username', 'trim|required');
+		$this->form_validation->set_rules('admin_password', 'password', 'required|md5');
 		
 		if ($this->form_validation->run() == FALSE)
 		{					

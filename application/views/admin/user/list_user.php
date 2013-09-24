@@ -32,16 +32,10 @@
             <?php foreach ($result as $row) : ?>
             <tr id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
                 <td><?php echo $x; ?></td>
-                <td>
-					<?php echo $row['admin_name']; ?>
-                    <span class="action">
-                    	<a href="javascript:;">Edit</a>
-                        <a href="javascript:;">Delete</a>
-                    </span>
-                </td>
+                <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['admin_name']; ?></a></td>
                 <td><?php echo $row['admin_username']; ?></td>
-                <td><?php echo date('d M Y', strtotime($row['admin_join_date'])); ?></td>
-                <td><?php echo date('d M Y', strtotime($row['admin_dob'])); ?></td>
+                <td><?php if ($row['admin_join_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_join_date'])); ?></td>
+                <td><?php if ($row['admin_dob'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_dob'])); ?></td>
                 <td><?php echo $row['admin_phone']; ?></td>
                 <td><?php echo $row['admin_work_email']; ?></td>
                 <td><?php echo $row['admin_job_position']; ?></td>

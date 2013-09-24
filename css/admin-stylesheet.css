@@ -5,11 +5,17 @@ body { font-size:12px; font-family:Arial; color:#000; margin:0; padding:0; }
 input::-moz-focus-inner { border:0; }
 
 div.clear { clear:both; }
+span.clear { clear:both; display:block; }
 
+span.flag.inactive { background:#F00; }
+span.flag.active { background:#0C0; }
+
+input[readonly=readonly] { background:#EEE; }
+textarea { font-family:Arial; font-size:12px; resize:none; }
 form#process-data div#action-wrapper > button, form#process-data input[type=submit], a.button { text-decoration:none; width:100px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
 button.delete { padding:2px; margin-left:15px; }
-input:focus, a.button:focus, button:focus { border-color:#666 !important; }
-input[type=submit], input[type=password], input[type=text], a.button, button { padding:3px; border:1px solid #CCC; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
+textarea:focus, input:focus, a.button:focus, button:focus { border-color:#666 !important; }
+textarea, input[type=submit], input[type=password], input[type=text], a.button, button { padding:3px; border:1px solid #CCC; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
 input[type=submit], a.button, button { border:1px solid #CCC; color:#444; cursor:pointer; border:1px solid rgba(0, 0, 0, 0.1); }
 input[type=submit], a.button, button {
 	background: #f5f5f5; /* Old browsers */
@@ -74,8 +80,6 @@ table.table-data > tbody > tr > td:first-child, table.table-data > tbody > tr > 
 table.table-data > tbody > tr > td span.action { display:block; display:none; }
 table.table-data > tbody > tr > td.status > img { position:absolute; margin-left:10px; margin-top:2px; display:none; }
 table.table-data > tbody > tr > td.status > span.flag { width:15px; height:15px; display:inline-block; text-align:center; cursor:pointer; }
-table.table-data > tbody > tr > td.status > span.inactive { background:#F00; }
-table.table-data > tbody > tr > td.status > span.active { background:#0C0; }
 table.table-data > tbody > tr:last-child > td { border-bottom:1px solid #000; }
 table.table-data > tbody > tr > td:last-child { text-align:center; }
 
@@ -89,6 +93,13 @@ form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 #form-left { margin-right:50px; }
 #form-content fieldset { border-color:#EEE; width:450px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; padding:5px; margin:30px 0; }
 #form-content fieldset legend { text-transform:uppercase; font-weight:bold; padding:0 5px; font-size:14px; }
-#form-content fieldset label.label-input { float:left; font-weight:bold; line-height:23px; display:block; margin:0 10px; }
+#form-content fieldset label.label-input:first-child { float:left; font-weight:bold; line-height:23px; display:block; margin:0 10px; }
 #form-content fieldset input { width:300px; }
-#form-content fieldset label.error { margin-right:10px; }
+#form-content fieldset label.error { margin:7px 10px 0 0; }
+#form-content fieldset div.flag { float:left; width:145px; margin-right:5px; }
+#form-content fieldset div.flag input { width:15px !important; float:left; }
+#form-content fieldset div.flag span.flag { display:block; float:left; width:15px; height:15px; margin-right:5px; }
+#form-content fieldset div.flag label.label-input { display:block; float:left; margin-top:2px; font-weight:bold; }
+#form-content fieldset div.memo { float:left; }
+#form-content fieldset div.memo p label { display:block; font-weight:bold; }
+#form-content fieldset div.memo textarea { width:280px; height:50px; }

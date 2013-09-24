@@ -21,9 +21,15 @@ $(document).ready(function(){
 	});
 	/* END Form Auto Width */
 	
-	$('form#process-data').validate();
+//	$('form#process-data').validate();
 	
 	$('form#process-data #action-wrapper button:first-child').click(function(){
 		history.go(-1);
+	});
+	
+	$('.datepicker').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true
 	});
 });

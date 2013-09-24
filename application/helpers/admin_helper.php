@@ -47,6 +47,24 @@ if ( ! function_exists('table_end'))
 	}
 }
 
+if ( ! function_exists('multi_language'))
+{
+	function multi_language($module_url)
+	{
+		$ci =& get_instance();
+		$row = $ci->db->select('module_multi_language')->where('module_url', $module_url)->get('module')->row_array();
+		
+		if ($row['module_multi_language'] == 0)
+		{
+			return FALSE;
+		}
+		else
+		{
+			// Do something for unique_id here
+		}
+	}
+}
+
 
 /* End of file admin_helper.php */
 /* Location: ./application/helpers/admin_helper.php */

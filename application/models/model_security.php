@@ -5,8 +5,8 @@ class Model_security extends CI_Model {
 	public function admin_login()
 	{
 		$condition = array(
-			'admin_username'	=> $this->input->post('admin-username'),
-			'admin_password'	=> $this->input->post('admin-password')
+			'admin_username'	=> $this->input->post('admin_username'),
+			'admin_password'	=> $this->input->post('admin_password')
 		);
 		
 		$query = $this->db->select('admin_name, unique_id, flag')->where($condition)->get('admin');
