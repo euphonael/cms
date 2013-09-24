@@ -8,7 +8,7 @@ div.clear { clear:both; }
 
 form#process-data div#action-wrapper > button, form#process-data input[type=submit], a.button { text-decoration:none; width:100px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
 button.delete { padding:2px; margin-left:15px; }
-input:focus, a.button:focus, button:focus { border-color:#333 !important; }
+input:focus, a.button:focus, button:focus { border-color:#666 !important; }
 input[type=submit], input[type=password], input[type=text], a.button, button { padding:3px; border:1px solid #CCC; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
 input[type=submit], a.button, button { border:1px solid #CCC; color:#444; cursor:pointer; border:1px solid rgba(0, 0, 0, 0.1); }
 input[type=submit], a.button, button {
@@ -79,11 +79,16 @@ table.table-data > tbody > tr > td.status > span.active { background:#0C0; }
 table.table-data > tbody > tr:last-child > td { border-bottom:1px solid #000; }
 table.table-data > tbody > tr > td:last-child { text-align:center; }
 
+/* Form Process (Add - Edit) */
 form#process-data div#action-wrapper > input[type=submit] { height:33px; float:left; }
 form#process-data div#action-wrapper > button { height:33px; float:left; }
 form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 
-div#form-content { margin-top:15px; }
-div#form-content fieldset { border-color:#BBB; }
-
-/* Alertify */
+#form-content { margin-top:15px; }
+#form-left, #form-right { float:left; }
+#form-left { margin-right:50px; }
+#form-content fieldset { border-color:#EEE; width:450px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; padding:5px; margin:30px 0; }
+#form-content fieldset legend { text-transform:uppercase; font-weight:bold; padding:0 5px; font-size:14px; }
+#form-content fieldset label.label-input { float:left; font-weight:bold; line-height:23px; display:block; margin:0 10px; }
+#form-content fieldset input { width:300px; }
+#form-content fieldset label.error { margin-right:10px; }
