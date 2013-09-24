@@ -16,8 +16,8 @@ class User extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'List ' . $this->title,
-			'css'	=> array('jquery.dataTables'),
-			'js'	=> array('jquery.dataTables.min', 'admin/list')
+			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
+			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
 		);
 		
 		$this->load->model('model_user');

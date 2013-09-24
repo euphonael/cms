@@ -55,6 +55,7 @@ div#content-heading > h2 { float:left; font-size:22px; margin:7px 0 0 0; }
 div#action-wrapper { float:right; }
 div#action-wrapper > a, div#action-wrapper > button { float:left; }
 
+/* DataTables */
 div.dataTables_wrapper { margin-top:25px; }
 div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter { margin-bottom:10px; }
 div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate { margin-top:10px; }
@@ -84,3 +85,5 @@ form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 
 div#form-content { margin-top:15px; }
 div#form-content fieldset { border-color:#BBB; }
+
+/* Alertify */
