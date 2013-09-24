@@ -3,7 +3,7 @@
         <div id="content-heading">
             <h2><?php echo $title; ?></h2>
             <div id="action-wrapper">
-                <button>Back</button>
+                <button type="button">Back</button>
                 <button type="reset">Reset Form</button>
             	<input type="submit" value="Save Data" />
                 <div class="clear"></div>

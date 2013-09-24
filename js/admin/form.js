@@ -1,5 +1,8 @@
 $(document).ready(function(){
 	
-	$('form').validate();
+	$('form#process-data').validate();
 	
+	$('form#process-data #action-wrapper button:first-child').click(function(){
+		history.go(-1);
+	});
 });
