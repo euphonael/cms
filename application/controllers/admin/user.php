@@ -44,6 +44,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email]');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
+		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)
@@ -75,6 +76,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
+		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)

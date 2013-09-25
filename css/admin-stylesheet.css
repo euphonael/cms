@@ -49,7 +49,7 @@ ul#main-menu > li > a > span { display:inline-block; }
 ul#main-menu > li > a > span.arrow { width:0; height:0; border-left:3px solid transparent; border-right:3px solid transparent; border-top:3px solid #BBB; position:relative; top:-3px; right:-4px; margin-right:3px; }
 ul#main-menu > li > a:hover > span.arrow { border-top-color:#FFF; }
 ul#main-menu > li > a.active > span.arrow { border-top-color:#000; }
-ul#main-menu > li > ul { list-style:none; left:-1px; top:30px; margin:0; padding:10px 0; position:absolute; background:#FFF; border:1px solid #BEBEBE; border-top:none; white-space:nowrap; display:none; }
+ul#main-menu > li > ul { list-style:none; left:-1px; top:30px; margin:0; padding:10px 0; position:absolute; background:#FFF; border:1px solid #BEBEBE; border-top:none; white-space:nowrap; display:none; min-width:150px; }
 ul#main-menu > li > ul > li { line-height:normal; }
 ul#main-menu > li > ul > li > a { color:#000; font-size:13px; display:block; text-decoration:none; font-weight:bold; display:block; padding:5px 30px 5px 15px; }
 ul#main-menu > li > ul > li > a:hover { background:#F0F0F0; }
@@ -109,3 +109,4 @@ form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 #form-content fieldset a.fake-input { display:block; padding:3px; float:left; margin-top:1px; }
 #form-content fieldset input[type=checkbox] { display:block; float:left; width:15px !important; margin-top:6px; }
 #form-content fieldset select { padding:3px; }
+#form-content fieldset textarea.input { height:100px; }

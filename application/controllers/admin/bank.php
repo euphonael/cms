@@ -43,6 +43,7 @@ class Bank extends MY_Controller {
 		$this->form_validation->set_rules('bank_swift_code', 'swift code', 'trim');
 		$this->form_validation->set_rules('bank_currency', 'currency', 'required');
 		$this->form_validation->set_rules('bank_invoice_type', 'invoice type', 'required');
+		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)
@@ -75,6 +76,7 @@ class Bank extends MY_Controller {
 		$this->form_validation->set_rules('bank_swift_code', 'swift code', 'trim');
 		$this->form_validation->set_rules('bank_currency', 'currency', 'required');
 		$this->form_validation->set_rules('bank_invoice_type', 'invoice type', 'required');
+		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)
@@ -90,5 +92,5 @@ class Bank extends MY_Controller {
 }
 
 
-/* End of file module.php */
-/* Location: ./application/controllers/admin/module.php */
+/* End of file bank.php */
+/* Location: ./application/controllers/admin/bank.php */

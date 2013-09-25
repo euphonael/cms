@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="login.php" server="C:/xampp/htdocs/cms/" local="130245085168445500" remote="130245085160000000" />
-<file name="dashboard.php" server="C:/xampp/htdocs/cms/" local="130240474514102000" remote="130240474510000000" />
-<file name="logout.php" server="C:/xampp/htdocs/cms/" local="130239859950662000" remote="130239859950000000" />
-<file name="user.php" server="C:/xampp/htdocs/cms/" local="130245707546208000" remote="130245707540000000" />
-<file name="ajax.php" server="C:/xampp/htdocs/cms/" local="130240634811852000" remote="130240634810000000" />
-<file name="module.php" server="C:/xampp/htdocs/cms/" local="130245707669118000" remote="130245707660000000" />
-<file name="bank.php" server="C:/xampp/htdocs/cms/" local="130245714330118000" remote="130245714330000000" />
+<file name="dashboard.php" server="C:/xampp/htdocs/cms/" local="130244927180214000" remote="130244927180000000" />
+<file name="logout.php" server="C:/xampp/htdocs/cms/" local="130244927180224000" remote="130244927180000000" />
+<file name="user.php" server="C:/xampp/htdocs/cms/" local="130245873446084000" remote="130245873440000000" />
+<file name="ajax.php" server="C:/xampp/htdocs/cms/" local="130244927180194000" remote="130244927180000000" />
+<file name="module.php" server="C:/xampp/htdocs/cms/" local="130245873379114000" remote="130245873370000000" />
+<file name="bank.php" server="C:/xampp/htdocs/cms/" local="130245887717834000" remote="130245887710000000" />
+<file name="domain.php" server="C:/xampp/htdocs/cms/" local="130245887813244000" remote="130245887810000000" />
+<file name="product.php" server="C:/xampp/htdocs/cms/" local="130245885838014000" remote="130245885830000000" />
 </dwsync>

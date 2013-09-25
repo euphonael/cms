@@ -4,5 +4,7 @@
 <file name="model_user.php" server="C:/xampp/htdocs/cms/" local="130245703580088000" remote="130245703580000000" />
 <file name="model_ajax.php" server="C:/xampp/htdocs/cms/" local="130244927180584000" remote="130244927180000000" />
 <file name="model_module.php" server="C:/xampp/htdocs/cms/" local="130245714153508000" remote="130245714150000000" />
-<file name="model_bank.php" server="C:/xampp/htdocs/cms/" local="130245714082958000" remote="130245714080000000" />
+<file name="model_bank.php" server="C:/xampp/htdocs/cms/" local="130245881131274000" remote="130245881130000000" />
+<file name="model_domain.php" server="C:/xampp/htdocs/cms/" local="130245880989034000" remote="130245880980000000" />
+<file name="model_product.php" server="C:/xampp/htdocs/cms/" local="130245886778794000" remote="130245886770000000" />
 </dwsync>

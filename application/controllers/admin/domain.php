@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Module extends MY_Controller {
+class Domain extends MY_Controller {
 
-	var $title = 'Module';
-	var $url = 'module';
-	var $db_table = 'module';
+	var $title = 'Domain';
+	var $url = 'domain';
+	var $db_table = 'domain';
 	
 	public function __construct()
 	{
 		parent::__construct();
 		check_admin_login('redirect');
-		$this->load->model('model_module');
+		$this->load->model('model_domain');
 	}	
 	
 	public function index()
@@ -21,7 +21,7 @@ class Module extends MY_Controller {
 			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
 		);
 
-		$db_query = $this->model_module->list_data();
+		$db_query = $this->model_domain->list_data();
 		
 		$data['result'] = $db_query;
 
@@ -36,12 +36,8 @@ class Module extends MY_Controller {
 			'js'	=> array('admin/form')
 		);
 		
-		$data['module_list'] = $this->model_module->get_parent();
-		
-		$this->form_validation->set_rules('module_name', 'module name', 'trim|required');
-		$this->form_validation->set_rules('module_url', 'Module URL', 'trim|required');
-		$this->form_validation->set_rules('module_parent', 'module parent', 'required');
-		$this->form_validation->set_rules('module_multi_language', 'module multi language', 'integer');
+		$this->form_validation->set_rules('domain_name', 'domain name', 'trim|required');
+		$this->form_validation->set_rules('domain_location', 'domain location', 'trim|required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
@@ -51,7 +47,7 @@ class Module extends MY_Controller {
 		}
 		else
 		{
-			$this->model_module->insert();
+			$this->model_domain->insert();
 			redirect(base_url('admin/' . $this->url));
 		}
 	}
@@ -64,15 +60,12 @@ class Module extends MY_Controller {
 			'js'	=> array('admin/form')
 		);
 		
-		$data['module_list'] = $this->model_module->get_parent();
-		$data['row'] = $this->model_module->get($unique_id);
+		$data['row'] = $this->model_domain->get($unique_id);
 		
 		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
 		
-		$this->form_validation->set_rules('module_name', 'module name', 'trim|required');
-		$this->form_validation->set_rules('module_url', 'Module URL', 'trim|required');
-		$this->form_validation->set_rules('module_parent', 'module parent', 'required');
-		$this->form_validation->set_rules('module_multi_language', 'module multi language', 'integer');
+		$this->form_validation->set_rules('domain_name', 'domain name', 'trim|required');
+		$this->form_validation->set_rules('domain_location', 'domain location', 'trim|required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
@@ -82,12 +75,12 @@ class Module extends MY_Controller {
 		}
 		else
 		{
-			$this->model_module->update($unique_id);
+			$this->model_domain->update($unique_id);
 			redirect(base_url('admin/' . $this->url));
 		}
 	}
 }
 
 
-/* End of file module.php */
-/* Location: ./application/controllers/admin/module.php */
+/* End of file domain.php */
+/* Location: ./application/controllers/admin/domain.php */
