@@ -81,7 +81,7 @@ class User extends MY_Controller {
 		else
 		{
 			$this->model_user->update($unique_id);
-			redirect(base_url('admin/' . $this->url));
+#			redirect(base_url('admin/' . $this->url));
 		}
 	}
 }

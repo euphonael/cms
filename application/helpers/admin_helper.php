@@ -47,6 +47,19 @@ if ( ! function_exists('table_end'))
 	}
 }
 
+if ( ! function_exists('get_unique_id'))
+{
+	function get_unique_id($db_table)
+	{
+		$ci =& get_instance();
+		$query = $ci->db->select_max($db_table . '_id')->where('flag !=', 3)->get($db_table);
+		
+		$row = $query->row_array();
+		
+		return ($row) ? $row[$db_table . '_id'] + 1 : 1;
+	}
+}
+
 if ( ! function_exists('multi_language'))
 {
 	function multi_language($module_url)

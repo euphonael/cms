@@ -18,6 +18,7 @@ class Model_user extends CI_Model {
 	public function insert()
 	{
 		$data = array(
+			'unique_id'				=> get_unique_id($this->db_table),
 			'admin_username'		=> $this->input->post('admin_username'),
 			'admin_password'		=> $this->input->post('admin_password'),
 			'admin_name'			=> $this->input->post('admin_name'),
@@ -35,18 +36,30 @@ class Model_user extends CI_Model {
 		);
 		
 		$this->db->insert($this->db_table, $data);
-		
-		$last_insert_id = $this->db->insert_id();
-		
-		if (multi_language('user') == FALSE)
-		{
-			$this->db->where('admin_id', $last_insert_id);
-			$this->db->update($this->db_table, array('unique_id' => $last_insert_id));
-		}
 	}
 	
 	public function update($unique_id)
 	{
+		$this->load->helper('upload_helper');
+		
+		$file = array();
+		
+		$admin_ktp = file_upload('admin_ktp', 'gif|jpeg|png|jpg', 'ktp');
+		
+		if ($admin_ktp)
+		{
+			remove_file($this->db_table, 'admin_ktp', $unique_id, 'ktp');
+			$file['admin_ktp'] = $admin_ktp['file_name'];
+		}
+		
+		$admin_npwp = file_upload('admin_npwp', 'gif|jpeg|png|jpg', 'npwp');
+		
+		if ($admin_npwp)
+		{
+			remove_file($this->db_table, 'admin_npwp', $unique_id, 'npwp');
+			$file['admin_npwp'] = $admin_npwp['file_name'];
+		}
+		
 		$data = array(
 			'admin_username'		=> $this->input->post('admin_username'),
 			'admin_name'			=> $this->input->post('admin_name'),
@@ -62,18 +75,17 @@ class Model_user extends CI_Model {
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
+
+		if ($this->input->post('admin_password')) $data['admin_password'] = $this->input->post('admin_password');
 		
-		/* Password */
-		if ($this->input->post('admin_password'))
-		{
-			$data['admin_password'] = $this->input->post('admin_password');
-		}
+		$data = array_merge($data, $file);
 		
 		$this->db->where('unique_id', $unique_id);
 		$this->db->update($this->db_table, $data);
 	}
 
 }
+
 
 /* End of file model_user.php */
 /* Location: ./application/models/model_user.php */

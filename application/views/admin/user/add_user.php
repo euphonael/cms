@@ -55,7 +55,7 @@
                     </p>
                     <p>
                         <label class="label-input" for="admin_personal_email">Personal E-mail</label>
-                        <input type="text" name="admin_personal_email" id="admin_personal_email" class="required email" value="<?php echo set_value('admin_personal_email'); ?>" />
+                        <input type="text" name="admin_personal_email" id="admin_personal_email" class="email" value="<?php echo set_value('admin_personal_email'); ?>" />
                         <?php echo form_error('admin_personal_email'); ?>
                     </p>
                     <p>
@@ -74,7 +74,7 @@
                     <legend>Staff Info</legend>
                     <p>
                         <label class="label-input" for="admin_work_email">Work E-mail</label>
-                        <input type="text" name="admin_work_email" id="admin_work_email" class="required email" value="<?php echo set_value('admin_work_email'); ?>" />
+                        <input type="text" name="admin_work_email" id="admin_work_email" class="email" value="<?php echo set_value('admin_work_email'); ?>" />
                         <?php echo form_error('admin_work_email'); ?>
                     </p>
                     <p>

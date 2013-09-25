@@ -1,5 +1,5 @@
 <div id="container">
-	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
+	<form id="process-data" method="post" action="<?php echo current_url(); ?>" enctype="multipart/form-data">
         <div id="content-heading">
             <h2><?php echo $title; ?>: <?php echo $row['admin_name']; ?></h2>
             <div id="action-wrapper">
@@ -55,7 +55,7 @@
                     </p>
                     <p>
                         <label class="label-input" for="admin_personal_email">Personal E-mail</label>
-                        <input type="text" name="admin_personal_email" id="admin_personal_email" class="required email" value="<?php echo (set_value('admin_personal_email')) ? set_value('admin_personal_email') : $row['admin_personal_email']; ?>" />
+                        <input type="text" name="admin_personal_email" id="admin_personal_email" class="email" value="<?php echo (set_value('admin_personal_email')) ? set_value('admin_personal_email') : $row['admin_personal_email']; ?>" />
                         <?php echo form_error('admin_personal_email'); ?>
                     </p>
                     <p>
@@ -74,7 +74,7 @@
                     <legend>Staff Info</legend>
                     <p>
                         <label class="label-input" for="admin_work_email">Work E-mail</label>
-                        <input type="text" name="admin_work_email" id="admin_work_email" class="required email" value="<?php echo (set_value('admin_work_email')) ? set_value('admin_work_email') : $row['admin_work_email']; ?>" />
+                        <input type="text" name="admin_work_email" id="admin_work_email" class="email" value="<?php echo (set_value('admin_work_email')) ? set_value('admin_work_email') : $row['admin_work_email']; ?>" />
                         <?php echo form_error('admin_work_email'); ?>
                     </p>
                     <p>

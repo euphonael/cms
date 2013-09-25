@@ -4,5 +4,5 @@ RewriteEngine on
 #RewriteCond %{HTTP_HOST} !^www\.domain\.com$ [NC]
 #RewriteRule ^(.*)$ http://www.domain.com/$1 [R=301,L]
 
-RewriteCond $1 !^(index\.php|images|js|css|robots\.txt)
+RewriteCond $1 !^(index\.php|upload|trash|images|js|css|robots\.txt)
 RewriteRule ^(.*)$ /cms/index.php/$1 [L]

@@ -9,6 +9,7 @@ span.clear { clear:both; display:block; }
 
 span.flag.inactive { background:#F00; }
 span.flag.active { background:#0C0; }
+span.flag.delete { background:#000; }
 
 input[readonly=readonly] { background:#EEE; }
 textarea { font-family:Arial; font-size:12px; resize:none; }
