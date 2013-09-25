@@ -60,5 +60,5 @@ class Model_bank extends CI_Model {
 }
 
 
-/* End of file model_module.php */
-/* Location: ./application/models/model_module.php */
+/* End of file model_bank.php */
+/* Location: ./application/models/model_bank.php */

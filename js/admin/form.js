@@ -17,14 +17,10 @@ $(document).ready(function(){
 
 	var input_width = max_width - label_width - 40;
 	
-	$('#form-content input').each(function(){
-		
+	$('#form-content input, #form-content select, #form-content textarea.input').each(function(){
 		$(this).width(input_width);
 	});
 	
-	$('#form-content select').each(function(){
-		$(this).width(input_width);
-	});
 	/* END Form Auto Width */
 	
 	$('form#process-data').validate();
