@@ -14,14 +14,8 @@
         <thead>
             <tr>
                 <th class="small">No.</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Join Date</th>
-                <th>Birthday</th>
-                <th>Phone</th>
-                <th>Work E-mail</th>
-                <th>Job Position</th>
-                <th>Privilege</th>
+                <th>Module Name</th>
+                <th>Parent Module</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>
@@ -32,14 +26,8 @@
             <?php foreach ($result as $row) : ?>
             <tr id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
                 <td><?php echo $x; ?></td>
-                <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['admin_name']; ?></a></td>
-                <td><?php echo $row['admin_username']; ?></td>
-                <td><?php if ($row['admin_join_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_join_date'])); ?></td>
-                <td><?php if ($row['admin_dob'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_dob'])); ?></td>
-                <td><?php echo $row['admin_phone']; ?></td>
-                <td><?php echo $row['admin_work_email']; ?></td>
-                <td><?php echo $row['admin_job_position']; ?></td>
-                <td><?php echo $row['admin_privilege']; ?></td>
+                <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['module_name']; ?></a></td>
+                <td><?php echo $row['module_parent_name']; ?></td>
                 <?php table_end($row); ?>
             </tr>
             <?php $x++; ?>

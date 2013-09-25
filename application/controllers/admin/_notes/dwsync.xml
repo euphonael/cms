@@ -3,6 +3,8 @@
 <file name="login.php" server="C:/xampp/htdocs/cms/" local="130245085168445500" remote="130245085160000000" />
 <file name="dashboard.php" server="C:/xampp/htdocs/cms/" local="130240474514102000" remote="130240474510000000" />
 <file name="logout.php" server="C:/xampp/htdocs/cms/" local="130239859950662000" remote="130239859950000000" />
-<file name="user.php" server="C:/xampp/htdocs/cms/" local="130245587560098000" remote="130245587560000000" />
+<file name="user.php" server="C:/xampp/htdocs/cms/" local="130245707546208000" remote="130245707540000000" />
 <file name="ajax.php" server="C:/xampp/htdocs/cms/" local="130240634811852000" remote="130240634810000000" />
+<file name="module.php" server="C:/xampp/htdocs/cms/" local="130245707669118000" remote="130245707660000000" />
+<file name="bank.php" server="C:/xampp/htdocs/cms/" local="130245714330118000" remote="130245714330000000" />
 </dwsync>

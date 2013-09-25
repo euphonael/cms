@@ -14,14 +14,13 @@
         <thead>
             <tr>
                 <th class="small">No.</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Join Date</th>
-                <th>Birthday</th>
-                <th>Phone</th>
-                <th>Work E-mail</th>
-                <th>Job Position</th>
-                <th>Privilege</th>
+                <th>Bank Name</th>
+                <th>Branch</th>
+                <th>Account Holder</th>
+                <th>Account Number</th>
+                <th>Currency</th>
+                <th>Invoice Type</th>
+                <th>Swift Code</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>
@@ -32,14 +31,13 @@
             <?php foreach ($result as $row) : ?>
             <tr id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
                 <td><?php echo $x; ?></td>
-                <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['admin_name']; ?></a></td>
-                <td><?php echo $row['admin_username']; ?></td>
-                <td><?php if ($row['admin_join_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_join_date'])); ?></td>
-                <td><?php if ($row['admin_dob'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_dob'])); ?></td>
-                <td><?php echo $row['admin_phone']; ?></td>
-                <td><?php echo $row['admin_work_email']; ?></td>
-                <td><?php echo $row['admin_job_position']; ?></td>
-                <td><?php echo $row['admin_privilege']; ?></td>
+                <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['bank_name']; ?></a></td>
+                <td><?php echo $row['bank_branch']; ?></td>
+                <td><?php echo $row['bank_account_holder']; ?></td>
+                <td><?php echo $row['bank_account_number']; ?></td>
+                <td><?php echo $row['bank_currency']; ?></td>
+                <td><?php if ($row['bank_invoice_type'] == 1) echo 'Wilson Iwan'; elseif ($row['bank_invoice_type'] == 2) echo 'PT. Go Online Solusi'; ?></td>
+                <td><?php echo $row['bank_swift_code']; ?></td>
                 <?php table_end($row); ?>
             </tr>
             <?php $x++; ?>

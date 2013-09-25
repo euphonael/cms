@@ -4,7 +4,7 @@ class Model_user extends CI_Model {
 
 	public function list_data()
 	{
-		$query = $this->db->select('unique_id, admin_username, admin_name, admin_join_date, admin_dob, admin_phone, admin_work_email, admin_job_position, admin_privilege, flag, memo')->where('flag !=', 3)->get($this->db_table);
+		$query = $this->db->select('unique_id, admin_username, admin_name, admin_join_date, admin_dob, admin_phone, admin_work_email, admin_job_position, admin_privilege, flag, memo')->order_by('unique_id', 'ASC')->where('flag !=', 3)->get($this->db_table);
 		
 		return $query->result_array();
 	}
@@ -53,6 +53,8 @@ class Model_user extends CI_Model {
 	public function update($unique_id)
 	{
 		$this->load->helper('upload_helper');
+		
+		$file = array();
 		
 		if ($this->input->post('admin_ktp_delete') == 1)
 		{

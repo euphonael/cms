@@ -1,5 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+if ( ! function_exists('form_value'))
+{
+	function form_value($field_name, $row)
+	{
+		return (set_value($field_name)) ? set_value($field_name) : $row[$field_name];
+	}
+}
+
 if ( ! function_exists('check_admin_login'))
 {
 	function check_admin_login($result = '')

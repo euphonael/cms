@@ -20,7 +20,7 @@
                     <div class="memo">
                     	<p>
                         	<label for="memo">Memo</label>
-                            <textarea id="memo" name="memo"><?php echo (set_value('memo')) ? set_value('memo') : $row['memo']; ?></textarea>
+                            <textarea id="memo" name="memo"><?php echo form_value('memo', $row); ?></textarea>
                         </p>
                     </div>
                     <div class="clear"></div>

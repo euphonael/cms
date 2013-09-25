@@ -18,7 +18,7 @@
                     <legend>Login Details</legend>
                     <p>
                         <label class="label-input" for="admin_username">Username</label>
-                        <input type="text" name="admin_username" id="admin_username" class="required" value="<?php echo (set_value('admin_username')) ? set_value('admin_username') : $row['admin_username']; ?>" />
+                        <input type="text" name="admin_username" id="admin_username" class="required" value="<?php echo form_value('admin_username', $row); ?>" />
                         <?php echo form_error('admin_username'); ?>
                     </p>
                     <p>
@@ -37,25 +37,25 @@
                     <legend>Personal Details</legend>
                     <p>
                         <label class="label-input" for="admin_name">Name</label>
-                        <input type="text" name="admin_name" id="admin_name" class="required" value="<?php echo (set_value('admin_name')) ? set_value('admin_name') : $row['admin_name']; ?>" />
+                        <input type="text" name="admin_name" id="admin_name" class="required" value="<?php echo form_value('admin_name', $row); ?>" />
                         <?php echo form_error('admin_name'); ?>
                     </p>
                     <p>
                         <label class="label-input" for="admin_dob">Date of Birth</label>
-                        <input type="text" name="admin_dob" id="admin_dob" class="datepicker" value="<?php echo (set_value('admin_dob')) ? set_value('admin_dob') : $row['admin_dob']; ?>" />
+                        <input type="text" name="admin_dob" id="admin_dob" class="datepicker" value="<?php echo form_value('admin_dob', $row); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="admin_pob">Place of Birth</label>
-                        <input type="text" name="admin_pob" id="admin_pob" value="<?php echo (set_value('admin_pob')) ? set_value('admin_pob') : $row['admin_pob']; ?>" />
+                        <input type="text" name="admin_pob" id="admin_pob" value="<?php echo form_value('admin_pob', $row); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="admin_phone">Phone</label>
-                        <input type="text" name="admin_phone" id="admin_phone" class="digits" value="<?php echo (set_value('admin_phone')) ? set_value('admin_phone') : $row['admin_phone']; ?>" />
+                        <input type="text" name="admin_phone" id="admin_phone" class="digits" value="<?php echo form_value('admin_phone', $row); ?>" />
                         <?php echo form_error('admin_phone'); ?>
                     </p>
                     <p>
                         <label class="label-input" for="admin_personal_email">Personal E-mail</label>
-                        <input type="text" name="admin_personal_email" id="admin_personal_email" class="email" value="<?php echo (set_value('admin_personal_email')) ? set_value('admin_personal_email') : $row['admin_personal_email']; ?>" />
+                        <input type="text" name="admin_personal_email" id="admin_personal_email" class="email" value="<?php echo form_value('admin_personal_email', $row); ?>" />
                         <?php echo form_error('admin_personal_email'); ?>
                     </p>
                     <p>
@@ -89,29 +89,30 @@
             </div>
             
             <div id="form-right">
+                
+                <?php $this->load->view('admin/template/view_flag'); ?>
+                
                 <fieldset>
                     <legend>Staff Info</legend>
                     <p>
                         <label class="label-input" for="admin_work_email">Work E-mail</label>
-                        <input type="text" name="admin_work_email" id="admin_work_email" class="email" value="<?php echo (set_value('admin_work_email')) ? set_value('admin_work_email') : $row['admin_work_email']; ?>" />
+                        <input type="text" name="admin_work_email" id="admin_work_email" class="email" value="<?php echo form_value('admin_work_email', $row); ?>" />
                         <?php echo form_error('admin_work_email'); ?>
                     </p>
                     <p>
                         <label class="label-input" for="admin_job_position">Job Position</label>
-                        <input type="text" name="admin_job_position" id="admin_job_position" class="required" value="<?php echo (set_value('admin_job_position')) ? set_value('admin_job_position') : $row['admin_job_position']; ?>" />
+                        <input type="text" name="admin_job_position" id="admin_job_position" class="required" value="<?php echo form_value('admin_job_position', $row); ?>" />
                         <?php echo form_error('admin_job_position'); ?>
                     </p>
                     <p>
                         <label class="label-input" for="admin_join_date">Join Date</label>
-                        <input type="text" name="admin_join_date" id="admin_join_date" class="datepicker" value="<?php echo (set_value('admin_join_date')) ? set_value('admin_join_date') : $row['admin_join_date']; ?>" />
+                        <input type="text" name="admin_join_date" id="admin_join_date" class="datepicker" value="<?php echo form_value('admin_join_date', $row); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="admin_resign_date">Resign Date</label>
-                        <input type="text" name="admin_resign_date" id="admin_resign_date" class="datepicker" value="<?php echo (set_value('admin_resign_date')) ? set_value('admin_resign_date') : $row['admin_resign_date']; ?>" />
+                        <input type="text" name="admin_resign_date" id="admin_resign_date" class="datepicker" value="<?php echo form_value('admin_resign_date', $row); ?>" />
                     </p>
                 </fieldset>
-                
-                <?php $this->load->view('admin/template/view_flag'); ?>
             </div>
             
             <div class="clear"></div>

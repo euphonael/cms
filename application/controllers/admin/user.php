@@ -39,11 +39,12 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username]');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|required|md5');
 		$this->form_validation->set_rules('admin_repassword', 'admin_repassword', 'required');
-		$this->form_validation->set_rules('admin_name', 'name', 'required');
-		$this->form_validation->set_rules('admin_phone', 'phone', 'numeric');
-		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'valid_email|is_unique[admin.admin_personal_email]');
-		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'valid_email|is_unique[admin.admin_work_email]');
-		$this->form_validation->set_rules('admin_job_position', 'job position', 'required');
+		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
+		$this->form_validation->set_rules('admin_phone', 'phone', 'trim|numeric');
+		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
+		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email]');
+		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
+		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -65,14 +66,16 @@ class User extends MY_Controller {
 		);
 		
 		$data['row'] = $this->model_user->get($unique_id);
+		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
 		
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username.unique_id.' . $unique_id . ']');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|md5');
-		$this->form_validation->set_rules('admin_name', 'name', 'required');
-		$this->form_validation->set_rules('admin_phone', 'phone', 'numeric');
-		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
-		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
-		$this->form_validation->set_rules('admin_job_position', 'job position', 'required');
+		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
+		$this->form_validation->set_rules('admin_phone', 'phone', 'trim|numeric');
+		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
+		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
+		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
+		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -81,7 +84,7 @@ class User extends MY_Controller {
 		else
 		{
 			$this->model_user->update($unique_id);
-#			redirect(base_url('admin/' . $this->url));
+			redirect(base_url('admin/' . $this->url));
 		}
 	}
 }

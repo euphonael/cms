@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	$('input').tooltip();
+	$('input, select').tooltip();
 	
 	/* Form Auto Width */
 	var max_width = 450;
@@ -14,16 +14,20 @@ $(document).ready(function(){
 	});
 		
 	$('#form-content label.label-input').width(label_width);
-	
-	var field_width = 0;
+
+	var input_width = max_width - label_width - 40;
 	
 	$('#form-content input').each(function(){
-		var input_width = max_width - label_width - 40;
-		$('#form-content input').width(input_width);
+		
+		$(this).width(input_width);
+	});
+	
+	$('#form-content select').each(function(){
+		$(this).width(input_width);
 	});
 	/* END Form Auto Width */
 	
-//	$('form#process-data').validate();
+	$('form#process-data').validate();
 	
 	$('form#process-data #action-wrapper button:first-child').click(function(){
 		history.go(-1);

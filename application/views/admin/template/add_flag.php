@@ -15,7 +15,7 @@
                     <div class="memo">
                     	<p>
                         	<label for="memo">Memo</label>
-                            <textarea id="memo" name="memo"></textarea>
+                            <textarea id="memo" name="memo"><?php echo set_value('memo'); ?></textarea>
                         </p>
                     </div>
                     <div class="clear"></div>
