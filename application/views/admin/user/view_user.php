@@ -62,10 +62,29 @@
                         <label class="label-input" for="admin_ktp">Scan KTP</label>
                         <input type="file" name="admin_ktp" id="admin_ktp" />
                     </p>
+                    
+                    <?php if ($row['admin_ktp']) : ?>
+                    <p>
+                    	<label class="label-input">Current File</label>
+						<a class="fake-input fancybox" title="<?php echo $row['admin_ktp']; ?>" href="<?php echo base_url('upload/ktp/' . $row['admin_ktp']); ?>"><?php echo $row['admin_ktp']; ?></a>
+                        <input class="file-checkbox" type="checkbox" value="1" name="admin_ktp_delete" title="Check this box to delete current file" />
+                        <span class="clear"></span>
+                    </p>
+                    <?php endif; ?>
+                    
                     <p>
                         <label class="label-input" for="admin_npwp">Scan NPWP</label>
                         <input type="file" name="admin_npwp" id="admin_npwp" />
                     </p>
+                    
+                    <?php if ($row['admin_npwp']) : ?>
+                    <p>
+                    	<label class="label-input">Current File</label>
+						<a class="fake-input fancybox" title="<?php echo $row['admin_npwp']; ?>" href="<?php echo base_url('upload/npwp/' . $row['admin_npwp']); ?>"><?php echo $row['admin_npwp']; ?></a>
+                        <input class="file-checkbox" type="checkbox" value="1" name="admin_npwp_delete" title="Check this box to delete current file" />
+                        <span class="clear"></span>
+                    </p>
+                    <?php endif; ?>
                 </fieldset>
             </div>
             

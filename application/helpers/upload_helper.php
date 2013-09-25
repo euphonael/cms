@@ -2,7 +2,7 @@
 
 if ( ! function_exists('file_upload'))
 {
-	function file_upload($field_name, $allowed_types, $target_folder, $debug = FALSE)
+	function file_upload($field_name, $allowed_types, $target_folder, $db_name, $unique_id = '', $debug = FALSE)
 	{
 		$ci =& get_instance();
 
@@ -27,6 +27,7 @@ if ( ! function_exists('file_upload'))
 		}
 		else
 		{
+			if ($unique_id) remove_file($db_name, $field_name, $unique_id, $target_folder);
 			return $ci->upload->data();
 		}
 	}
@@ -34,29 +35,27 @@ if ( ! function_exists('file_upload'))
 
 if ( ! function_exists('remove_file'))
 {
-	function remove_file($db_name, $column_name, $unique_id, $target_folder)
+	function remove_file($db_name, $field_name, $unique_id, $target_folder)
 	{
 		$ci =& get_instance();
 		
 		$file_directory = 'upload/' . $target_folder;
 		$trash_folder = 'trash/' . $target_folder;
 		
-		$row = $ci->db->select($column_name)->where('unique_id', $unique_id)->get($db_name)->row_array();
-		
-		print_r($row);
+		$row = $ci->db->select($field_name)->where('unique_id', $unique_id)->get($db_name)->row_array();
 		
 		if ($row)
 		{
-			if ($row[$column_name])
+			if ($row[$field_name])
 			{
 				if ( ! file_exists($trash_folder))
 				{
 					mkdir($trash_folder);
 				}
 				
-				if (file_exists($file_directory . '/' . $row[$column_name]))
+				if (file_exists($file_directory . '/' . $row[$field_name]))
 				{
-					rename($file_directory . '/' . $row[$column_name], $trash_folder . '/' . $row[$column_name]);
+					rename($file_directory . '/' . $row[$field_name], $trash_folder . '/' . $row[$field_name]);
 				}
 			}
 		}

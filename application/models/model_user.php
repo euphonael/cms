@@ -17,6 +17,16 @@ class Model_user extends CI_Model {
 	
 	public function insert()
 	{
+		$this->load->helper('upload_helper');
+		
+		$admin_ktp = file_upload('admin_ktp', 'gif|jpeg|png|jpg', 'ktp', $this->db_table);
+		$admin_npwp = file_upload('admin_npwp', 'gif|jpeg|png|jpg', 'npwp', $this->db_table);
+		
+		$file = array();
+		
+		if ($admin_ktp) $file['admin_ktp'] = $admin_ktp['file_name'];
+		if ($admin_npwp) $file['admin_npwp'] = $admin_npwp['file_name'];
+		
 		$data = array(
 			'unique_id'				=> get_unique_id($this->db_table),
 			'admin_username'		=> $this->input->post('admin_username'),
@@ -35,6 +45,8 @@ class Model_user extends CI_Model {
 			'memo'					=> $this->input->post('memo')
 		);
 		
+		$data = array_merge($data, $file);
+		
 		$this->db->insert($this->db_table, $data);
 	}
 	
@@ -42,23 +54,23 @@ class Model_user extends CI_Model {
 	{
 		$this->load->helper('upload_helper');
 		
-		$file = array();
-		
-		$admin_ktp = file_upload('admin_ktp', 'gif|jpeg|png|jpg', 'ktp');
-		
-		if ($admin_ktp)
+		if ($this->input->post('admin_ktp_delete') == 1)
 		{
 			remove_file($this->db_table, 'admin_ktp', $unique_id, 'ktp');
-			$file['admin_ktp'] = $admin_ktp['file_name'];
+			$file['admin_ktp'] = '';
 		}
 		
-		$admin_npwp = file_upload('admin_npwp', 'gif|jpeg|png|jpg', 'npwp');
-		
-		if ($admin_npwp)
+		if ($this->input->post('admin_npwp_delete') == 1)
 		{
 			remove_file($this->db_table, 'admin_npwp', $unique_id, 'npwp');
-			$file['admin_npwp'] = $admin_npwp['file_name'];
+			$file['admin_npwp'] = '';
 		}
+		
+		$admin_ktp = file_upload('admin_ktp', 'gif|jpeg|png|jpg|xls|xlsx', 'ktp', $this->db_table, $unique_id);
+		$admin_npwp = file_upload('admin_npwp', 'gif|jpeg|png|jpg', 'npwp', $this->db_table, $unique_id);
+		
+		if ($admin_ktp) $file['admin_ktp'] = $admin_ktp['file_name'];
+		if ($admin_npwp) $file['admin_npwp'] = $admin_npwp['file_name'];
 		
 		$data = array(
 			'admin_username'		=> $this->input->post('admin_username'),

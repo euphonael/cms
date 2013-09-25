@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	$('input').tooltip();
+	
 	/* Form Auto Width */
 	var max_width = 450;
 	var label_width = 0;

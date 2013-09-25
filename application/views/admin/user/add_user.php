@@ -1,5 +1,5 @@
 <div id="container">
-	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
+	<form id="process-data" method="post" action="<?php echo current_url(); ?>" enctype="multipart/form-data">
         <div id="content-heading">
             <h2><?php echo $title; ?></h2>
             <div id="action-wrapper">

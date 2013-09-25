@@ -60,8 +60,8 @@ class User extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
-			'css'	=> array(),
-			'js'	=> array('admin/form')
+			'css'	=> array('jquery.fancybox'),
+			'js'	=> array('admin/form', 'jquery.fancybox.pack', 'admin/file_handling')
 		);
 		
 		$data['row'] = $this->model_user->get($unique_id);

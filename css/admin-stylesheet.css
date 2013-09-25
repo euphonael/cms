@@ -104,3 +104,5 @@ form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 #form-content fieldset div.memo { float:left; }
 #form-content fieldset div.memo p label { display:block; font-weight:bold; }
 #form-content fieldset div.memo textarea { width:280px; height:50px; }
+#form-content fieldset a.fake-input { display:block; padding:3px; float:left; }
+#form-content fieldset input.file-checkbox { display:block; float:left; width:15px !important; margin-top:4px; }
