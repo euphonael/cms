@@ -26,7 +26,7 @@
                         <select name="client_company_id">
                         	<option value="">--</option>
                             <?php foreach ($company_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if ($row['client_company_id'] == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['company_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('client_company_id', $row, $item['unique_id']); ?>><?php echo $item['company_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </p>

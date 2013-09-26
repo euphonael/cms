@@ -49,8 +49,8 @@
                         <label class="label-input" for="bank_currency">Currency</label>
                         <select name="bank_currency" class="required">
                         	<option value="">--</option>
-                            <option value="Rp." <?php if (set_value('bank_currency') == 'Rp.' || $row['bank_currency'] == 'Rp.') echo 'selected="selected"'; ?>>Rp.</option>
-                            <option value="USD" <?php if (set_value('bank_currency') == 'USD' || $row['bank_currency'] == 'USD') echo 'selected="selected"'; ?>>USD</option>
+                            <option value="Rp." <?php default_selected('bank_currency', $row, 'Rp.'); ?>>Rp.</option>
+                            <option value="USD" <?php default_selected('bank_currency', $row, 'USD'); ?>>USD</option>
                         </select>
                         <?php echo form_error('bank_currency'); ?>
                     </p>       
@@ -58,8 +58,8 @@
                         <label class="label-input" for="bank_invoice_type">Invoice Type</label>
                         <select name="bank_invoice_type" class="required">
                         	<option value="">--</option>
-                            <option value="1" <?php if (set_value('bank_invoice_type') == 1 || $row['bank_invoice_type'] == 1) echo 'selected="selected"'; ?>>Wilson Iwan</option>
-                            <option value="2" <?php if (set_value('bank_invoice_type') == 1 || $row['bank_invoice_type'] == 2) echo 'selected="selected"'; ?>>PT. Go Online Solusi</option>
+                            <option value="1" <?php default_selected('bank_invoice_type', $row, 1); ?>>Wilson Iwan</option>
+                            <option value="2" <?php default_selected('bank_invoice_type', $row, 2); ?>>PT. Go Online Solusi</option>
                         </select>
                         <?php echo form_error('bank_currency'); ?>
                     </p>   

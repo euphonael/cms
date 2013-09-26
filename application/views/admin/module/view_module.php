@@ -30,9 +30,9 @@
                         <label class="label-input">Module Parent</label>
                         <select name="module_parent" class="required">
                         	<option value="">--</option>
-                        	<option value="0" <?php if (set_value('module_parent') == '0' || $row['module_parent'] == '0') echo 'selected="selected"'; ?>>(Parent module)</option>
+                        	<option value="0" <?php default_selected('module_parent', $row, '0'); ?>>(Parent module)</option>
                             <?php foreach ($module_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if (set_value('module_parent') == $item['unique_id'] || $row['module_parent'] == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['module_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('module_parent', $row, $item['unique_id']); ?>><?php echo $item['module_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('module_parent'); ?>
@@ -44,7 +44,7 @@
                     </p>
                     <p>
                     	<label class="label-input" for="module_multi_language">Allow multi language</label>
-                        <input type="checkbox" name="module_multi_language" id="module_multi_language" value="1" <?php if (set_value('module_multi_language') == 1 || $row['module_multi_language'] == 1) echo 'checked="checked"'; ?> />
+                        <input type="checkbox" name="module_multi_language" id="module_multi_language" value="1" <?php echo default_checked('module_multi_language', $row, 1); ?> />
                         <span class="clear"></span>
                     </p>
                 </fieldset>

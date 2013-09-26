@@ -1,5 +1,35 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+if ( ! function_exists('default_checked'))
+{
+	function default_checked($fieldname, $row, $value)
+	{
+		if (empty(set_value($fieldname)))
+		{
+			if ($row[$fieldname] == $value) echo 'checked="checked"';
+		}
+		else
+		{
+			if (set_value($fieldname) == $value) echo 'checked="checked"';
+		}
+	}
+}
+
+if ( ! function_exists('default_selected'))
+{
+	function default_selected($fieldname, $row, $value)
+	{
+		if (empty(set_value($fieldname)))
+		{
+			if ($row[$fieldname] == $value) echo 'selected="selected"';
+		}
+		else
+		{
+			if (set_value($fieldname) == $value) echo 'selected="selected"';
+		}
+	}
+}
+
 if ( ! function_exists('form_value'))
 {
 	function form_value($field_name, $row)

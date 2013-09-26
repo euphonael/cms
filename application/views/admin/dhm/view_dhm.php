@@ -52,7 +52,7 @@
                         <select name="dhm_company_id" class="required">
                         	<option value="">--</option>
                             <?php foreach ($company_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if ($row['dhm_company_id'] == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['company_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('dhm_company_id', $row, $item['unique_id']); ?>><?php echo $item['company_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('hosting_root_domain'); ?>
@@ -62,7 +62,7 @@
                         <select name="dhm_domain_id" class="required">
                         	<option value="">--</option>
                             <?php foreach ($domain_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if ($row['dhm_domain_id'] == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['domain_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('dhm_domain_id', $row, $item['unique_id']); ?>><?php echo $item['domain_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('dhm_domain_id'); ?>
@@ -72,7 +72,7 @@
                         <select name="dhm_hosting_id" class="required">
                         	<option value="">--</option>
                             <?php foreach ($hosting_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if ($row['dhm_hosting_id'] == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['hosting_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('dhm_hosting_id', $row, $item['unique_id']); ?>><?php echo $item['hosting_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('dhm_hosting_id'); ?>
@@ -82,7 +82,7 @@
                         <select name="dhm_bank_id" class="required">
                         	<option value="">--</option>
                             <?php foreach ($bank_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if ($row['dhm_bank_id'] == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['bank_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('dhm_bank_id', $row, $item['unique_id']); ?>><?php echo $item['bank_name']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('dhm_bank_id'); ?>
