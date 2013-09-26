@@ -61,7 +61,7 @@ class Model_security extends CI_Model {
 			'flag'			=> 1
 		);
 		
-		$query = $this->db->select('unique_id, module_name, module_url')->where($condition)->get('module');
+		$query = $this->db->select('unique_id, module_name, module_url')->order_by('module_name', 'ASC')->where($condition)->get('module');
 		
 		foreach ($query->result_array() as $parent_menu)
 		{					
@@ -70,7 +70,7 @@ class Model_security extends CI_Model {
 				'flag'			=> 1
 			);
 			
-			$submenu_query = $this->db->select('unique_id, module_name, module_parent, module_url')->where($submenu_condition)->get('module');
+			$submenu_query = $this->db->select('unique_id, module_name, module_parent, module_url')->order_by('module_name', 'ASC')->where($submenu_condition)->get('module');
 			
 			if ($submenu_query->num_rows() > 0)
 			{

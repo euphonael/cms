@@ -9,13 +9,6 @@ class Model_product extends CI_Model {
 		return $query->result_array();
 	}
 	
-	public function get_parent()
-	{	
-		$query = $this->db->select('unique_id, module_name')->where(array('flag !=' => 3, 'module_parent' => 0))->order_by('unique_id', 'ASC')->get($this->db_table);
-		
-		return $query->result_array();
-	}
-	
 	public function get($unique_id)
 	{
 		$query = $this->db->get_where($this->db_table, array('unique_id' => $unique_id));

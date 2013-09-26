@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="model_security.php" server="C:/xampp/htdocs/cms/" local="130246508908291500" remote="130246508900000000" />
+<file name="model_security.php" server="C:/xampp/htdocs/cms/" local="130246554019181500" remote="130246554010000000" />
 <file name="model_user.php" server="C:/xampp/htdocs/cms/" local="130246510389061500" remote="130246510380000000" />
 <file name="model_ajax.php" server="C:/xampp/htdocs/cms/" local="130244927180584000" remote="130244927180000000" />
 <file name="model_module.php" server="C:/xampp/htdocs/cms/" local="130246513743451500" remote="130246513740000000" />
-<file name="model_bank.php" server="C:/xampp/htdocs/cms/" local="130246509706261500" remote="130246509700000000" />
-<file name="model_domain.php" server="C:/xampp/htdocs/cms/" local="130246510012751500" remote="130246510010000000" />
-<file name="model_product.php" server="C:/xampp/htdocs/cms/" local="130246510270591500" remote="130246510270000000" />
+<file name="model_bank.php" server="C:/xampp/htdocs/cms/" local="130246520165801500" remote="130246520160000000" />
+<file name="model_domain.php" server="C:/xampp/htdocs/cms/" local="130246520220791500" remote="130246520220000000" />
+<file name="model_product.php" server="C:/xampp/htdocs/cms/" local="130246520272831500" remote="130246520270000000" />
+<file name="model_company.php" server="C:/xampp/htdocs/cms/" local="130246538317691500" remote="130246538310000000" />
+<file name="model_client.php" server="C:/xampp/htdocs/cms/" local="130246551934871500" remote="130246551930000000" />
+<file name="model_hosting.php" server="C:/xampp/htdocs/cms/" local="130246571725541500" remote="130246571720000000" />
 </dwsync>

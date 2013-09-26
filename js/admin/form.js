@@ -23,7 +23,9 @@ $(document).ready(function(){
 	
 	/* END Form Auto Width */
 	
-	$('form#process-data').validate();
+	$('form#process-data').validate({
+		ignoreTitle: true
+	});
 	
 	$('form#process-data #action-wrapper button:first-child').click(function(){
 		history.go(-1);

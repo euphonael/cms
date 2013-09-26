@@ -69,10 +69,7 @@
                 </fieldset>
             </div>
             
-            <div id="form-right">
-                
-                <?php $this->load->view('admin/template/add_flag'); ?>
-                
+            <div id="form-right">                
                 <fieldset>
                     <legend>Staff Info</legend>
                     <p>
@@ -94,6 +91,8 @@
                         <input type="text" name="admin_resign_date" id="admin_resign_date" class="datepicker" value="<?php echo set_value('admin_resign_date'); ?>" />
                     </p>
                 </fieldset>
+                
+                <?php $this->load->view('admin/template/add_flag'); ?>
             </div>
             
             <div class="clear"></div>
