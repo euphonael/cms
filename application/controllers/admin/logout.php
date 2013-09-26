@@ -4,7 +4,10 @@ class Logout extends CI_Controller {
 		
 	public function index()
 	{
+		log_action('LOGOUT', 'admin', $this->session->userdata('admin_id'), 'Logout Success');
+		
 		$admin_session = array(
+			'admin_id'			=> '',
 			'admin_logged_in'	=> FALSE,
 			'admin_name'		=> ''
 		);

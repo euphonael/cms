@@ -6,7 +6,7 @@ class Model_security extends CI_Model {
 	{
 		$condition = array(
 			'admin_username'	=> $this->input->post('admin_username'),
-			'admin_password'	=> $this->input->post('admin_password')
+			'admin_password'	=> md5($this->input->post('admin_password'))
 		);
 		
 		$query = $this->db->select('admin_name, unique_id, flag')->where($condition)->get('admin');
@@ -16,27 +16,38 @@ class Model_security extends CI_Model {
 			$row = $query->row_array();
 
 			if ($row['flag'] == 1)
-			{
+			{	
 				$admin_session = array(
+					'admin_id'			=> $row['unique_id'],
 					'admin_logged_in'	=> TRUE,
 					'admin_name'		=> $row['admin_name']
 				);
 				
 				$this->session->set_userdata($admin_session);
 				
+				log_action('LOGIN', 'admin', $row['unique_id'], 'Login Success');
+				
 				return TRUE;
 			}
 			elseif ($row['flag'] == 2)
 			{
+				log_action('FAILED LOGIN', 'admin', $row['unique_id'], 'Login Failure (Inactive User)');
 				return FALSE;
 			}
 			elseif ($row['flag'] == 3)
 			{
+				log_action('FAILED LOGIN', 'admin', $row['unique_id'], 'Login Failure (Deleted User)');
+				return NULL;
+			}
+			else
+			{
+				log_action('FAILED LOGIN', 'admin', $row['unique_id'], 'Login Failure (Flag Unknown)');
 				return NULL;
 			}
 		}
 		else
 		{
+			log_action('LOGIN ATTEMPT', 'admin', 0, 'Combination: ' . $this->input->post('admin_username') . ' // ' . $this->input->post('admin_password'));
 			return NULL;
 		}
 	}

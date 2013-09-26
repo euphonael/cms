@@ -35,6 +35,8 @@ class Model_module extends CI_Model {
 		);
 		
 		$this->db->insert($this->db_table, $data);
+		
+		log_action('INSERT', $this->db_table, $data['unique_id']);
 	}
 	
 	public function update($unique_id)
@@ -50,6 +52,8 @@ class Model_module extends CI_Model {
 
 		$this->db->where('unique_id', $unique_id);
 		$this->db->update($this->db_table, $data);
+		
+		log_action('UPDATE', $this->db_table, $unique_id);
 	}
 }
 

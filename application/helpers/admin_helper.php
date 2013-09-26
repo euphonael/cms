@@ -68,21 +68,23 @@ if ( ! function_exists('get_unique_id'))
 	}
 }
 
-if ( ! function_exists('multi_language'))
+if ( ! function_exists('log_action'))
 {
-	function multi_language($module_url)
+	function log_action($action = '', $db = '', $value = '', $description = '')
 	{
 		$ci =& get_instance();
-		$row = $ci->db->select('module_multi_language')->where('module_url', $module_url)->get('module')->row_array();
 		
-		if ($row['module_multi_language'] == 0)
-		{
-			return FALSE;
-		}
-		else
-		{
-			// Do something for unique_id here
-		}
+		$data = array(
+			'log_admin_id'		=> $ci->session->userdata('admin_id'),
+			'log_action'		=> $action,
+			'log_db'			=> $db,
+			'log_value'			=> $value,
+			'log_description'	=> $description,
+			'log_ip'			=> $ci->input->ip_address(),
+			'log_time'			=> date('Y-m-d H:i:s')
+		);
+		
+		$ci->db->insert('log', $data);
 	}
 }
 
