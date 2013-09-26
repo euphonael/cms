@@ -38,6 +38,11 @@
                         <?php echo form_error('module_parent'); ?>
                     </p>
                     <p>
+                    	<label class="label-input" for="module_notes">Module Notes</label>
+                        <textarea class="input" name="module_notes" id="module_notes"><?php echo set_value('module_notes'); ?></textarea>
+                        <?php echo form_error('module_notes'); ?>
+                    </p>
+                    <p>
                     	<label class="label-input" for="module_multi_language">Allow multi language</label>
                         <input type="checkbox" name="module_multi_language" id="module_multi_language" value="1" <?php if (set_value('module_multi_language') == 1) echo 'checked="checked"'; ?> />
                         <span class="clear"></span>

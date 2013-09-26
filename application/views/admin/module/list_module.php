@@ -16,6 +16,7 @@
                 <th class="small">No.</th>
                 <th>Module Name</th>
                 <th>Parent Module</th>
+                <th>Module Notes</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>
@@ -28,6 +29,7 @@
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['module_name']; ?></a></td>
                 <td><?php echo $row['module_parent_name']; ?></td>
+                <td><?php echo $row['module_notes']; ?></td>
                 <?php table_end($row); ?>
             </tr>
             <?php $x++; ?>

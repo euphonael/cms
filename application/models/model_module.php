@@ -4,7 +4,7 @@ class Model_module extends CI_Model {
 
 	public function list_data()
 	{	
-		$query = $this->db->select('m.unique_id, m.module_name, m.flag, m.memo, f.module_name AS module_parent_name')->join('module f', 'f.unique_id = m.module_parent', 'left')->where('m.flag !=', 3)->order_by('m.unique_id', 'ASC')->get($this->db_table . ' m');
+		$query = $this->db->select('m.unique_id, m.module_name, m.module_notes, m.flag, m.memo, f.module_name AS module_parent_name')->join('module f', 'f.unique_id = m.module_parent', 'left')->where('m.flag !=', 3)->order_by('m.unique_id', 'ASC')->get($this->db_table . ' m');
 		
 		return $query->result_array();
 	}
@@ -30,6 +30,7 @@ class Model_module extends CI_Model {
 			'module_url'			=> $this->input->post('module_url'),
 			'module_parent'			=> $this->input->post('module_parent'),
 			'module_multi_language'	=> $this->input->post('module_multi_language'),
+			'module_notes'			=> $this->input->post('module_notes'),
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
@@ -46,6 +47,7 @@ class Model_module extends CI_Model {
 			'module_url'			=> $this->input->post('module_url'),
 			'module_parent'			=> $this->input->post('module_parent'),
 			'module_multi_language'	=> $this->input->post('module_multi_language'),
+			'module_notes'			=> $this->input->post('module_notes'),
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
