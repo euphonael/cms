@@ -3,7 +3,7 @@
 <file name="login.php" server="C:/xampp/htdocs/cms/" local="130246507876481500" remote="130246507870000000" />
 <file name="dashboard.php" server="C:/xampp/htdocs/cms/" local="130244927180214000" remote="130244927180000000" />
 <file name="logout.php" server="C:/xampp/htdocs/cms/" local="130246505245281500" remote="130246505240000000" />
-<file name="user.php" server="C:/xampp/htdocs/cms/" local="130245873446084000" remote="130245873440000000" />
+<file name="user.php" server="C:/xampp/htdocs/cms/" local="130246609012301500" remote="130246609010000000" />
 <file name="ajax.php" server="C:/xampp/htdocs/cms/" local="130244927180194000" remote="130244927180000000" />
 <file name="module.php" server="C:/xampp/htdocs/cms/" local="130246512294681500" remote="130246512290000000" />
 <file name="bank.php" server="C:/xampp/htdocs/cms/" local="130245887717834000" remote="130245887710000000" />
@@ -12,4 +12,5 @@
 <file name="company.php" server="C:/xampp/htdocs/cms/" local="130246537201831500" remote="130246537200000000" />
 <file name="client.php" server="C:/xampp/htdocs/cms/" local="130246546141491500" remote="130246546140000000" />
 <file name="hosting.php" server="C:/xampp/htdocs/cms/" local="130246571452521500" remote="130246571450000000" />
+<file name="dhm.php" server="C:/xampp/htdocs/cms/" local="130246614655771500" remote="130246614650000000" />
 </dwsync>

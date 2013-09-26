@@ -40,7 +40,7 @@ class Company extends MY_Controller {
 		$this->form_validation->set_rules('company_address', 'company address', 'trim');
 		$this->form_validation->set_rules('company_country', 'company country', 'trim');
 		$this->form_validation->set_rules('company_city', 'company city', 'trim');
-		$this->form_validation->set_rules('company_postal_code', 'postal code', 'integer');
+		$this->form_validation->set_rules('company_postal_code', 'postal code', 'numeric');
 		$this->form_validation->set_rules('company_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('company_mobile', 'mobile', 'trim');
 		$this->form_validation->set_rules('company_fax', 'fax', 'trim');
@@ -75,7 +75,7 @@ class Company extends MY_Controller {
 		$this->form_validation->set_rules('company_address', 'company address', 'trim');
 		$this->form_validation->set_rules('company_country', 'company country', 'trim');
 		$this->form_validation->set_rules('company_city', 'company city', 'trim');
-		$this->form_validation->set_rules('company_postal_code', 'postal code', 'integer');
+		$this->form_validation->set_rules('company_postal_code', 'postal code', 'numeric');
 		$this->form_validation->set_rules('company_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('company_mobile', 'mobile', 'trim');
 		$this->form_validation->set_rules('company_fax', 'fax', 'trim');

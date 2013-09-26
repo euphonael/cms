@@ -40,7 +40,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|required|md5');
 		$this->form_validation->set_rules('admin_repassword', 'admin_repassword', 'required');
 		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
-		$this->form_validation->set_rules('admin_phone', 'phone', 'trim|numeric');
+		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email]');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
@@ -72,7 +72,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username.unique_id.' . $unique_id . ']');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|md5');
 		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
-		$this->form_validation->set_rules('admin_phone', 'phone', 'trim|numeric');
+		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');

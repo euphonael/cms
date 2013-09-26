@@ -41,7 +41,7 @@ class Module extends MY_Controller {
 		$this->form_validation->set_rules('module_name', 'module name', 'trim|required');
 		$this->form_validation->set_rules('module_url', 'Module URL', 'trim|required');
 		$this->form_validation->set_rules('module_parent', 'module parent', 'required');
-		$this->form_validation->set_rules('module_multi_language', 'module multi language', 'integer');
+		$this->form_validation->set_rules('module_multi_language', 'module multi language', 'numeric');
 		$this->form_validation->set_rules('module_notes', 'module_notes', 'trim');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
@@ -73,7 +73,7 @@ class Module extends MY_Controller {
 		$this->form_validation->set_rules('module_name', 'module name', 'trim|required');
 		$this->form_validation->set_rules('module_url', 'Module URL', 'trim|required');
 		$this->form_validation->set_rules('module_parent', 'module parent', 'required');
-		$this->form_validation->set_rules('module_multi_language', 'module multi language', 'integer');
+		$this->form_validation->set_rules('module_multi_language', 'module multi language', 'numeric');
 		$this->form_validation->set_rules('module_notes', 'module_notes', 'trim');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');

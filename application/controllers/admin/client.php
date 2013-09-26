@@ -43,7 +43,7 @@ class Client extends MY_Controller {
 		$this->form_validation->set_rules('client_address', 'client address', 'trim');
 		$this->form_validation->set_rules('client_country', 'client country', 'trim');
 		$this->form_validation->set_rules('client_city', 'client city', 'trim');
-		$this->form_validation->set_rules('client_postal_code', 'postal code', 'integer');
+		$this->form_validation->set_rules('client_postal_code', 'postal code', 'numeric');
 		$this->form_validation->set_rules('client_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('client_mobile', 'mobile', 'trim');
 		$this->form_validation->set_rules('client_fax', 'fax', 'trim');
@@ -81,7 +81,7 @@ class Client extends MY_Controller {
 		$this->form_validation->set_rules('client_address', 'client address', 'trim');
 		$this->form_validation->set_rules('client_country', 'client country', 'trim');
 		$this->form_validation->set_rules('client_city', 'client city', 'trim');
-		$this->form_validation->set_rules('client_postal_code', 'postal code', 'integer');
+		$this->form_validation->set_rules('client_postal_code', 'postal code', 'numeric');
 		$this->form_validation->set_rules('client_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('client_mobile', 'mobile', 'trim');
 		$this->form_validation->set_rules('client_fax', 'fax', 'trim');

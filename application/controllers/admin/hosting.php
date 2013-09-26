@@ -42,10 +42,10 @@ class Hosting extends MY_Controller {
 		$this->form_validation->set_rules('hosting_cpanel_url', 'cpanel url', 'trim|required');
 		$this->form_validation->set_rules('hosting_cpanel_username', 'cpanel username', 'trim|required');
 		$this->form_validation->set_rules('hosting_cpanel_password', 'cpanel password', 'trim|required');
-		$this->form_validation->set_rules('hosting_disk_space', 'disk space', 'trim|integer|required');
-		$this->form_validation->set_rules('hosting_subdomain', 'subdomain', 'trim|integer|required');
-		$this->form_validation->set_rules('hosting_addon_domain', 'addon domain', 'trim|integer|required');
-		$this->form_validation->set_rules('hosting_mysql_db', 'mysql db', 'trim|integer|required');
+		$this->form_validation->set_rules('hosting_disk_space', 'disk space', 'trim|numeric|required');
+		$this->form_validation->set_rules('hosting_subdomain', 'subdomain', 'trim|numeric|required');
+		$this->form_validation->set_rules('hosting_addon_domain', 'addon domain', 'trim|numeric|required');
+		$this->form_validation->set_rules('hosting_mysql_db', 'mysql db', 'trim|numeric|required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
@@ -78,10 +78,10 @@ class Hosting extends MY_Controller {
 		$this->form_validation->set_rules('hosting_cpanel_url', 'cpanel url', 'trim|required');
 		$this->form_validation->set_rules('hosting_cpanel_username', 'cpanel username', 'trim|required');
 		$this->form_validation->set_rules('hosting_cpanel_password', 'cpanel password', 'trim|required');
-		$this->form_validation->set_rules('hosting_disk_space', 'disk space', 'trim|integer|required');
-		$this->form_validation->set_rules('hosting_subdomain', 'subdomain', 'trim|integer|required');
-		$this->form_validation->set_rules('hosting_addon_domain', 'addon domain', 'trim|integer|required');
-		$this->form_validation->set_rules('hosting_mysql_db', 'mysql db', 'trim|integer|required');
+		$this->form_validation->set_rules('hosting_disk_space', 'disk space', 'trim|numeric|required');
+		$this->form_validation->set_rules('hosting_subdomain', 'subdomain', 'trim|numeric|required');
+		$this->form_validation->set_rules('hosting_addon_domain', 'addon domain', 'trim|numeric|required');
+		$this->form_validation->set_rules('hosting_mysql_db', 'mysql db', 'trim|numeric|required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
