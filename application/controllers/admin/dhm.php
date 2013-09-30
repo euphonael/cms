@@ -45,7 +45,7 @@ class Dhm extends MY_Controller {
 		$this->form_validation->set_rules('dhm_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('dhm_period', 'period', 'numeric|trim|required');
 		$this->form_validation->set_rules('dhm_price', 'price', 'numeric|trim|required');
-		$this->form_validation->set_rules('dhm_extend', 'extend period', 'numeric|trim|required');
+		$this->form_validation->set_rules('dhm_extend', 'extend period', 'numeric|trim');
 		$this->form_validation->set_rules('dhm_company_id', 'company name', 'trim|required');
 		$this->form_validation->set_rules('dhm_domain_id', 'domain name', 'trim|required');
 		$this->form_validation->set_rules('dhm_hosting_id', 'hosting name', 'trim|required');
@@ -85,7 +85,7 @@ class Dhm extends MY_Controller {
 		$this->form_validation->set_rules('dhm_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('dhm_period', 'period', 'numeric|trim|required');
 		$this->form_validation->set_rules('dhm_price', 'price', 'numeric|trim|required');
-		$this->form_validation->set_rules('dhm_extend', 'extend period', 'numeric|trim|required');
+		$this->form_validation->set_rules('dhm_extend', 'extend period', 'numeric|trim');
 		$this->form_validation->set_rules('dhm_company_id', 'company name', 'trim|required');
 		$this->form_validation->set_rules('dhm_domain_id', 'domain name', 'trim|required');
 		$this->form_validation->set_rules('dhm_hosting_id', 'hosting name', 'trim|required');
@@ -106,5 +106,5 @@ class Dhm extends MY_Controller {
 }
 
 
-/* End of file hosting.php */
-/* Location: ./application/controllers/admin/hosting.php */
+/* End of file dhm.php */
+/* Location: ./application/controllers/admin/dhm.php */

@@ -10,5 +10,6 @@
 <file name="model_company.php" server="C:/xampp/htdocs/cms/" local="130246538317691500" remote="130246538310000000" />
 <file name="model_client.php" server="C:/xampp/htdocs/cms/" local="130246551934871500" remote="130246551930000000" />
 <file name="model_hosting.php" server="C:/xampp/htdocs/cms/" local="130246571725541500" remote="130246571720000000" />
-<file name="model_dhm.php" server="C:/xampp/htdocs/cms/" local="130246618027701500" remote="130246618020000000" />
+<file name="model_dhm.php" server="C:/xampp/htdocs/cms/" local="130250146550408500" remote="130250146550000000" />
+<file name="model_maintenance.php" server="C:/xampp/htdocs/cms/" local="130250145916008500" remote="130250145910000000" />
 </dwsync>

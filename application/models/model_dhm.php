@@ -4,7 +4,7 @@ class Model_dhm extends CI_Model {
 
 	public function list_data()
 	{	
-		$query = $this->db->select('m.unique_id, m.dhm_name, m.dhm_price, m.dhm_start, com.company_name, dom.domain_name, hos.hosting_name, ban.bank_name, m.flag, m.memo')->where('m.flag !=', 3)->join('company com', 'com.unique_id = m.dhm_company_id', 'left')->join('domain dom', 'dom.unique_id = m.dhm_domain_id', 'left')->join('hosting hos', 'hos.unique_id = m.dhm_hosting_id', 'left')->join('bank ban', 'ban.unique_id = m.dhm_bank_id', 'left')->get($this->db_table . ' m');
+		$query = $this->db->select('m.unique_id, m.dhm_name, m.dhm_price, m.dhm_start, com.company_name, dom.domain_name, hos.hosting_name, ban.bank_name, m.flag, m.memo')->select('DATE_ADD(m.dhm_start, INTERVAL m.dhm_period MONTH) as dhm_end', false)->where('m.flag !=', 3)->join('company com', 'com.unique_id = m.dhm_company_id', 'left')->join('domain dom', 'dom.unique_id = m.dhm_domain_id', 'left')->join('hosting hos', 'hos.unique_id = m.dhm_hosting_id', 'left')->join('bank ban', 'ban.unique_id = m.dhm_bank_id', 'left')->get($this->db_table . ' m');
 		
 		return $query->result_array();
 	}
@@ -85,5 +85,5 @@ class Model_dhm extends CI_Model {
 }
 
 
-/* End of file model_hosting.php */
-/* Location: ./application/models/model_hosting.php */
+/* End of file model_dhm.php */
+/* Location: ./application/models/model_dhm.php */
