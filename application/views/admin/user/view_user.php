@@ -97,6 +97,16 @@
                         <?php echo form_error('admin_work_email'); ?>
                     </p>
                     <p>
+                    	<label class="label-input">Division</label>
+                        <select name="admin_division" class="required">
+                        	<option value="">--</option>
+                            <?php foreach ($division_list as $item) : ?>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('admin_division', $row, $item['unique_id']); ?>><?php echo $item['division_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php echo form_error('admin_division'); ?>
+                    </p>
+                    <p>
                         <label class="label-input" for="admin_job_position">Job Position</label>
                         <input type="text" name="admin_job_position" id="admin_job_position" class="required" value="<?php echo form_value('admin_job_position', $row); ?>" />
                         <?php echo form_error('admin_job_position'); ?>

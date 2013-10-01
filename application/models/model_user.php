@@ -21,6 +21,12 @@ class Model_user extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_division()
+	{
+		$query = $this->db->select('unique_id, division_name')->where('flag !=', 3)->order_by('division_name', 'ASC')->get('division');
+		return $query->result_array();
+	}
+	
 	public function insert()
 	{
 		$this->load->helper('upload_helper');
@@ -43,6 +49,7 @@ class Model_user extends CI_Model {
 			'admin_phone'			=> $this->input->post('admin_phone'),
 			'admin_personal_email'	=> $this->input->post('admin_personal_email'),
 			'admin_work_email'		=> $this->input->post('admin_work_email'),
+			'admin_division'		=> $this->input->post('admin_division'),
 			'admin_job_position'	=> $this->input->post('admin_job_position'),
 			'admin_join_date'		=> $this->input->post('admin_join_date'),
 			'admin_resign_date'		=> $this->input->post('admin_resign_date'),
@@ -103,6 +110,7 @@ class Model_user extends CI_Model {
 			'admin_phone'			=> $this->input->post('admin_phone'),
 			'admin_personal_email'	=> $this->input->post('admin_personal_email'),
 			'admin_work_email'		=> $this->input->post('admin_work_email'),
+			'admin_division'		=> $this->input->post('admin_division'),
 			'admin_job_position'	=> $this->input->post('admin_job_position'),
 			'admin_join_date'		=> $this->input->post('admin_join_date'),
 			'admin_resign_date'		=> $this->input->post('admin_resign_date'),

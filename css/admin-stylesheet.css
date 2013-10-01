@@ -13,11 +13,11 @@ span.flag.delete { background:#000; }
 
 input[readonly=readonly] { background:#EEE; }
 textarea { font-family:Arial; font-size:12px; resize:none; }
-form#process-data div#action-wrapper > button, form#process-data input[type=submit], a.button { text-decoration:none; min-width:125px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
+form#process-data div#action-wrapper > button, form#process-data input[type=submit], a.button { text-decoration:none; padding:0 10px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
 button.delete { padding:2px; margin-left:15px; }
 textarea:focus, input:focus, a.button:focus, button:focus { border-color:#666 !important; }
 select, textarea, input[type=submit], input[type=password], input[type=text], a.button, button { padding:3px; border:1px solid #CCC; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
-input[type=submit], a.button, button { border:1px solid #CCC; color:#444; cursor:pointer; border:1px solid rgba(0, 0, 0, 0.1); }
+input[type=submit], a.button, button { border:1px solid #CCC; color:#444; cursor:pointer; border:1px solid rgba(0, 0, 0, 0.1); padding-left:10px; padding-right:10px; }
 input[type=submit], a.button, button {
 	background: #f5f5f5; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f5f5f5 0%, #f1f1f1 100%); /* FF3.6+ */

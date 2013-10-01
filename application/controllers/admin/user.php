@@ -37,6 +37,7 @@ class User extends MY_Controller {
 		);
 		
 		$data['module_list'] = $this->model_user->get_module();
+		$data['division_list'] = $this->model_user->get_division();
 		
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username]');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|required|md5');
@@ -45,6 +46,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email]');
+		$this->form_validation->set_rules('admin_division', 'division', 'required');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
 		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
@@ -73,6 +75,7 @@ class User extends MY_Controller {
 		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
 		
 		$data['module_list'] = $this->model_user->get_module();
+		$data['division_list'] = $this->model_user->get_division();
 		
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username.unique_id.' . $unique_id . ']');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|md5');
@@ -80,6 +83,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
+		$this->form_validation->set_rules('admin_division', 'division', 'required');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
 		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
