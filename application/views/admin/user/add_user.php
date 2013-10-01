@@ -92,6 +92,44 @@
                     </p>
                 </fieldset>
                 
+                <fieldset>
+                	<legend>Privilege</legend>
+                    
+                    <p>
+                    	<label class="label-input">Access</label>
+                        <select name="admin_privilege" id="admin_privilege" class="required">
+                        	<option value="">--</option>
+                            <option value="1" <?php if (set_value('admin_privilege') == 1) echo 'selected="selected"'; ?>>Super Admin</option>
+                            <option value="2" <?php if (set_value('admin_privilege') == 2) echo 'selected="selected"'; ?>>Data Entry</option>
+                            <option value="3" <?php if (set_value('admin_privilege') == 3) echo 'selected="selected"'; ?>>Custom</option>
+                        </select>
+                    </p>
+                    
+                    <table id="privilege-table" class="table-data" cellpadding="0" cellspacing="0" style="display:none;">
+                    	<thead>
+                        	<tr>
+                            	<th width="150">Module Name</th>
+                                <th class="small" align="center">Read</th>
+                                <th class="small" align="center">Add</th>
+                                <th class="small" align="center">Modify</th>
+                                <th class="small" align="center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	<?php foreach ($module_list as $item) : ?>
+                            <tr>
+                            	<td><?php echo $item['module_name']; ?></td>
+                                <td align="center"><input type="checkbox" value="8" class="access-read" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td align="center"><input type="checkbox" value="1" class="access-add" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td align="center"><input type="checkbox" value="2" class="access-modify" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td align="center"><input type="checkbox" value="4" class="access-delete" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td style="display:none;"><input id="total-<?php echo $item['unique_id']; ?>" type="hidden" name="module-total-<?php echo $item['unique_id']; ?>" value="" />
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </fieldset>
+                
                 <?php $this->load->view('admin/template/add_flag'); ?>
             </div>
             

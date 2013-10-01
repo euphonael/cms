@@ -110,3 +110,8 @@ form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 #form-content fieldset input[type=checkbox] { display:block; float:left; width:15px !important; margin-top:6px; }
 #form-content fieldset select { padding:3px; }
 #form-content fieldset textarea.input { height:100px; }
+
+#privilege-table { margin:15px auto; }
+#privilege-table input[type=checkbox] { width:auto !important; margin:0 !important; float:none !important; display:inline !important; }
+#privilege-table thead tr th { border-bottom:1px solid #333; }
+#privilege-table tbody tr td { border-bottom:1px solid #333; }

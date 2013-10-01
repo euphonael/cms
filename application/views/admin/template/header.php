@@ -11,6 +11,7 @@
 <script type="text/javascript">var base_url = '<?php echo base_url(); ?>'; </script>
 <script type="text/javascript" src="<?php echo base_url('js/jquery-1.10.2.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/jquery-ui.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('js/function.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/admin/global.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
 <?php foreach ($js as $javascript) : ?>

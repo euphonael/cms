@@ -111,6 +111,56 @@
                     </p>
                 </fieldset>
                 
+                <fieldset>
+                	<legend>Privilege</legend>
+                    
+                    <p>
+                    	<label class="label-input">Access</label>
+                        <select name="admin_privilege" id="admin_privilege" class="required">
+                        	<option value="">--</option>
+                            <option value="1" <?php default_selected('admin_privilege', $row, 1); ?>>Super Admin</option>
+                            <option value="2" <?php default_selected('admin_privilege', $row, 2); ?>>Data Entry</option>
+                            <option value="3" <?php default_selected('admin_privilege', $row, 3); ?>>Custom</option>
+                        </select>
+                    </p>
+                    
+                    <table id="privilege-table" class="table-data" cellpadding="0" cellspacing="0" <?php if ($row['admin_privilege'] != 3) echo 'style="display:none;"'; ?>>
+                    	<thead>
+                        	<tr>
+                            	<th width="150">Module Name</th>
+                                <th class="small" align="center">Read</th>
+                                <th class="small" align="center">Add</th>
+                                <th class="small" align="center">Modify</th>
+                                <th class="small" align="center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	<?php foreach ($module_list as $item) : ?>
+                            <?php
+							$module_list = explode(',', $row['admin_module_list']);
+							$access = explode(',', $row['admin_module_access']);
+							$array_key = array_search($item['unique_id'], $module_list);
+							
+							$value = ($access[$array_key]) ? $access[$array_key] : 0;
+							
+							$add = (($access[$array_key] & 1) == 1) ? 'checked="checked"' : '';
+							$edit = (($access[$array_key] & 2) == 2) ? 'checked="checked"' : '';
+							$delete = (($access[$array_key] & 4) == 4) ? 'checked="checked"' : '';
+							$read = (($access[$array_key] & 8) == 8) ? 'checked="checked"' : '';
+							?>
+                            <tr>
+                            	<td><?php echo $item['module_name']; ?></td>
+                                <td align="center"><input <?php echo $read; ?> type="checkbox" value="8" class="access-read" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td align="center"><input <?php echo $add; ?> type="checkbox" value="1" class="access-add" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td align="center"><input <?php echo $edit; ?> type="checkbox" value="2" class="access-modify" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td align="center"><input <?php echo $delete; ?> type="checkbox" value="4" class="access-delete" name="module-<?php echo $item['unique_id']; ?>" /></td>
+                                <td style="display:none;"><input id="total-<?php echo $item['unique_id']; ?>" type="hidden" name="module-total-<?php echo $item['unique_id']; ?>" value="<?php echo $value; ?>" />
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </fieldset>
+                
                 <?php $this->load->view('admin/template/view_flag'); ?>
             </div>
             

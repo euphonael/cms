@@ -33,8 +33,10 @@ class User extends MY_Controller {
 		$data = array(
 			'title'	=> 'Add ' . $this->title,
 			'css'	=> array(),
-			'js'	=> array('admin/form')
+			'js'	=> array('admin/form', 'admin/privilege')
 		);
+		
+		$data['module_list'] = $this->model_user->get_module();
 		
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username]');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|required|md5');
@@ -44,6 +46,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email]');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
+		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		
@@ -63,11 +66,13 @@ class User extends MY_Controller {
 		$data = array(
 			'title'	=> 'View ' . $this->title,
 			'css'	=> array('jquery.fancybox'),
-			'js'	=> array('admin/form', 'jquery.fancybox.pack', 'admin/file_handling')
+			'js'	=> array('admin/form', 'jquery.fancybox.pack', 'admin/file_handling', 'admin/privilege')
 		);
 		
 		$data['row'] = $this->model_user->get($unique_id);
 		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
+		
+		$data['module_list'] = $this->model_user->get_module();
 		
 		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username.unique_id.' . $unique_id . ']');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|md5');
@@ -76,6 +81,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
+		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
 		

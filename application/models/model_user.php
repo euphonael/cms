@@ -15,6 +15,12 @@ class Model_user extends CI_Model {
 		return $query->row_array();
 	}
 	
+	public function get_module()
+	{
+		$query = $this->db->select('unique_id, module_name')->where(array('flag !=' => 3, 'module_url !=' => '#'))->get('module');
+		return $query->result_array();
+	}
+	
 	public function insert()
 	{
 		$this->load->helper('upload_helper');
@@ -40,10 +46,23 @@ class Model_user extends CI_Model {
 			'admin_job_position'	=> $this->input->post('admin_job_position'),
 			'admin_join_date'		=> $this->input->post('admin_join_date'),
 			'admin_resign_date'		=> $this->input->post('admin_resign_date'),
-			'admin_privilege'		=> 1, // Temporary default: 1
+			'admin_privilege'		=> $this->input->post('admin_privilege'),
+			'admin_module_list'		=> '',
+			'admin_module_access'	=> '',
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
+		
+		if ($this->input->post('admin_privilege') == 3)
+		{			
+			foreach ($this->get_module() as $item)
+			{
+				$module_list[$item['unique_id']] = $this->input->post('module-total-' . $item['unique_id']);
+			}
+			
+			$data['admin_module_list'] = implode(',', array_keys($module_list));
+			$data['admin_module_access'] = implode(',', array_values($module_list));
+		}
 		
 		$data = array_merge($data, $file);
 		
@@ -87,12 +106,25 @@ class Model_user extends CI_Model {
 			'admin_job_position'	=> $this->input->post('admin_job_position'),
 			'admin_join_date'		=> $this->input->post('admin_join_date'),
 			'admin_resign_date'		=> $this->input->post('admin_resign_date'),
-			'admin_privilege'		=> 1, // Temporary default: 1
+			'admin_privilege'		=> $this->input->post('admin_privilege'),
+			'admin_module_list'		=> '',
+			'admin_module_access'	=> '',
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
 
 		if ($this->input->post('admin_password')) $data['admin_password'] = $this->input->post('admin_password');
+		
+		if ($this->input->post('admin_privilege') == 3)
+		{			
+			foreach ($this->get_module() as $item)
+			{
+				$module_list[$item['unique_id']] = $this->input->post('module-total-' . $item['unique_id']);
+			}
+			
+			$data['admin_module_list'] = implode(',', array_keys($module_list));
+			$data['admin_module_access'] = implode(',', array_values($module_list));
+		}
 		
 		$data = array_merge($data, $file);
 		
