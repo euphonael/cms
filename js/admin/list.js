@@ -4,7 +4,7 @@ $(document).ready(function(){
 	
 	$('table.table-data').dataTable();
 
-	$('table.table-data tbody tr td span.flag').click(function(){
+	$(document).on('click', 'table.table-data tbody tr td span.flag', function(){
 		
 		var db_table = $(this).closest('table.table-data').attr('id');
 		var unique_id = $(this).closest('tr').attr('id').replace(db_table + '-', '');
@@ -50,13 +50,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('table.table-data tbody tr').hover(function(){
-		$(this).find('td span.action').css({ visibility: 'visible' });
-	}, function(){
-		$(this).find('td span.action').css({ visibility: 'hidden' });
-	});
-	
-	$('table.table-data tbody tr td.del input[type=checkbox]').change(function(){
+	$(document).on('click', 'table.table-data tbody tr td.del input[type=checkbox]', function(){
 		$(this).toggleClass('checked');
 	});
 	
