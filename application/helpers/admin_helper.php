@@ -118,6 +118,36 @@ if ( ! function_exists('log_action'))
 	}
 }
 
+if ( ! function_exists('check_access'))
+{
+	function check_access($module_url, $access, $redirect = FALSE)
+	{
+		$ci =& get_instance();
+		
+		/* First, get logged-in admin details */
+		$query = $ci->db->select('admin_privilege, admin_module_list, admin_module_access')->where('unique_id', $ci->session->userdata('admin_id'))->get('admin');
+		$row = $query->row_array();
+		
+		if ($row['admin_privilege'] == 1)
+		{
+			return TRUE;
+		}
+		elseif ($row['admin_privilege'] == 2)
+		{
+			if ($access == 'add' || $access == 'edit' || $access == 'read' || $access == 'menu')
+			{
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		elseif ($row['admin_privilege'] == 3) /* Custom Privilege */
+		{
+		}
+	}
+}
 
 /* End of file admin_helper.php */
 /* Location: ./application/helpers/admin_helper.php */
