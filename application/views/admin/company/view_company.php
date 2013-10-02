@@ -1,3 +1,10 @@
+<script type="text/javascript">
+$(document).ready(function(){	
+	$('#company_client_name').autocomplete({
+		source: <?php echo $client_list; ?>
+	});
+});
+</script>
 <div id="container">
 	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
         <div id="content-heading">
@@ -20,6 +27,10 @@
                         <label class="label-input" for="company_name">Company Name</label>
                         <input type="text" name="company_name" id="company_name" class="required" value="<?php echo form_value('company_name', $row); ?>" />
                         <?php echo form_error('company_name'); ?>
+                    </p>
+                    <p>
+                    	<label for="company_client_name" class="label-input">PIC</label>
+                        <input type="text" name="company_client_name" id="company_client_name" class="required" value="<?php echo form_value('company_client_name', $row); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="company_address">Address</label>

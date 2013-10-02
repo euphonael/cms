@@ -16,11 +16,10 @@
                 <th class="small">No.</th>
                 <th>Client Name</th>
                 <th>Company Name</th>
-                <th>Address</th>
-                <th>Country</th>
-                <th>City</th>
+                <th>Mobile</th>
                 <th>Phone</th>
                 <th>E-mail</th>
+                <th>Address</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>
@@ -33,11 +32,10 @@
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['client_name']; ?></a></td>
                 <td><?php echo $row['company_name']; ?></td>
-                <td><?php echo $row['client_address']; ?></td>
-                <td><?php echo $row['client_country']; ?></td>
-                <td><?php echo $row['client_city']; ?></td>
+                <td><?php echo $row['client_mobile']; ?></td>
                 <td><?php echo $row['client_phone']; ?></td>
                 <td><?php echo $row['client_email']; ?></td>
+                <td><?php echo $row['client_address']; ?></td>
                 <?php table_end($row); ?>
             </tr>
             <?php $x++; ?>

@@ -36,7 +36,7 @@
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['hosting_name']; ?></a></td>
                 <td><?php echo $row['hosting_root_domain']; ?></td>
-                <td><?php echo $row['hosting_cpanel_url']; ?></td>
+                <td><a href="<?php echo prep_url($row['hosting_cpanel_url']); ?>"><?php echo $row['hosting_cpanel_url']; ?></a></td>
                 <td><?php echo $row['hosting_cpanel_username']; ?></td>
                 <td><?php echo $row['hosting_cpanel_password']; ?></td>
                 <td><?php echo $row['hosting_disk_space']; ?></td>

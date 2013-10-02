@@ -7,8 +7,8 @@
 <file name="model_bank.php" server="C:/xampp/htdocs/cms/" local="130246520165801500" remote="130246520160000000" />
 <file name="model_domain.php" server="C:/xampp/htdocs/cms/" local="130246520220791500" remote="130246520220000000" />
 <file name="model_product.php" server="C:/xampp/htdocs/cms/" local="130246520272831500" remote="130246520270000000" />
-<file name="model_company.php" server="C:/xampp/htdocs/cms/" local="130246538317691500" remote="130246538310000000" />
-<file name="model_client.php" server="C:/xampp/htdocs/cms/" local="130246551934871500" remote="130246551930000000" />
+<file name="model_company.php" server="C:/xampp/htdocs/cms/" local="130251755881720000" remote="130251755880000000" />
+<file name="model_client.php" server="C:/xampp/htdocs/cms/" local="130251746328330000" remote="130251746320000000" />
 <file name="model_hosting.php" server="C:/xampp/htdocs/cms/" local="130246571725541500" remote="130246571720000000" />
 <file name="model_dhm.php" server="C:/xampp/htdocs/cms/" local="130250146550408500" remote="130250146550000000" />
 <file name="model_maintenance.php" server="C:/xampp/htdocs/cms/" local="130250145916008500" remote="130250145910000000" />

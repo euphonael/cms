@@ -2,7 +2,10 @@ $(document).ready(function(){
 		
 	alertify.set({ buttonReverse: true });
 	
-	$('table.table-data').dataTable();
+	$('table.table-data').dataTable({
+		iDisplayLength: 50,
+		aLengthMenu: [50, 100, 150, 200]
+	});
 
 	$(document).on('click', 'table.table-data tbody tr td span.flag', function(){
 		

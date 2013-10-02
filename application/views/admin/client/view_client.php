@@ -1,3 +1,10 @@
+<script type="text/javascript">
+$(document).ready(function(){	
+	$('#client_company_name').autocomplete({
+		source: <?php echo $company_list; ?>
+	});
+});
+</script>
 <div id="container">
 	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
         <div id="content-heading">
@@ -22,13 +29,8 @@
                         <?php echo form_error('client_name'); ?>
                     </p>
                     <p>
-                    	<label class="label-input">Company Name</label>
-                        <select name="client_company_id">
-                        	<option value="">--</option>
-                            <?php foreach ($company_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('client_company_id', $row, $item['unique_id']); ?>><?php echo $item['company_name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    	<label for="client_company_name" class="label-input">Company Name</label>
+                        <input type="text" name="client_company_name" id="client_company_name" value="<?php echo form_value('client_company_name', $row); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="client_address">Address</label>

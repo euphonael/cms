@@ -15,6 +15,7 @@
             <tr>
                 <th class="small">No.</th>
                 <th>Company Name</th>
+                <th>PIC</th>
                 <th>Address</th>
                 <th>Country</th>
                 <th>City</th>
@@ -31,6 +32,7 @@
             <tr id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['company_name']; ?></a></td>
+                <td><?php echo $row['client_name']; ?></td>
                 <td><?php echo $row['company_address']; ?></td>
                 <td><?php echo $row['company_country']; ?></td>
                 <td><?php echo $row['company_city']; ?></td>

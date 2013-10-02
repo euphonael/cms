@@ -47,7 +47,7 @@
                     </p>
                     <p>
                         <label class="label-input" for="hosting_cpanel_password">Password</label>
-                        <input type="text" name="hosting_cpanel_password" id="hosting_cpanel_password" value="<?php echo form_value('hosting_cpanel_password', $row); ?>" />
+                        <input type="text" name="hosting_cpanel_password" id="hosting_cpanel_password" value="<?php echo form_value('hosting_cpanel_password', $row); ?>" class="required" />
                         <?php echo form_error('hosting_cpanel_password'); ?>
                     </p>
                 </fieldset>

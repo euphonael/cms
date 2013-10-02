@@ -36,7 +36,15 @@ class Company extends MY_Controller {
 			'js'	=> array('admin/form')
 		);
 		
+		foreach ($this->model_company->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
 		$this->form_validation->set_rules('company_name', 'company name', 'trim|required');
+		$this->form_validation->set_rules('company_client_name', 'client name', 'trim|required');
 		$this->form_validation->set_rules('company_address', 'company address', 'trim');
 		$this->form_validation->set_rules('company_country', 'company country', 'trim');
 		$this->form_validation->set_rules('company_city', 'company city', 'trim');
@@ -71,7 +79,15 @@ class Company extends MY_Controller {
 		
 		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
 		
+		foreach ($this->model_company->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
 		$this->form_validation->set_rules('company_name', 'company name', 'trim|required');
+		$this->form_validation->set_rules('company_client_name', 'client name', 'trim|required');
 		$this->form_validation->set_rules('company_address', 'company address', 'trim');
 		$this->form_validation->set_rules('company_country', 'company country', 'trim');
 		$this->form_validation->set_rules('company_city', 'company city', 'trim');

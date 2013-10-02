@@ -1,3 +1,10 @@
+<script type="text/javascript">
+$(document).ready(function(){	
+	$('#client_company_name').autocomplete({
+		source: <?php echo $company_list; ?>
+	});
+});
+</script>
 <div id="container">
 	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
         <div id="content-heading">
@@ -22,13 +29,8 @@
                         <?php echo form_error('client_name'); ?>
                     </p>
                     <p>
-                    	<label class="label-input">Company Name</label>
-                        <select name="client_company_id">
-                        	<option value="">--</option>
-                            <?php foreach ($company_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if (set_value('client_company_id') == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['company_name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    	<label for="client_company_name" class="label-input">Company Name</label>
+                        <input type="text" name="client_company_name" id="client_company_name" title="Untuk PT/CV/PD harap ditambahkan dibelakang" value="<?php echo set_value('client_company_name'); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="client_address">Address</label>
@@ -37,12 +39,12 @@
                     </p>
                     <p>
                         <label class="label-input" for="client_country">Country</label>
-                        <input type="text" name="client_country" id="client_country" value="<?php echo set_value('client_country'); ?>" />
+                        <input type="text" name="client_country" id="client_country" value="<?php if (set_value('client_country')) echo set_value('client_country'); else echo 'Indonesia'; ?>" />
                         <?php echo form_error('client_country'); ?>
                     </p>
                     <p>
                         <label class="label-input" for="client_city">City</label>
-                        <input type="text" name="client_city" id="client_city" value="<?php echo set_value('client_city'); ?>" />
+                        <input type="text" name="client_city" id="client_city" value="<?php if (set_value('client_city')) echo set_value('client_city'); else echo 'Jakarta'; ?>" />
                         <?php echo form_error('client_city'); ?>
                     </p>
                     <p>

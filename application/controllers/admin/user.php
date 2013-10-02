@@ -45,7 +45,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
 		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
-		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email]');
+		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|required|is_unique[admin.admin_work_email]');
 		$this->form_validation->set_rules('admin_division', 'division', 'required');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
 		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
@@ -82,7 +82,7 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
 		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
-		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
+		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|required|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
 		$this->form_validation->set_rules('admin_division', 'division', 'required');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
 		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');

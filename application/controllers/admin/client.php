@@ -13,6 +13,11 @@ class Client extends MY_Controller {
 		$this->load->model('model_client');
 	}	
 	
+	public function kosong()
+	{
+		$this->db->truncate('company');
+		$this->db->truncate('client');
+	}
 	public function index()
 	{
 		$data = array(
@@ -36,10 +41,15 @@ class Client extends MY_Controller {
 			'js'	=> array('admin/form')
 		);
 		
-		$data['company_list'] = $this->model_client->get_company();
+		foreach ($this->model_client->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
 		
 		$this->form_validation->set_rules('client_name', 'client name', 'trim|required');
-		$this->form_validation->set_rules('client_company_id', 'company id', 'trim');
+		$this->form_validation->set_rules('client_company_name', 'company name', 'trim');
 		$this->form_validation->set_rules('client_address', 'client address', 'trim');
 		$this->form_validation->set_rules('client_country', 'client country', 'trim');
 		$this->form_validation->set_rules('client_city', 'client city', 'trim');
@@ -74,10 +84,15 @@ class Client extends MY_Controller {
 		
 		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
 		
-		$data['company_list'] = $this->model_client->get_company();
+		foreach ($this->model_client->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
 		
 		$this->form_validation->set_rules('client_name', 'client name', 'trim|required');
-		$this->form_validation->set_rules('client_company_id', 'company id', 'trim');
+		$this->form_validation->set_rules('client_company_name', 'company name', 'trim');
 		$this->form_validation->set_rules('client_address', 'client address', 'trim');
 		$this->form_validation->set_rules('client_country', 'client country', 'trim');
 		$this->form_validation->set_rules('client_city', 'client city', 'trim');

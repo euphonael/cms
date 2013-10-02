@@ -74,7 +74,7 @@
                     <legend>Staff Info</legend>
                     <p>
                         <label class="label-input" for="admin_work_email">Work E-mail</label>
-                        <input type="text" name="admin_work_email" id="admin_work_email" class="email" value="<?php echo set_value('admin_work_email'); ?>" />
+                        <input type="text" name="admin_work_email" id="admin_work_email" class="email required" value="<?php echo set_value('admin_work_email'); ?>" />
                         <?php echo form_error('admin_work_email'); ?>
                     </p>
                     <p>
@@ -94,7 +94,7 @@
                     </p>
                     <p>
                         <label class="label-input" for="admin_join_date">Join Date</label>
-                        <input type="text" name="admin_join_date" id="admin_join_date" class="datepicker" value="<?php echo set_value('admin_join_date'); ?>" />
+                        <input type="text" name="admin_join_date" id="admin_join_date" class="datepicker" value="<?php if (set_value('admin_join_date')) echo set_value('admin_join_date'); else echo date('Y-m-d'); ?>" />
                     </p>
                     <p>
                         <label class="label-input" for="admin_resign_date">Resign Date</label>
