@@ -1,3 +1,30 @@
+<script type="text/javascript">
+$(document).ready(function(){	
+	$('#maintenance_company_name').autocomplete({
+		source: <?php echo $company_list; ?>,
+		change: function(event, ui)
+		{
+			if(ui.item == null || ui.item == undefined)
+			{
+				$('#dhm_company_name').val('').focus();
+				alertify.error('You have to choose an existing company');
+			}
+		}
+	});
+	
+	$('#maintenance_client_name').autocomplete({
+		source: <?php echo $client_list; ?>,
+		change: function(event, ui)
+		{
+			if(ui.item == null || ui.item == undefined)
+			{
+				$('#dhm_client_name').val('').focus();
+				alertify.error('You have to choose an existing client');
+			}
+		}
+	});
+});
+</script>
 <div id="container">
 	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
         <div id="content-heading">
@@ -47,22 +74,39 @@
             <div id="form-right">
                 <fieldset>
                 	<legend>Details</legend>
+                    
                     <p>
-                        <label class="label-input" for="maintenance_company_id">Company</label>
-                        <select name="maintenance_company_id" class="required">
-                        	<option value="">--</option>
-                            <?php foreach ($company_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('maintenance_company_id', $row, $item['unique_id']); ?>><?php echo $item['company_name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <?php echo form_error('hosting_root_domain'); ?>
+                    	<label class="label-input">Type</label>
+                        <span class="radio-options">
+                            <input type="radio" name="maintenance_customer_type" value="1" id="type_client" class="maintenance_customer_type required" <?php default_checked('maintenance_customer_type', $row, 1); ?> />
+                            <label class="radio" for="type_client">Client</label>
+                            <input type="radio" name="maintenance_customer_type" value="2" id="type_company" class="maintenance_customer_type" <?php default_checked('maintenance_customer_type', $row, 2); ?> />
+                            <label class="radio" for="type_company">Company</label>
+	                        <span class="clear"></span>
+                        </span>
+						<span class="clear"></span>
+                        <label class="error" for="maintenance_customer_type"></label>
+                        <?php echo form_error('maintenance_customer_type'); ?>
                     </p>
+                    
+                    <p id="maintenance_client_name_wrap" <?php if ($row['maintenance_customer_type'] == 2) echo 'class="hidden"'; ?>>
+                        <label class="label-input" for="maintenance_client_name">Client Name</label>
+                        <input type="text" name="maintenance_client_name" id="maintenance_client_name" <?php if ($row['maintenance_customer_type'] == 2) echo 'disabled="disabled"'; ?> value="<?php echo form_value('maintenance_client_name', $row); ?>" class="required" />
+                        <?php echo form_error('maintenance_client_name'); ?>
+                    </p>
+                    
+                    <p id="maintenance_company_name_wrap" <?php if ($row['maintenance_customer_type'] == 1) echo 'class="hidden"'; ?>>
+                        <label class="label-input" for="maintenance_company_name">Company Name</label>
+                        <input type="text" name="maintenance_company_name" id="maintenance_company_name" <?php if ($row['maintenance_customer_type'] == 1) echo 'disabled="disabled"'; ?> value="<?php echo form_value('maintenance_company_name', $row); ?>" class="required" />
+                        <?php echo form_error('maintenance_company_name'); ?>
+                    </p>
+                    
                     <p>
                         <label class="label-input" for="maintenance_bank_id">Bank</label>
                         <select name="maintenance_bank_id" class="required">
                         	<option value="">--</option>
                             <?php foreach ($bank_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('maintenance_bank_id', $row, $item['unique_id']); ?>><?php echo $item['bank_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php default_selected('maintenance_bank_id', $row, $item['unique_id']); ?>><?php echo $item['bank_name']; ?> (<?php echo $item['bank_account_number']; ?> a/n <?php echo $item['bank_account_holder']; ?>)</option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('maintenance_bank_id'); ?>

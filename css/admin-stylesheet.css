@@ -111,6 +111,14 @@ form#process-data div#action-wrapper > button[type=reset] { margin:0 15px; }
 #form-content fieldset select { padding:3px; }
 #form-content fieldset textarea.input { height:100px; }
 
+#form-content fieldset span.radio-options { display:block; float:left; margin-top:2px; }
+#form-content fieldset span.radio-options input, #form-content fieldset span.radio-options label.radio { width:auto !important; float:left; margin:0; }
+#form-content fieldset span.radio-options input { margin-top:3px; margin-right:5px; }
+#form-content fieldset span.radio-options label.radio { margin-top:3px; margin-right:15px; }
+
+#form-content fieldset span.suffix { display:block; float:left; font-weight:bold; line-height:23px; margin-left:5px; }
+#form-content fieldset .has-suffix { display:block; float:left; }
+
 #privilege-table { margin:15px auto; }
 #privilege-table input[type=checkbox] { width:auto !important; margin:0 !important; float:none !important; display:inline !important; }
 #privilege-table thead tr th { border-bottom:1px solid #333; }

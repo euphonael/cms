@@ -18,7 +18,15 @@ $(document).ready(function(){
 	var input_width = max_width - label_width - 40;
 	
 	$('#form-content input, #form-content select, #form-content textarea.input').each(function(){
-		$(this).width(input_width);
+		if ($(this).hasClass('has-suffix'))
+		{
+			var suffix_width = $(this).siblings('span.suffix').width();
+			$(this).width(input_width - suffix_width - 5);
+		}
+		else
+		{
+			$(this).width(input_width);
+		}
 	});
 	
 	/* END Form Auto Width */
@@ -35,5 +43,49 @@ $(document).ready(function(){
 		dateFormat: 'yy-mm-dd',
 		changeMonth: true,
 		changeYear: true
+	});
+	
+	$('input.number-format').each(function(){
+		var angka = $(this).val().replace(',', '');
+		var format = number_format(angka, 0, '', ',')
+		$(this).val(format);
+    });
+	
+	$('input.number-format').keyup(function(){
+		var angka = $(this).val().replace(',', '');
+		var format = number_format(angka, 0, '', ',')
+		$(this).val(format);
+	});
+	
+	$('p.hidden').hide();
+	
+	$('input.dhm_customer_type').change(function(){
+		var type = $(this).val();
+		
+		if (type == 1)
+		{
+			$('#dhm_company_name_wrap').fadeOut().hide().find('input').prop('disabled', true);
+			$('#dhm_client_name_wrap').fadeIn().find('input').prop('disabled', false);
+		}
+		else if (type == 2)
+		{
+			$('#dhm_client_name_wrap').fadeOut().hide().find('input').prop('disabled', true);
+			$('#dhm_company_name_wrap').fadeIn().find('input').prop('disabled', false);
+		}
+	});
+	
+	$('input.maintenance_customer_type').change(function(){
+		var type = $(this).val();
+		
+		if (type == 1)
+		{
+			$('#maintenance_company_name_wrap').fadeOut().hide().find('input').prop('disabled', true);
+			$('#maintenance_client_name_wrap').fadeIn().find('input').prop('disabled', false);
+		}
+		else if (type == 2)
+		{
+			$('#maintenance_client_name_wrap').fadeOut().hide().find('input').prop('disabled', true);
+			$('#maintenance_company_name_wrap').fadeIn().find('input').prop('disabled', false);
+		}
 	});
 });

@@ -1,3 +1,30 @@
+<script type="text/javascript">
+$(document).ready(function(){	
+	$('#dhm_company_name').autocomplete({
+		source: <?php echo $company_list; ?>,
+		change: function(event, ui)
+		{
+			if(ui.item == null || ui.item == undefined)
+			{
+				$('#dhm_company_name').val('').focus();
+				alertify.error('You have to choose an existing company');
+			}
+		}
+	});
+	
+	$('#dhm_client_name').autocomplete({
+		source: <?php echo $client_list; ?>,
+		change: function(event, ui)
+		{
+			if(ui.item == null || ui.item == undefined)
+			{
+				$('#dhm_client_name').val('').focus();
+				alertify.error('You have to choose an existing client');
+			}
+		}
+	});
+});
+</script>
 <div id="container">
 	<form id="process-data" method="post" action="<?php echo current_url(); ?>">
         <div id="content-heading">
@@ -17,7 +44,7 @@
                 <fieldset>
                     <legend>Basic Info</legend>
                     <p>
-                        <label class="label-input" for="dhm_name">Name</label>
+                        <label class="label-input" for="dhm_name">http://www.</label>
                         <input type="text" name="dhm_name" id="dhm_name" class="required" value="<?php echo set_value('dhm_name'); ?>" />
                         <?php echo form_error('dhm_name'); ?>
                     </p>
@@ -28,18 +55,24 @@
                     </p>
                     <p>
                         <label class="label-input" for="dhm_period">Period</label>
-                        <input type="text" name="dhm_period" id="dhm_period" class="digits required" title="Number of months" value="<?php echo set_value('dhm_period'); ?>" />
+                        <select name="dhm_period" class="required">
+                        	<option value="12" <?php if (set_value('dhm_period') == 12) echo 'selected="selected"'; ?>>12 months</option>
+                            <option value="24" <?php if (set_value('dhm_period') == 24) echo 'selected="selected"'; ?>>24 months</option>
+                            <option value="36" <?php if (set_value('dhm_period') == 36) echo 'selected="selected"'; ?>>36 months</option>
+                            <option value="48" <?php if (set_value('dhm_period') == 48) echo 'selected="selected"'; ?>>48 months</option>
+                            <option value="60" <?php if (set_value('dhm_period') == 60) echo 'selected="selected"'; ?>>60 months</option>
+                        </select>
                         <?php echo form_error('dhm_period'); ?>
                     </p>
                     <p>
                         <label class="label-input" for="dhm_price">Price</label>
-                        <input type="text" name="dhm_price" id="dhm_price" class="digits required" value="<?php echo set_value('dhm_price'); ?>" />
+                        <input type="text" name="dhm_price" id="dhm_price" class="number-format required" value="<?php echo set_value('dhm_price'); ?>" />
                         <?php echo form_error('dhm_price'); ?>
                     </p>
                     <p>
-                        <label class="label-input" for="dhm_extend">Extend</label>
-                        <input type="text" name="dhm_extend" id="dhm_extend" class="digits" value="<?php echo set_value('dhm_extend'); ?>" />
-                        <?php echo form_error('dhm_extend'); ?>
+                        <label class="label-input" for="dhm_markup">Mark-up</label>
+                        <input type="text" name="dhm_markup" id="dhm_markup" class="number-format" value="<?php echo set_value('dhm_markup'); ?>" />
+                        <?php echo form_error('dhm_markup'); ?>
                     </p>
                 </fieldset>
             </div>
@@ -47,16 +80,33 @@
             <div id="form-right">
                 <fieldset>
                 	<legend>Details</legend>
+                    
                     <p>
-                        <label class="label-input" for="dhm_company_id">Company</label>
-                        <select name="dhm_company_id" class="required">
-                        	<option value="">--</option>
-                            <?php foreach ($company_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if (set_value('dhm_company_id') == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['company_name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <?php echo form_error('hosting_root_domain'); ?>
+                    	<label class="label-input">Type</label>
+                        <span class="radio-options">
+                            <input type="radio" name="dhm_customer_type" value="1" id="type_client" class="dhm_customer_type required" <?php if (set_value('dhm_customer_type') == 1) echo 'checked="checked"'; ?> />
+                            <label class="radio" for="type_client">Client</label>
+                            <input type="radio" name="dhm_customer_type" value="2" id="type_company" class="dhm_customer_type" <?php if (set_value('dhm_customer_type') == 2) echo 'checked="checked"'; ?> />
+                            <label class="radio" for="type_company">Company</label>
+	                        <span class="clear"></span>
+                        </span>
+						<span class="clear"></span>
+                        <label class="error" for="dhm_customer_type"></label>
+                        <?php echo form_error('dhm_customer_type'); ?>
                     </p>
+
+                    <p id="dhm_client_name_wrap" <?php if (set_value('dhm_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'class="hidden"'; ?>>
+                        <label class="label-input" for="dhm_client_name">Client Name</label>
+                        <input type="text" name="dhm_client_name" id="dhm_client_name" <?php if (set_value('dhm_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'disabled="disabled"'; ?> value="<?php echo set_value('dhm_client_name'); ?>" class="required" />
+                        <?php echo form_error('dhm_client_name'); ?>
+                    </p>
+                    
+                    <p id="dhm_company_name_wrap" <?php if (set_value('dhm_customer_type') == 1 || empty(set_value('dhm_customer_type'))) echo 'class="hidden"'; ?>>
+                        <label class="label-input" for="dhm_company_name">Company Name</label>
+                        <input type="text" name="dhm_company_name" id="dhm_company_name" <?php if (set_value('dhm_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'disabled="disabled"'; ?> value="<?php echo set_value('dhm_company_name'); ?>" class="required" />
+                        <?php echo form_error('dhm_company_name'); ?>
+                    </p>
+                    
                     <p>
                         <label class="label-input" for="dhm_domain_id">Domain</label>
                         <select name="dhm_domain_id" class="required">
@@ -82,7 +132,7 @@
                         <select name="dhm_bank_id" class="required">
                         	<option value="">--</option>
                             <?php foreach ($bank_list as $item) : ?>
-                            <option value="<?php echo $item['unique_id']; ?>" <?php if (set_value('dhm_bank_id') == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['bank_name']; ?></option>
+                            <option value="<?php echo $item['unique_id']; ?>" <?php if (set_value('dhm_bank_id') == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['bank_name']; ?> (<?php echo $item['bank_account_number']; ?> a/n <?php echo $item['bank_account_holder']; ?>)</option>
                             <?php endforeach; ?>
                         </select>
                         <?php echo form_error('dhm_bank_id'); ?>

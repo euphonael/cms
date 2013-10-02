@@ -17,6 +17,7 @@
                 <th>Maintenance Name</th>
                 <th>Company</th>
                 <th>Bank</th>
+                <th>Period</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Price</th>
@@ -31,11 +32,12 @@
             <tr id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['maintenance_name']; ?></a></td>
-                <td><?php echo $row['company_name']; ?></td>
+                <td><?php echo ($row['company_name']) ? $row['company_name'] : $row['client_name']; ?></td>
+                <td><?php echo $row['maintenance_period']; ?> months</td>
                 <td><?php echo $row['bank_name']; ?></td>
                 <td><?php echo date('d M Y', strtotime($row['maintenance_start'])); ?></td>
                 <td><?php echo date('d M Y', strtotime($row['maintenance_end'])); ?></td>
-                <td><?php echo $row['maintenance_price']; ?></td>
+                <td><?php echo number_format($row['maintenance_price']); ?></td>
                 <?php table_end($row); ?>
             </tr>
             <?php $x++; ?>

@@ -39,12 +39,37 @@ class Maintenance extends MY_Controller {
 		$data['company_list'] = $this->model_maintenance->get_company();
 		$data['bank_list'] = $this->model_maintenance->get_bank();
 		
+		foreach ($this->model_maintenance->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
+		foreach ($this->model_maintenance->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
+		
 		$this->form_validation->set_rules('maintenance_name', 'maintenance name', 'trim|required');
 		$this->form_validation->set_rules('maintenance_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('maintenance_period', 'period', 'numeric|trim|required');
-		$this->form_validation->set_rules('maintenance_price', 'price', 'numeric|trim|required');
+		$this->form_validation->set_rules('maintenance_price', 'price', 'trim|required');
+		$this->form_validation->set_rules('maintenance_markup', 'markup', 'trim');
+		$this->form_validation->set_rules('maintenance_customer_type', 'customer type', 'required');
+		
+		if ($this->input->post('maintenance_customer_type') == 1)
+		{
+			$this->form_validation->set_rules('maintenance_client_name', 'client_name', 'trim|required');
+		}
+		if ($this->input->post('maintenance_customer_type') == 2)
+		{
+			$this->form_validation->set_rules('maintenance_company_name', 'company ', 'trim|required');
+		}
+		
 		$this->form_validation->set_rules('maintenance_extend', 'extend period', 'numeric|trim');
-		$this->form_validation->set_rules('maintenance_company_id', 'company name', 'trim|required');
 		$this->form_validation->set_rules('maintenance_bank_id', 'bank name', 'trim|required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');
@@ -75,12 +100,37 @@ class Maintenance extends MY_Controller {
 		$data['company_list'] = $this->model_maintenance->get_company();
 		$data['bank_list'] = $this->model_maintenance->get_bank();
 		
+		foreach ($this->model_maintenance->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
+		foreach ($this->model_maintenance->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
+		
 		$this->form_validation->set_rules('maintenance_name', 'maintenance name', 'trim|required');
 		$this->form_validation->set_rules('maintenance_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('maintenance_period', 'period', 'numeric|trim|required');
 		$this->form_validation->set_rules('maintenance_price', 'price', 'numeric|trim|required');
+		$this->form_validation->set_rules('maintenance_markup', 'markup', 'trim');
 		$this->form_validation->set_rules('maintenance_extend', 'extend period', 'numeric|trim');
-		$this->form_validation->set_rules('maintenance_company_id', 'company name', 'trim|required');
+		$this->form_validation->set_rules('maintenance_customer_type', 'customer type', 'required');
+		
+		if ($this->input->post('maintenance_customer_type') == 1)
+		{
+			$this->form_validation->set_rules('maintenance_client_name', 'client_name', 'trim|required');
+		}
+		if ($this->input->post('maintenance_customer_type') == 2)
+		{
+			$this->form_validation->set_rules('maintenance_company_name', 'company ', 'trim|required');
+		}
+		
 		$this->form_validation->set_rules('maintenance_bank_id', 'bank name', 'trim|required');
 		$this->form_validation->set_rules('flag', 'flag', 'required');
 		$this->form_validation->set_rules('memo', 'memo', 'trim');

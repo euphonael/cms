@@ -32,21 +32,44 @@ class Dhm extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'Add ' . $this->title,
-			'css'	=> array(),
-			'js'	=> array('admin/form')
+			'css'	=> array('alertify.core', 'alertify.bootstrap'),
+			'js'	=> array('alertify', 'admin/form')
 		);
 		
-		$data['company_list'] = $this->model_dhm->get_company();
 		$data['domain_list'] = $this->model_dhm->get_domain();
 		$data['hosting_list'] = $this->model_dhm->get_hosting();
 		$data['bank_list'] = $this->model_dhm->get_bank();
 		
+		foreach ($this->model_dhm->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
+		foreach ($this->model_dhm->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
+		
 		$this->form_validation->set_rules('dhm_name', 'dhm name', 'trim|required');
 		$this->form_validation->set_rules('dhm_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('dhm_period', 'period', 'numeric|trim|required');
-		$this->form_validation->set_rules('dhm_price', 'price', 'numeric|trim|required');
-		$this->form_validation->set_rules('dhm_extend', 'extend period', 'numeric|trim');
-		$this->form_validation->set_rules('dhm_company_id', 'company name', 'trim|required');
+		$this->form_validation->set_rules('dhm_price', 'price', 'trim|required');
+		$this->form_validation->set_rules('dhm_markup', 'markup', 'trim');
+		$this->form_validation->set_rules('dhm_customer_type', 'customer type', 'required');
+		
+		if ($this->input->post('dhm_customer_type') == 1)
+		{
+			$this->form_validation->set_rules('dhm_client_name', 'client_name', 'trim|required');
+		}
+		if ($this->input->post('dhm_customer_type') == 2)
+		{
+			$this->form_validation->set_rules('dhm_company_name', 'company ', 'trim|required');
+		}
+		
 		$this->form_validation->set_rules('dhm_domain_id', 'domain name', 'trim|required');
 		$this->form_validation->set_rules('dhm_hosting_id', 'hosting name', 'trim|required');
 		$this->form_validation->set_rules('dhm_bank_id', 'bank name', 'trim|required');
@@ -76,17 +99,40 @@ class Dhm extends MY_Controller {
 		
 		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
 		
-		$data['company_list'] = $this->model_dhm->get_company();
 		$data['domain_list'] = $this->model_dhm->get_domain();
 		$data['hosting_list'] = $this->model_dhm->get_hosting();
 		$data['bank_list'] = $this->model_dhm->get_bank();
 		
+		foreach ($this->model_dhm->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
+		foreach ($this->model_dhm->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
+		
 		$this->form_validation->set_rules('dhm_name', 'dhm name', 'trim|required');
 		$this->form_validation->set_rules('dhm_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('dhm_period', 'period', 'numeric|trim|required');
-		$this->form_validation->set_rules('dhm_price', 'price', 'numeric|trim|required');
-		$this->form_validation->set_rules('dhm_extend', 'extend period', 'numeric|trim');
-		$this->form_validation->set_rules('dhm_company_id', 'company name', 'trim|required');
+		$this->form_validation->set_rules('dhm_price', 'price', 'trim|required');
+		$this->form_validation->set_rules('dhm_markup', 'markup', 'trim');
+		$this->form_validation->set_rules('dhm_customer_type', 'customer type', 'required');
+		
+		if ($this->input->post('dhm_customer_type') == 1)
+		{
+			$this->form_validation->set_rules('dhm_client_name', 'client_name', 'trim|required');
+		}
+		if ($this->input->post('dhm_customer_type') == 2)
+		{
+			$this->form_validation->set_rules('dhm_company_name', 'company ', 'trim|required');
+		}
+		
 		$this->form_validation->set_rules('dhm_domain_id', 'domain name', 'trim|required');
 		$this->form_validation->set_rules('dhm_hosting_id', 'hosting name', 'trim|required');
 		$this->form_validation->set_rules('dhm_bank_id', 'bank name', 'trim|required');
