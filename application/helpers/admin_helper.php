@@ -147,6 +147,14 @@ if ( ! function_exists('check_access'))
 		{
 		}
 	}
+	
+	if ( ! function_exists('close_fancybox'))
+	{
+		function close_fancybox()
+		{
+			echo '<script type="text/javascript">parent.jQuery.fancybox.close("a");</script>';
+		}
+	}
 }
 
 /* End of file admin_helper.php */

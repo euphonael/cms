@@ -58,7 +58,7 @@ class Division extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
-			'css'	=> array('jquery.fancybox'),
+			'css'	=> array(),
 			'js'	=> array('admin/form')
 		);
 		

@@ -17,8 +17,8 @@ class Dhm extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'List ' . $this->title,
-			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
-			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
+			'css'	=> array('jquery.fancybox', 'alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
+			'js'	=> array('jquery.fancybox.pack', 'alertify', 'jquery.dataTables.min', 'admin/list')
 		);
 
 		$db_query = $this->model_dhm->list_data();
@@ -91,8 +91,8 @@ class Dhm extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
-			'css'	=> array('jquery.fancybox'),
-			'js'	=> array('admin/form')
+			'css'	=> array('alertify.core', 'alertify.bootstrap'),
+			'js'	=> array('alertify', 'admin/form')
 		);
 		
 		$data['row'] = $this->model_dhm->get($unique_id);
@@ -147,6 +147,42 @@ class Dhm extends MY_Controller {
 		{
 			$this->model_dhm->update($unique_id);
 			redirect(base_url('admin/' . $this->url));
+		}
+	}
+	
+	public function extend($unique_id)
+	{
+		$data = array(
+			'title'	=> 'Extend ' . $this->title,
+			'css'	=> array(),
+			'js'	=> array('admin/form')
+		);
+		
+		$data['row'] = $this->model_dhm->get($unique_id);
+		
+		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
+		
+		$data['domain_list'] = $this->model_dhm->get_domain();
+		$data['hosting_list'] = $this->model_dhm->get_hosting();
+		$data['bank_list'] = $this->model_dhm->get_bank();
+		
+		$this->form_validation->set_rules('invoice_project_name', 'project name', 'trim|required');
+		$this->form_validation->set_rules('dhm_period', 'period', 'required');
+		$this->form_validation->set_rules('dhm_bank_id', 'bank', 'required');
+		$this->form_validation->set_rules('dhm_bank_currency', 'currency', 'required');
+		$this->form_validation->set_rules('dhm_price', 'price', 'required');
+		$this->form_validation->set_rules('dhm_markup', 'mark-up', 'required');
+		$this->form_validation->set_rules('invoice_note', 'note', 'trim');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('admin/template/header', $data);
+			$this->load->view('admin/' . $this->url . '/' . $this->url . '_extend');
+			$this->load->view('admin/template/footer');
+		}
+		else
+		{
+			$this->model_dhm->extend($unique_id);
 		}
 	}
 }

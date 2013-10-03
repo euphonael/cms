@@ -1,3 +1,10 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$('a.button.inside').fancybox({
+		width: 515
+	});
+});
+</script>
 <div id="container">
 	<div id="content-heading">
     	<h2><?php echo $title; ?></h2>
@@ -16,6 +23,7 @@
                 <th class="small">No.</th>
                 <th>DHM Name</th>
                 <th>Company / Client</th>
+                <th class="medium">Extend</th>
                 <th>Domain</th>
                 <th>Hosting</th>
                 <th>Bank</th>
@@ -34,11 +42,16 @@
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['dhm_name']; ?></a></td>
                 <td><?php echo ($row['company_name']) ? $row['company_name'] : $row['client_name']; ?></td>
+                <td class="dhm-extend">
+					<?php if ($row['date_diff'] >= -30) : ?>
+                    <a class="button inside" id="dhm-extend-<?php echo $row['unique_id']; ?>" data-fancybox-type="iframe" href="<?php echo base_url('admin/dhm/extend/' . $row['unique_id']); ?>">Extend</a>
+                    <?php endif; ?>
+                </td>
                 <td><?php echo $row['domain_name']; ?></td>
                 <td><?php echo $row['hosting_name']; ?></td>
                 <td><?php echo $row['bank_name']; ?></td>
                 <td><?php echo date('d M Y', strtotime($row['dhm_start'])); ?></td>
-                <td><?php echo date('d M Y', strtotime($row['dhm_end'])); ?></td>
+                <td class="dhm-end-date"><?php echo date('d M Y', strtotime($row['dhm_end'])); ?></td>
                 <td><?php echo number_format($row['dhm_price']); ?></td>
                 <?php table_end($row); ?>
             </tr>
