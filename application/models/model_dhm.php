@@ -133,7 +133,7 @@ class Model_dhm extends CI_Model {
 			'invoice_top_percent'	=> '100', // Karena extend, default 100%
 			'invoice_top_amount'	=> $total, // Total dari price + markup
 			'invoice_bank_id'		=> $this->input->post('dhm_bank_id'),
-			'invoice_currency'		=> $this->input->post('dhm_bank_currency'),
+			'invoice_currency'		=> $this->input->post('bank_currency'),
 			'invoice_create_date'	=> date('Y-m-d'),
 			'invoice_note'			=> $this->input->post('invoice_note'),
 			'flag'					=> 1

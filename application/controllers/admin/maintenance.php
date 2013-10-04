@@ -17,8 +17,8 @@ class Maintenance extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'List ' . $this->title,
-			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
-			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
+			'css'	=> array('jquery.fancybox', 'alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
+			'js'	=> array('jquery.fancybox.pack', 'alertify', 'jquery.dataTables.min', 'admin/list')
 		);
 
 		$db_query = $this->model_maintenance->list_data();
@@ -32,8 +32,8 @@ class Maintenance extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'Add ' . $this->title,
-			'css'	=> array(),
-			'js'	=> array('admin/form')
+			'css'	=> array('alertify.core', 'alertify.bootstrap'),
+			'js'	=> array('alertify', 'admin/form')
 		);
 		
 		$data['company_list'] = $this->model_maintenance->get_company();
@@ -89,8 +89,8 @@ class Maintenance extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
-			'css'	=> array(),
-			'js'	=> array('admin/form')
+			'css'	=> array('alertify.core', 'alertify.bootstrap'),
+			'js'	=> array('alertify', 'admin/form')
 		);
 		
 		$data['row'] = $this->model_maintenance->get($unique_id);
@@ -119,7 +119,6 @@ class Maintenance extends MY_Controller {
 		$this->form_validation->set_rules('maintenance_period', 'period', 'numeric|trim|required');
 		$this->form_validation->set_rules('maintenance_price', 'price', 'numeric|trim|required');
 		$this->form_validation->set_rules('maintenance_markup', 'markup', 'trim');
-		$this->form_validation->set_rules('maintenance_extend', 'extend period', 'numeric|trim');
 		$this->form_validation->set_rules('maintenance_customer_type', 'customer type', 'required');
 		
 		if ($this->input->post('maintenance_customer_type') == 1)
@@ -143,6 +142,42 @@ class Maintenance extends MY_Controller {
 		{
 			$this->model_maintenance->update($unique_id);
 			redirect(base_url('admin/' . $this->url));
+		}
+	}
+	
+	public function extend($unique_id)
+	{
+		$data = array(
+			'title'	=> 'Extend ' . $this->title,
+			'css'	=> array(),
+			'js'	=> array('admin/form')
+		);
+		
+		$data['row'] = $this->model_maintenance->get($unique_id);
+		
+		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
+
+		$data['bank_list'] = $this->model_maintenance->get_bank();
+		$data['product_list'] = $this->model_maintenance->get_product();
+		
+		$this->form_validation->set_rules('invoice_project_name', 'project name', 'trim|required');
+		$this->form_validation->set_rules('maintenance_period', 'period', 'required');
+		$this->form_validation->set_rules('maintenance_product_id', 'product', 'required');
+		$this->form_validation->set_rules('maintenance_bank_id', 'bank', 'required');
+		$this->form_validation->set_rules('bank_currency', 'currency', 'required');
+		$this->form_validation->set_rules('maintenance_price', 'price', 'required');
+		$this->form_validation->set_rules('maintenance_markup', 'mark-up', 'required');
+		$this->form_validation->set_rules('invoice_note', 'note', 'trim');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('admin/template/header', $data);
+			$this->load->view('admin/' . $this->url . '/' . $this->url . '_extend');
+			$this->load->view('admin/template/footer');
+		}
+		else
+		{
+			$this->model_maintenance->extend($unique_id);
 		}
 	}
 }

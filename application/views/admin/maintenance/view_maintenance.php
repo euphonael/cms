@@ -6,7 +6,7 @@ $(document).ready(function(){
 		{
 			if(ui.item == null || ui.item == undefined)
 			{
-				$('#dhm_company_name').val('').focus();
+				$('#maintenance_company_name').val('').focus();
 				alertify.error('You have to choose an existing company');
 			}
 		}
@@ -18,7 +18,7 @@ $(document).ready(function(){
 		{
 			if(ui.item == null || ui.item == undefined)
 			{
-				$('#dhm_client_name').val('').focus();
+				$('#maintenance_client_name').val('').focus();
 				alertify.error('You have to choose an existing client');
 			}
 		}
@@ -55,18 +55,16 @@ $(document).ready(function(){
                     </p>
                     <p>
                         <label class="label-input" for="maintenance_period">Period</label>
-                        <input type="text" name="maintenance_period" id="maintenance_period" class="digits required" title="Number of months" value="<?php echo form_value('maintenance_period', $row); ?>" />
+                        <input type="text" name="maintenance_period" id="maintenance_period" class="has-suffix digits required" title="Number of months" value="<?php echo form_value('maintenance_period', $row); ?>" />
+                        <span class="suffix">Months</span>
                         <?php echo form_error('maintenance_period'); ?>
+                        <span class="clear"></span>
+                        <label class="error" for="maintenance_period"></label>
                     </p>
                     <p>
                         <label class="label-input" for="maintenance_price">Price</label>
                         <input type="text" name="maintenance_price" id="maintenance_price" class="digits required" value="<?php echo form_value('maintenance_price', $row); ?>" />
                         <?php echo form_error('maintenance_price'); ?>
-                    </p>
-                    <p>
-                        <label class="label-input" for="maintenance_extend">Extend</label>
-                        <input type="text" name="maintenance_extend" id="maintenance_extend" class="digits" value="<?php echo form_value('maintenance_extend', $row); ?>" />
-                        <?php echo form_error('maintenance_extend'); ?>
                     </p>
                 </fieldset>
             </div>

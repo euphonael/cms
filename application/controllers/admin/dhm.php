@@ -169,7 +169,7 @@ class Dhm extends MY_Controller {
 		$this->form_validation->set_rules('invoice_project_name', 'project name', 'trim|required');
 		$this->form_validation->set_rules('dhm_period', 'period', 'required');
 		$this->form_validation->set_rules('dhm_bank_id', 'bank', 'required');
-		$this->form_validation->set_rules('dhm_bank_currency', 'currency', 'required');
+		$this->form_validation->set_rules('bank_currency', 'currency', 'required');
 		$this->form_validation->set_rules('dhm_price', 'price', 'required');
 		$this->form_validation->set_rules('dhm_markup', 'mark-up', 'required');
 		$this->form_validation->set_rules('invoice_note', 'note', 'trim');

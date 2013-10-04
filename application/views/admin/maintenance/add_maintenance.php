@@ -6,7 +6,7 @@ $(document).ready(function(){
 		{
 			if(ui.item == null || ui.item == undefined)
 			{
-				$('#dhm_company_name').val('').focus();
+				$('#maintenance_company_name').val('').focus();
 				alertify.error('You have to choose an existing company');
 			}
 		}
@@ -18,7 +18,7 @@ $(document).ready(function(){
 		{
 			if(ui.item == null || ui.item == undefined)
 			{
-				$('#dhm_client_name').val('').focus();
+				$('#maintenance_client_name').val('').focus();
 				alertify.error('You have to choose an existing client');
 			}
 		}
@@ -59,6 +59,7 @@ $(document).ready(function(){
                         <span class="suffix">Months</span>
                         <?php echo form_error('maintenance_period'); ?>
                         <span class="clear"></span>
+                        <label class="error" for="maintenance_period"></label>
                     </p>
                     <p>
                         <label class="label-input" for="maintenance_price">Price</label>

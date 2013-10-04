@@ -53,7 +53,6 @@ $(document).ready(function(){
 					<p>
                         <label class="label-input" for="dhm_period">Extension Period</label>
                         <select name="dhm_period" class="required">
-                        	<option value="">--</option>
                         	<option value="12" <?php if (set_value('dhm_period') == 12) echo 'selected="selected"'; ?>>12 months</option>
                             <option value="24" <?php if (set_value('dhm_period') == 24) echo 'selected="selected"'; ?>>24 months</option>
                             <option value="36" <?php if (set_value('dhm_period') == 36) echo 'selected="selected"'; ?>>36 months</option>
@@ -77,12 +76,12 @@ $(document).ready(function(){
                     </p>
                     
                     <p>
-                        <label class="label-input" for="dhm_bank_currency">Currency</label>
-                        <select name="dhm_bank_currency" class="required">
+                        <label class="label-input" for="bank_currency">Currency</label>
+                        <select name="bank_currency" class="required">
                             <option value="Rp." <?php default_selected('bank_currency', $row, 'Rp.'); ?>>Rp.</option>
                             <option value="USD" <?php default_selected('bank_currency', $row, 'USD'); ?>>USD</option>
                         </select>
-                        <?php echo form_error('dhm_bank_id'); ?>
+                        <?php echo form_error('bank_currency'); ?>
                     </p>    
                     
                     <p>
