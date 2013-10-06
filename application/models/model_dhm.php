@@ -121,6 +121,8 @@ class Model_dhm extends CI_Model {
 		
 		$data = array(
 			'unique_id'				=> get_unique_id('invoice'),
+			'invoice_type'			=> 1,
+			'invoice_item_id'		=> $unique_id,
 			'invoice_customer_type'	=> $this->input->post('invoice_customer_type'),
 			'invoice_number'		=> 'Auto Generate - TEMP',
 			'invoice_project_name'	=> $this->input->post('invoice_project_name'),

@@ -88,4 +88,53 @@ $(document).ready(function(){
 			$('#maintenance_company_name_wrap').fadeIn().find('input').prop('disabled', false);
 		}
 	});
+	
+	$('input.project_customer_type').change(function(){
+		var type = $(this).val();
+		
+		if (type == 1)
+		{
+			$('#project_company_name_wrap').fadeOut().hide().find('input').prop('disabled', true);
+			$('#project_client_name_wrap').fadeIn().find('input').prop('disabled', false);
+		}
+		else if (type == 2)
+		{
+			$('#project_client_name_wrap').fadeOut().hide().find('input').prop('disabled', true);
+			$('#project_company_name_wrap').fadeIn().find('input').prop('disabled', false);
+		}
+	});
+	
+	$('#add-project-top').click(function(){
+		/* How many TOP now? */
+		var count = $('div.project-top').length;
+		
+		if (count == 1)
+		{
+			$('#del-project-top').fadeIn();
+		}
+		
+		$('#temp-top').load(base_url + 'admin/project/add_top/' + count, function(html){
+			
+			var suffix_width = $('#project-top-list span.suffix').width();
+
+			$('#project-top-list').append($('#temp-top').html());
+			$('#project-top-list label.label-input').width(label_width);
+			$('#project-top-list input').width(input_width - suffix_width - 5);
+			
+			$('#temp-top').html('');
+		});
+	});
+	
+	$('#del-project-top').click(function(){
+		
+		var count = $('div.project-top').length;
+		$('#project-top-list div.project-top:last').remove();
+
+		var new_count = count - 1;
+		
+		if (new_count == 1)
+		{
+			$('#del-project-top').fadeOut();
+		}
+	});
 });

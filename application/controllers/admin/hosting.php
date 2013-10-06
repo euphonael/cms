@@ -60,7 +60,7 @@ class Hosting extends MY_Controller {
 		}
 	}
 	
-	function view($unique_id)
+	public function view($unique_id)
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
