@@ -91,7 +91,7 @@ $(document).ready(function(){
 	                        <span class="clear"></span>
                         </span>
 						<span class="clear"></span>
-                        <label class="error" for="dhm_customer_type"></label>
+                        <label class="error initial" for="dhm_customer_type"></label>
                         <?php echo form_error('dhm_customer_type'); ?>
                     </p>
 

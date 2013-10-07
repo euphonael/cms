@@ -127,7 +127,7 @@ $(document).ready(function(){
                             <span class="clear"></span>
                         </span>
                         <span class="clear"></span>
-                        <label class="error" for="project_customer_type"></label>
+                        <label class="error initial" for="project_customer_type"></label>
                         <?php echo form_error('project_customer_type'); ?>
                     </p>
 
@@ -144,7 +144,9 @@ $(document).ready(function(){
                     </p>
                 </fieldset>
                 <fieldset>
-                	<legend>Terms of Payment (in %)</legend>
+                	<legend>Terms of Payment</legend>
+
+                    <div id="temp-top" style="display:none;"></div>
                     
                     <div>
 	                    <button class="inside-form" id="add-project-top" type="button">Add</button>
@@ -152,34 +154,44 @@ $(document).ready(function(){
 	                    <div class="clear"></div>
                     </div>
                     
-                    <div id="temp-top" style="display:none;"></div>
+                    <p>
+                        <label class="label-input">Payment Type</label>
+                        <span class="radio-options">
+                            <input type="radio" name="project_top_type" value="1" id="type_percent" class="project_top_type required" <?php if (set_value('project_top_type') == 1 || empty(set_value('project_top_type'))) echo 'checked="checked"'; ?> />
+                            <label class="radio" for="type_percent">Percent (%)</label>
+                            <input type="radio" name="project_top_type" value="2" id="type_value" class="project_top_type" <?php if (set_value('project_top_type') == 2) echo 'checked="checked"'; ?> />
+                            <label class="radio" for="type_value">Fixed Amount</label>
+                            <span class="clear"></span>
+                        </span>
+                        <span class="clear"></span>
+                        <label class="error initial" for="project_top_type"></label>
+                        <?php echo form_error('project_top_type'); ?>
+                    </p>
                     
                     <div id="project-top-list">
+                    	<p id="project-top-error"></p>
                         <div class="project-top">
                             <p>
                                 <label class="label-input" for="project_top_1">Payment 1</label>
-                                <input type="text" class="has-suffix required" name="project_top[]" id="project_top_1" value="30" />
+                                <input type="text" class="has-suffix required number-format" name="project_top[]" id="project_top_1" value="30" />
                                 <span class="suffix">%</span>
                                 <span class="clear"></span>
-                                <label class="error" for="project_top_1"></label>
                             </p>
                         </div>
                         <div class="project-top">
                             <p>
                                 <label class="label-input" for="project_top_2">Payment 2</label>
-                                <input type="text" class="has-suffix required" name="project_top[]" id="project_top_2" value="40" />
+                                <input type="text" class="has-suffix required number-format" name="project_top[]" id="project_top_2" value="40" />
                                 <span class="suffix">%</span>
                                 <span class="clear"></span>
-                                <label class="error" for="project_top_2"></label>
                             </p>
                         </div>
                         <div class="project-top">
                             <p>
                                 <label class="label-input" for="project_top_3">Payment 3</label>
-                                <input type="text" class="has-suffix required" name="project_top[]" id="project_top_3" value="30" />
+                                <input type="text" class="has-suffix required number-format" name="project_top[]" id="project_top_3" value="30" />
                                 <span class="suffix">%</span>
                                 <span class="clear"></span>
-                                <label class="error" for="project_top_3"></label>
                             </p>
                         </div>
                     </div>

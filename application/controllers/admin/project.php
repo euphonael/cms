@@ -63,6 +63,8 @@ class Project extends MY_Controller {
 		$this->form_validation->set_rules('project_bank_id', 'bank', 'required');
 		$this->form_validation->set_rules('project_currency', 'currency', 'required');
 		$this->form_validation->set_rules('project_customer_type', 'customer type', 'required');
+		$this->form_validation->set_rules('project_top_type', 'top type', 'required');
+#		$this->form_validation->set_rules('project_top', 'project top', 'callback_check_top');
 		
 		if ($this->input->post('project_customer_type') == 1)
 		{
@@ -87,17 +89,52 @@ class Project extends MY_Controller {
 		}
 	}
 	
-	public function add_top($current_count)
+	/*
+	public function check_top($content)
+	{
+		// Percent
+		if ($this->input->post('project_top_type') == 1)
+		{
+			$target = 100;
+			$error = 'Total amount must be 100 percent.';
+		}
+		elseif ($this->input->post('project_top_type') == 2)
+		{
+			$target = str_replace(',', '', $this->input->post('project_price')) + str_replace(',', '', $this->input->post('project_markup'));
+			$error = 'Total amount must be ' . number_format($target);
+		}
+		
+		$value = 0;
+		
+		foreach ($content as $item)
+		{
+			$value = $value + $item;
+		}
+		
+		if ($value != $target)
+		{
+			$this->form_validation->set_message('check_top', $error);
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	*/
+	
+	public function add_top($current_count, $type)
 	{
 		$new = $current_count + 1;
+		
+		$style = ($type == 2) ? 'style="display:none;"' : '';
 		
 		$html = '<div class="project-top">';
 		$html .= '<p>';
 		$html .= '<label class="label-input" for="project_top_' . $new . '">Payment ' . $new . '</label>';
-		$html .= '<input type="text" class="has-suffix required" name="project_top_' . $new . '" id="project_top_' . $new . '" value="" />';
-		$html .= '<span class="suffix">%</span>';
+		$html .= '<input type="text" class="has-suffix required number-format" name="project_top[]" id="project_top_' . $new . '" value="" />';
+		$html .= '<span class="suffix" ' . $style . '>%</span>';
 		$html .= '<span class="clear"></span>';
-		$html .= '<label class="error" for="project_top_' . $new . '"></label>';
 		$html .= '</p>';
 		$html .= '</div>';
 		
@@ -143,6 +180,7 @@ class Project extends MY_Controller {
 		$this->form_validation->set_rules('project_bank_id', 'bank', 'required');
 		$this->form_validation->set_rules('project_currency', 'currency', 'required');
 		$this->form_validation->set_rules('project_customer_type', 'customer type', 'required');
+		$this->form_validation->set_rules('project_top_type', 'top type', 'required');
 		
 		if ($this->input->post('project_customer_type') == 1)
 		{
@@ -158,6 +196,7 @@ class Project extends MY_Controller {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
+			echo validation_errors();
 			$this->show('admin/' . $this->url . '/view_' . $this->url, $data);
 		}
 		else

@@ -59,7 +59,7 @@ $(document).ready(function(){
                         <span class="suffix">Months</span>
                         <?php echo form_error('maintenance_period'); ?>
                         <span class="clear"></span>
-                        <label class="error" for="maintenance_period"></label>
+                        <label class="error initial" for="maintenance_period"></label>
                     </p>
                     <p>
                         <label class="label-input" for="maintenance_price">Price</label>
@@ -88,7 +88,7 @@ $(document).ready(function(){
 	                        <span class="clear"></span>
                         </span>
 						<span class="clear"></span>
-                        <label class="error" for="maintenance_customer_type"></label>
+                        <label class="error initial" for="maintenance_customer_type"></label>
                         <?php echo form_error('maintenance_customer_type'); ?>
                     </p>
                     

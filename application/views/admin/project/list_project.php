@@ -25,7 +25,7 @@ $(document).ready(function(){
                 <th>Product</th>
                 <th>Company / Client</th>
                 <th>T.O.P</th>
-                <th>Percent</th>
+<!--                <th>Percent / Value</th>-->
                 <th>Bank</th>
                 <th>Price</th>
                 <th>Sales</th>
@@ -43,9 +43,8 @@ $(document).ready(function(){
                 <td><?php echo $row['product_name']; ?></td>
                 <td><?php echo ($row['company_name']) ? $row['company_name'] : $row['client_name']; ?></td>
                 <td><?php echo $row['project_top']; ?></td>
-                <td><?php echo $row['project_top_percent']; ?></td>
                 <td><?php echo $row['bank_name']; ?></td>
-                <td><?php echo number_format($row['project_price']); ?></td>
+                <td><?php echo number_format($row['project_price'] + $row['project_markup']); ?></td>
                 <td><?php echo $row['admin_name']; ?></td>
                 <?php table_end($row); ?>
             </tr>

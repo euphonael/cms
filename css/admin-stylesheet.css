@@ -126,3 +126,6 @@ button.inside-form { margin:5px 10px; }
 #privilege-table input[type=checkbox] { width:auto !important; margin:0 !important; float:none !important; display:inline !important; }
 #privilege-table thead tr th { border-bottom:1px solid #333; }
 #privilege-table tbody tr td { border-bottom:1px solid #333; }
+
+label.initial { margin:0 !important; }
+#project-top-error { text-align:right; color:red; font-size:11px; margin-right:27px; display:none; }

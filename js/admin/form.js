@@ -113,7 +113,9 @@ $(document).ready(function(){
 			$('#del-project-top').fadeIn();
 		}
 		
-		$('#temp-top').load(base_url + 'admin/project/add_top/' + count, function(html){
+		var type = ($('#type_value').is(':checked')) ? 2 : 1;
+		
+		$('#temp-top').load(base_url + 'admin/project/add_top/' + count + '/' + type, function(html){
 			
 			var suffix_width = $('#project-top-list span.suffix').width();
 
@@ -137,4 +139,64 @@ $(document).ready(function(){
 			$('#del-project-top').fadeOut();
 		}
 	});
+
+	$('input.project_top_type').click(function(){
+		var type = $(this).val();
+		
+		if (type == 1)
+		{
+			$('span.suffix').fadeIn();
+		}
+		else if (type == 2)
+		{
+			$('span.suffix').fadeOut();
+		}
+	});
+	
+	/*
+	$('div.project-top input').keyup(function(){
+		var type = ($('input#type_value').is(':checked')) ? 2 : 1;
+		
+		
+		if (type == 1)
+		{
+			var total = 0;
+			$('div.project-top input').each(function(){
+				var value = int($(this).val());
+				total = total + value;
+			});
+			
+			if (total != 100)
+			{
+				$('#project-top-error').html('Total amount must be 100%').fadeIn();
+			}
+			else
+			{
+				$('#project-top-error').html('').fadeOut();
+			}
+		}
+		else if (type == 2)
+		{
+			var price = $('input#project_price').val().replace(',', '');
+			var markup = $('input#project_markup').val().replace(',', '');
+			
+			var total = int(price) + int(markup);
+			var result = 0;
+			
+			$('div.project-top input').each(function(){
+				var value = int($(this).val().replace(',', ''));
+				result = result + value;
+			});
+			
+			if (result != total)
+			{
+				$('#project-top-error').html('Total amount must be equal to price + markup value').fadeIn();
+			}
+			else
+			{
+				$('#project-top-error').html('').fadeOut();
+			}
+		}
+	});
+	*/
 });

@@ -127,7 +127,7 @@ $(document).ready(function(){
                             <span class="clear"></span>
                         </span>
                         <span class="clear"></span>
-                        <label class="error" for="project_customer_type"></label>
+                        <label class="error initial" for="project_customer_type"></label>
                         <?php echo form_error('project_customer_type'); ?>
                     </p>
 
@@ -153,19 +153,35 @@ $(document).ready(function(){
                     </div>
                     
                     <div id="temp-top" style="display:none;"></div>
-                    
-                    <?php $top_percent = explode(',', $row['project_top_percent']); ?>
+
+                    <?php $top_type = ($row['project_top_type'] == 1) ? $row['project_top_percent'] : $row['project_top_value']; ?>
+                    <?php $top_amount = explode(',', $top_type); ?>
                     <?php $x = 0; ?>
                     
                     <div id="project-top-list">
+                    
+                    	<p>
+                        <label class="label-input">Payment Type</label>
+                        <span class="radio-options">
+                            <input type="radio" name="project_top_type" value="1" id="type_percent" class="project_top_type required" <?php default_checked('project_top_type', $row, 1); ?> />
+                            <label class="radio" for="type_percent">Percent (%)</label>
+                            <input type="radio" name="project_top_type" value="2" id="type_value" class="project_top_type" <?php default_checked('project_top_type', $row, 2); ?>  />
+                            <label class="radio" for="type_value">Fixed Amount</label>
+                            <span class="clear"></span>
+                        </span>
+                        <span class="clear"></span>
+                        <label class="error initial" for="project_top_type"></label>
+                        <?php echo form_error('project_top_type'); ?>
+                    </p>
+                    
                     	<?php for ($i = 1; $i <= $row['project_top']; $i++) : ?>
                         <div class="project-top">
                             <p>
                                 <label class="label-input" for="project_top_<?php echo $i; ?>">Payment <?php echo $i; ?></label>
-                                <input type="text" class="has-suffix required" name="project_top[]" id="project_top_<?php echo $i; ?>" value="<?php echo $top_percent[$x]; ?>" />
+                                <input type="text" class="has-suffix number-format required" name="project_top[]" id="project_top_<?php echo $i; ?>" value="<?php echo number_format($top_amount[$x]); ?>" />
                                 <span class="suffix">%</span>
                                 <span class="clear"></span>
-                                <label class="error" for="project_top_<?php echo $i; ?>"></label>
+                                <label class="error initial" for="project_top_<?php echo $i; ?>"></label>
                             </p>
                         </div>
                         <?php $x++; ?>
