@@ -46,13 +46,13 @@ $(document).ready(function(){
 	});
 	
 	$('input.number-format').each(function(){
-		var angka = $(this).val().replace(',', '');
+		var angka = $(this).val().replace(/,/g, '');
 		var format = number_format(angka, 0, '', ',')
 		$(this).val(format);
     });
 	
 	$('input.number-format').keyup(function(){
-		var angka = $(this).val().replace(',', '');
+		var angka = $(this).val().replace(/,/g, '');
 		var format = number_format(angka, 0, '', ',')
 		$(this).val(format);
 	});
@@ -146,10 +146,30 @@ $(document).ready(function(){
 		if (type == 1)
 		{
 			$('span.suffix').fadeIn();
+			var price = int($('#project_price').val().replace(/,/g, ''));
+			var markup = int($('#project_markup').val().replace(/,/g, ''));
+			var total = price + markup;
+			
+			$('div.project-top input').each(function(){
+				var amount = int($(this).val().replace(/,/g, ''));
+				
+				$(this).val(amount / total * 100);
+			});
 		}
-		else if (type == 2)
+		else if (type == 2) // Fixed amount, convert
 		{
+			var price = int($('#project_price').val().replace(/,/g, ''));
+			var markup = int($('#project_markup').val().replace(/,/g, ''));
+			var total = price + markup;
+			
+			console.log('Price : ' + price);
+			
 			$('span.suffix').fadeOut();
+			$('div.project-top input').each(function(){
+				var percent = int($(this).val().replace(/,/g, ''));
+				
+				$(this).val(number_format(percent / 100 * total));
+			});
 		}
 	});
 	

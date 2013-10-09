@@ -65,7 +65,7 @@ $(document).ready(function(){
                         <?php echo form_error('dhm_period'); ?>
                     </p>
                     <p>
-                        <label class="label-input" for="dhm_price">Price</label>
+                        <label class="label-input" for="dhm_price">Price / year</label>
                         <input type="text" name="dhm_price" id="dhm_price" class="number-format required" value="<?php echo set_value('dhm_price'); ?>" />
                         <?php echo form_error('dhm_price'); ?>
                     </p>

@@ -62,9 +62,14 @@ $(document).ready(function(){
                         <label class="error initial" for="maintenance_period"></label>
                     </p>
                     <p>
-                        <label class="label-input" for="maintenance_price">Price</label>
-                        <input type="text" name="maintenance_price" id="maintenance_price" class="digits required" value="<?php echo form_value('maintenance_price', $row); ?>" />
+                        <label class="label-input" for="maintenance_price">Price / month</label>
+                        <input type="text" name="maintenance_price" id="maintenance_price" class="number-format required" value="<?php echo form_value('maintenance_price', $row); ?>" />
                         <?php echo form_error('maintenance_price'); ?>
+                    </p>
+                    <p>
+                        <label class="label-input" for="maintenance_markup">Mark-up</label>
+                        <input type="text" name="maintenance_markup" id="maintenance_markup" class="number-format" value="<?php echo form_value('maintenance_markup', $row); ?>" />
+                        <?php echo form_error('maintenance_markup'); ?>
                     </p>
                 </fieldset>
             </div>

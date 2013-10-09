@@ -63,7 +63,7 @@ $(document).ready(function(){
                     </p>
                 </fieldset>
                 
-            	<fieldset>
+            	<fieldset id="extend-payment-details">
                 	<legend>Payment Details</legend>
 					<p>
                         <label class="label-input" for="dhm_bank_id">Bank</label>

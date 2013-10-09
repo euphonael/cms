@@ -1,7 +1,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('a.button.inside').fancybox({
-		width: 515
+		autoSize: false,
+		width: 515,
+		height: 350
 	});
 });
 </script>
@@ -29,7 +31,7 @@ $(document).ready(function(){
                 <th>Bank</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Price</th>
+                <th>Price / year</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>

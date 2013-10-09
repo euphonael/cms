@@ -105,7 +105,8 @@ class Model_maintenance extends CI_Model {
 	
 	public function extend($unique_id)
 	{
-		$price = str_replace(',', '', $this->input->post('maintenance_price'));
+		$period = $this->input->post('maintenance_period');
+		$price = str_replace(',', '', $this->input->post('maintenance_price')) * $period;
 		$markup = str_replace(',', '', $this->input->post('maintenance_markup'));
 		$total = $price + $markup;
 		
@@ -135,11 +136,13 @@ class Model_maintenance extends CI_Model {
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('maintenance_client_name'))->get('client')->row_array();
 			$data['invoice_client_id'] = $row['unique_id'];
+			$data['invoice_customer_name']= $this->input->post('maintenance_client_name');
 		}
 		elseif ($data['invoice_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('maintenance_company_name'))->get('company')->row_array();
 			$data['invoice_company_id'] = $row['unique_id'];
+			$data['invoice_customer_name']= $this->input->post('maintenance_company_name');
 		}
 		
 		$this->db->insert('invoice', $data);

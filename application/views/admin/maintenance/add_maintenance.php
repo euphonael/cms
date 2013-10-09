@@ -62,7 +62,7 @@ $(document).ready(function(){
                         <label class="error initial" for="maintenance_period"></label>
                     </p>
                     <p>
-                        <label class="label-input" for="maintenance_price">Price</label>
+                        <label class="label-input" for="maintenance_price">Price / month</label>
                         <input type="text" name="maintenance_price" id="maintenance_price" class="number-format required" value="<?php echo set_value('maintenance_price'); ?>" />
                         <?php echo form_error('maintenance_price'); ?>
                     </p>

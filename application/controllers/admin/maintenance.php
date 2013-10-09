@@ -117,7 +117,7 @@ class Maintenance extends MY_Controller {
 		$this->form_validation->set_rules('maintenance_name', 'maintenance name', 'trim|required');
 		$this->form_validation->set_rules('maintenance_start', 'start date', 'trim|required');
 		$this->form_validation->set_rules('maintenance_period', 'period', 'numeric|trim|required');
-		$this->form_validation->set_rules('maintenance_price', 'price', 'numeric|trim|required');
+		$this->form_validation->set_rules('maintenance_price', 'price', 'trim|required');
 		$this->form_validation->set_rules('maintenance_markup', 'markup', 'trim');
 		$this->form_validation->set_rules('maintenance_customer_type', 'customer type', 'required');
 		
