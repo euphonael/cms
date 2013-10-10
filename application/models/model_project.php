@@ -45,6 +45,12 @@ class Model_project extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_invoice($unique_id)
+	{
+		$query = $this->db->select('unique_id, invoice_number, invoice_create_date, invoice_note, flag, memo')->where(array('invoice_type' => 3, 'invoice_item_id' => $unique_id, 'flag !=' => 3))->get('invoice');
+		return $query->result_array();
+	}
+	
 	public function insert()
 	{
 		$data = array(
@@ -157,6 +163,42 @@ class Model_project extends CI_Model {
 		$this->db->update($this->db_table, $data);
 		
 		log_action('UPDATE', $this->db_table, $unique_id);
+	}
+	
+	public function create_invoice()
+	{
+		$post = $this->input->post();
+		
+		$invoice_number = 'AUTO GENERATE - TEMP';
+		
+		$additional = array(
+			'unique_id'				=> get_unique_id('invoice'),
+			'invoice_number'		=> $invoice_number,
+			'invoice_create_date'	=> date('Y-m-d'),
+			'flag'					=> 1
+		);
+		
+		if ($post['invoice_customer_type'] == 1)
+		{
+			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('invoice_customer_name'))->get('client')->row_array();
+			$additional['invoice_client_id'] = $row['unique_id'];
+		}
+		elseif ($data['project_customer_type'] == 2)
+		{
+			echo 'b';
+			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('invoice_customer_name'))->get('company')->row_array();
+			$additional['invoice_company_id'] = $row['unique_id'];
+		}
+		
+		$data = array_merge($post, $additional);
+		
+		$this->db->insert('invoice', $data);
+		
+		$readable_date = array('readable_date' => date('d M Y'));
+		
+		$result = array_merge($data, $readable_date);
+		
+		echo json_encode($result);
 	}
 }
 

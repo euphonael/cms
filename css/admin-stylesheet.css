@@ -70,6 +70,7 @@ table.table-data > thead > tr > th { border-top:1px solid #000; border-right:1px
 table.table-data > thead > tr > th:first-child { border-left:1px solid #000; }
 table.table-data > thead > tr > th.small { width:30px; }
 table.table-data > thead > tr > th.medium { width:60px; }
+table.table-data > thead > tr > th.long { width:120px; }
 table.table-data > thead > tr > th.sorting { background-image:url(../images/dataTables/ts_sort_both.gif); }
 table.table-data > thead > tr > th.sorting_desc { background:#8DBDD8 url(../images/dataTables/ts_sort_asc.gif) right center no-repeat; }
 table.table-data > thead > tr > th.sorting_asc { background:#8DBDD8 url(../images/dataTables/ts_sort_desc.gif) right center no-repeat; }
