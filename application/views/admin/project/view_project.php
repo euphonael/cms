@@ -193,4 +193,58 @@ $(document).ready(function(){
             <div class="clear"></div>
         </div>
     </form>
+        
+    
+	<div id="content-heading">
+    	<h2>Project Invoice</h2>
+        <div id="action-wrapper">
+            <button class="delete" id="delete-invoice" title="Delete selected items"><img src="<?php echo base_url('images/icon-delete.png'); ?>" /></button>
+            <div class="clear"></div>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    
+    <table id="invoice" class="table-data project-invoice" cellpadding="0" cellspacing="0">
+    	<input type="hidden" id="project_unique_id" value="<?php echo $row['unique_id']; ?>" />
+    	<thead>
+        	<tr>
+            	<th class="medium">Payment</th>
+                <th>Invoice Number</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Note</th>
+                <th class="medium">Status</th>
+                <th>Memo</th>
+                <th class="small">Del</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<?php $x = 0; ?>
+        	<?php for ($i = 1; $i <= $row['project_top']; $i++) : ?>
+            <tr <?php echo (isset($invoice_list[$x]['unique_id'])) ? 'id="invoice-' . $invoice_list[$x]['unique_id'] . '"' : ''; ?> <?php if (isset($invoice_list[$x]['unique_id'])) echo 'class="has-invoice"'; ?>>
+            	<td id="payment-<?php echo $i; ?>" class="payment-number"><?php echo $i; ?></td>
+                <td class="top">
+                	<?php if (isset($invoice_list[$x]['invoice_number'])) echo $invoice_list[$x]['invoice_number'];
+					else echo '<a id="project-top-' . $i . '" class="button inside">Generate</a>'; ?>
+                </td>
+                <td class="amount"><?php echo number_format($value[$x]); ?></td>
+                <td class="date"><?php if (isset($invoice_list[$x]['invoice_create_date'])) echo date('d M Y', strtotime($invoice_list[$x]['invoice_create_date'])); ?></td>
+                <td class="note"><?php if (isset($invoice_list[$x]['invoice_note'])) echo $invoice_list[$x]['invoice_note']; ?></td>
+                <td class="status">
+                	<?php
+                    if (isset($invoice_list[$x]['flag'])) :
+						if ($invoice_list[$x]['flag'] == 1) $class = 'active';
+						elseif ($invoice_list[$x]['flag'] == 2) $class = 'inactive';
+						echo '<span class="flag ' . $class . '"></span><img src="' . base_url('images/ajax-loader.gif') . '" />';
+					endif;
+					?>
+                </td>
+                <td class="memo"><?php if (isset($invoice_list[$x]['memo'])) echo $invoice_list[$x]['memo']; ?></td>
+                <td class="del"><?php if (isset($invoice_list[$x]['invoice_number'])) echo '<input type="checkbox" />'; ?></td>
+            </tr>
+            <?php $x++; ?>
+            <?php endfor; ?>
+        </tbody>
+    </table>
 </div>

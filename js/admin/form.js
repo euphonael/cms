@@ -54,6 +54,8 @@ $(document).ready(function(){
 	$('input.number-format').keyup(function(){
 		var angka = $(this).val().replace(/,/g, '');
 		var format = number_format(angka, 0, '', ',')
+		
+		if ($(this).hasClass('number-format'))
 		$(this).val(format);
 	});
 	
@@ -140,7 +142,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('input.project_top_type').click(function(){
+	$('input.project_top_type').change(function(){
 		var type = $(this).val();
 		
 		if (type == 1)
@@ -151,9 +153,18 @@ $(document).ready(function(){
 			var total = price + markup;
 			
 			$('div.project-top input').each(function(){
-				var amount = int($(this).val().replace(/,/g, ''));
 				
-				$(this).val(amount / total * 100);
+				var char = $(this).val().length;
+				
+				if (char > 3) // Kalo udah bentuk harga, convert ke percent
+				{
+					console.log('Udah harga, convert ke percent');
+					$(this).removeClass('number-format');
+					$(this).attr('maxlength', 3);
+					var amount = int($(this).val().replace(/,/g, ''));
+					
+					$(this).val(amount / total * 100);
+				}
 			});
 		}
 		else if (type == 2) // Fixed amount, convert
@@ -162,61 +173,75 @@ $(document).ready(function(){
 			var markup = int($('#project_markup').val().replace(/,/g, ''));
 			var total = price + markup;
 			
-			console.log('Price : ' + price);
-			
 			$('span.suffix').fadeOut();
+			
 			$('div.project-top input').each(function(){
-				var percent = int($(this).val().replace(/,/g, ''));
+
+				$(this).removeAttr('maxlength');
+				$(this).addClass('number-format');
+				var percent = $(this).val().replace(/,/g, '');
 				
 				$(this).val(number_format(percent / 100 * total));
 			});
 		}
 	});
 	
-	/*
-	$('div.project-top input').keyup(function(){
-		var type = ($('input#type_value').is(':checked')) ? 2 : 1;
+	$('table.project-invoice a.button.inside').click(function(){
 		
+		var top_number = $(this).closest('tr').find('td.payment-number').attr('id').replace('payment-', '');
+		var tr = $(this).closest('tr');
+
+		var amount = $('#project_top_' + $(this).attr('id').replace('project-top-', '')).val().replace(/,/g, ''); // Jumlahnya?
+	
+		if (amount.length < 4) // Kalo masih percent, convert ke harga
+		{
+			var price = int($('#project_price').val().replace(/,/g, ''));
+			var markup = int($('#project_markup').val().replace(/,/g, ''));
+			var total = price + markup;
+			
+			amount = amount / 100 * total;
+		}
+				
+		var data = {
+			invoice_type : 3, // Project
+			invoice_item_id : $('#project_unique_id').val(), // Project unique id
+			invoice_customer_type :($('#type_company').is(':checked')) ? 2 : 1,
+			invoice_customer_name : ($('#type_company').is(':checked')) ? $('#project_company_name').val() : $('#project_client_name').val(),
+			invoice_project_name : $('#project_name').val(),
+			invoice_product_id : $('select[name=project_product_id]').val(),
+			invoice_price : $('#project_price').val().replace(/,/g, ''),
+			invoice_markup : $('#project_markup').val().replace(/,/g, ''),
+			invoice_commission : 0,
+			invoice_top : $('div.project-top').length,
+			invoice_top_number : top_number,
+			invoice_top_percent : '', // Kalo project, gimana?
+			invoice_top_amount : amount,
+			invoice_bank_id : $('select[name=project_bank_id]').val(),
+			invoice_currency : $('select[name=project_currency]').val(),
+		};
 		
-		if (type == 1)
-		{
-			var total = 0;
-			$('div.project-top input').each(function(){
-				var value = int($(this).val());
-				total = total + value;
-			});
-			
-			if (total != 100)
+		alertify.prompt("Generate Invoice. Note:", function(e, memo){
+			if (e)
 			{
-				$('#project-top-error').html('Total amount must be 100%').fadeIn();
+				data.invoice_note = memo;
+				$.ajax({
+					type : 'POST',
+					data: data,
+					url : base_url + 'admin/project/create_invoice',
+					success: function(html)
+					{
+						var result = $.parseJSON(html);
+						
+						$(tr).attr('id', 'invoice-' + result.unique_id);
+						$(tr).find('td.top').html(result.invoice_number);
+						$(tr).find('td.date').html(result.readable_date);
+						$(tr).find('td.note').html(result.invoice_note);
+						$(tr).find('td.status').html('<span class="flag active"></span><img src="' + base_url + 'images/ajax-loader.gif' + '" />');
+						$(tr).find('td.del').html('<td class="del"><input type="checkbox" /></td>');
+						alertify.success('Invoice #___ generated');
+					}
+				});
 			}
-			else
-			{
-				$('#project-top-error').html('').fadeOut();
-			}
-		}
-		else if (type == 2)
-		{
-			var price = $('input#project_price').val().replace(',', '');
-			var markup = $('input#project_markup').val().replace(',', '');
-			
-			var total = int(price) + int(markup);
-			var result = 0;
-			
-			$('div.project-top input').each(function(){
-				var value = int($(this).val().replace(',', ''));
-				result = result + value;
-			});
-			
-			if (result != total)
-			{
-				$('#project-top-error').html('Total amount must be equal to price + markup value').fadeIn();
-			}
-			else
-			{
-				$('#project-top-error').html('').fadeOut();
-			}
-		}
+		});
 	});
-	*/
 });

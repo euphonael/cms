@@ -110,8 +110,8 @@ class Project extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
-			'css'	=> array('alertify.core', 'alertify.bootstrap'),
-			'js'	=> array('alertify', 'admin/form')
+			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
+			'js'	=> array('alertify', 'admin/form', 'jquery.dataTables.min', 'admin/list')
 		);
 		
 		$data['row'] = $this->model_project->get($unique_id);
@@ -121,6 +121,8 @@ class Project extends MY_Controller {
 		$data['bank_list'] = $this->model_project->get_bank();
 		$data['product_list'] = $this->model_project->get_product();
 		$data['admin_list'] = $this->model_project->get_admin();
+		
+		$data['invoice_list'] = $this->model_project->get_invoice($unique_id);
 		
 		foreach ($this->model_project->get_client() as $item)
 		{
@@ -169,6 +171,11 @@ class Project extends MY_Controller {
 			$this->model_project->update($unique_id);
 			redirect(base_url('admin/' . $this->url));
 		}
+	}
+	
+	public function create_invoice()
+	{
+		$this->model_project->create_invoice();
 	}
 }
 
