@@ -11,7 +11,7 @@ span.flag.inactive { background:#F00; }
 span.flag.active { background:#0C0; }
 span.flag.delete { background:#000; }
 
-input[readonly=readonly] { background:#EEE; }
+textarea[readonly=readonly], input[readonly=readonly] { background:#EEE; }
 textarea { font-family:Arial; font-size:12px; resize:none; }
 button.inside-form, form#process-data div#action-wrapper > button, form.popup div#action-wrapper > button, form#process-data input[type=submit], form.popup input[type=submit], a.button { text-decoration:none; padding:0 10px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
 button.delete { padding:2px; margin-left:15px; }

@@ -163,7 +163,6 @@ class Project extends MY_Controller {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			echo validation_errors();
 			$this->show('admin/' . $this->url . '/view_' . $this->url, $data);
 		}
 		else
