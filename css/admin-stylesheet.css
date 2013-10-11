@@ -131,3 +131,5 @@ button.inside-form { margin:5px 10px; }
 label.initial { margin:0 !important; }
 #project-top-error { text-align:right; color:red; font-size:11px; margin-right:27px; display:none; }
 #extend-payment-details { display:none; }
+table#invoice_log input { width:100%; box-sizing:border-box; -moz-box-sizing:border-box; }
+table#invoice_log tr td:last-child { text-align:left !important; }

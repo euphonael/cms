@@ -244,4 +244,36 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	$('table#invoice_log input').keypress(function(e){
+		if (e.which == 13) // On enter
+		{
+			alertify.confirm("Add this note to invoice log?", function(f){;
+				if (f)
+				{
+					$.ajax({
+						type : 'POST',
+						data: { invoice_log_description : $('#invoice_log_description').val(), invoice_unique_id : $('#invoice_log_description').attr('name') },
+						url : base_url + 'admin/invoice/add_log',
+						success: function(html)
+						{
+							if (html == 'success')
+							{
+								$('tr#add-new td.note').html($('#invoice_log_description').val());
+								alertify.success('Log added');
+							}
+							else
+							{
+								alertify.error('Note is required');
+							}
+						}
+					});
+				}
+				else
+				{
+					alertify.error('Cancelled');
+				}
+			});
+		}
+	});
 });

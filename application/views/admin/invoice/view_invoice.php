@@ -77,16 +77,36 @@
             <div class="clear"></div>
         </div>
     </form>
-        
     
-	<div id="content-heading">
-    	<h2>Log</h2>
-        <div id="action-wrapper">
-            <button class="delete" id="delete-invoice" title="Delete selected items"><img src="<?php echo base_url('images/icon-delete.png'); ?>" /></button>
-            <div class="clear"></div>
-        </div>
-        
-        <div class="clear"></div>
-    </div>
-    
+	<table id="invoice_log" class="table-data" cellpadding="0" cellspacing="0">
+    	<thead>
+        	<tr>
+            	<th class="small">No.</th>
+                <th class="long">Date / Time</th>
+                <th class="long">Admin</th>
+                <th class="medium">IP Address</th>
+                <th class="note">Note</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<?php $x = 1; ?>
+        	<?php foreach ($log as $item) : ?>
+        	<tr>
+            	<td><?php echo $x; ?></td>
+                <td><?php echo date('d M Y H:i', strtotime($item['invoice_log_datetime'])); ?></td>
+                <td><?php echo $item['admin_name']; ?></td>
+                <td><?php echo $item['invoice_log_admin_ip']; ?></td>
+                <td><?php echo $item['invoice_log_description']; ?></td>
+            </tr>
+            <?php $x++; ?>
+            <?php endforeach; ?>
+            <tr id="add-new">
+            	<td><?php echo $x; ?></td>
+                <td class="date"><?php echo date('d M Y H:i'); ?></td>
+                <td><?php echo $this->session->userdata('admin_name'); ?></td>
+                <td><?php echo $this->input->ip_address(); ?></td>
+                <td class="note"><input type="text" name="<?php echo $row['unique_id']; ?>" id="invoice_log_description" /></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
