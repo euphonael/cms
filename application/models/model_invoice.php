@@ -45,6 +45,37 @@ class Model_invoice extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_type($type = '')
+	{
+		if ($type == 1) // DHM
+		{
+			$query = $this->db->select('unique_id, dhm_name AS name')->where(array('flag !=' => 3, 'DATEDIFF(NOW(), DATE_ADD(dhm_start, INTERVAL dhm_period + dhm_extend_month MONTH)) >=' => '-30'))->get('dhm');
+		}
+		elseif ($type == 2) // Maintenance
+		{
+			$query = $this->db->select('unique_id, maintenance_name AS name')->where(array('flag !=' => 3, 'DATEDIFF(NOW(), DATE_ADD(maintenance_start, INTERVAL maintenance_period + maintenance_extend_month MONTH)) >=' => '-30'))->get('maintenance');
+		}
+		elseif ($type == 3)
+		{
+			$query = $this->db->select('unique_id, project_name AS name')->where(array('flag !=' => 3))->get('project');
+		}
+		
+		if ($type) return $query->result_array();
+		else return false;
+	}
+	
+	public function get_period($table, $item_id)
+	{
+		$query = $this->db->select($table . '_period AS period')->where('unique_id', $item_id)->get($table);
+		return $query->row_array();
+	}
+	
+	public function get_price($table, $item_id)
+	{
+		$query = $this->db->select($table . '_price AS price, ' . $table . '_markup AS markup, ' . $table . '_period AS period')->where('unique_id', $item_id)->get($table);
+		return $query->row_array();
+	}
+	
 	public function get_invoice($unique_id)
 	{
 		$query = $this->db->select('unique_id, invoice_number, invoice_create_date, invoice_note, flag, memo')->where(array('invoice_type' => 3, 'invoice_item_id' => $unique_id, 'flag !=' => 3))->get('invoice');

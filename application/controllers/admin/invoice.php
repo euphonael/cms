@@ -82,6 +82,82 @@ class Invoice extends MY_Controller {
 	{
 		$this->model_invoice->add_log();
 	}
+	
+	public function get_type($type = '')
+	{
+		$result = $this->model_invoice->get_type($type);
+		
+		echo '<option value="">--</option>';
+		
+		if ($result)
+		{
+			foreach ($result as $item)
+			{
+				echo '<option value="' . $item['unique_id'] . '">' . $item['name'] . '</option>';
+			}
+		}
+	}
+	
+	public function get_product($type = '')
+	{
+		$result = $this->model_invoice->get_product();
+		
+		echo '<option value="">--</option>';
+		
+		foreach ($result as $item)
+		{
+			echo '<option value="' . $item['unique_id'] . '">' . $item['product_code'] . ' ' . $item['product_name'] . '</option>';
+		}
+	}
+	
+	public function get_period($invoice_type, $item_id)
+	{
+		$html = '';
+		
+		if ($invoice_type == 1) $table = 'dhm';
+		elseif ($invoice_type == 2) $table = 'maintenance';
+		
+		$period = $this->model_invoice->get_period($table, $item_id);
+		
+		if ($invoice_type == 1) // DHM
+		{
+			$html .= '<select style="display:none;" name="period[]">';
+			
+			for ($x = 12; $x <= 60; $x += 12)
+			{
+				$sel = ($period['period'] == $x) ? ' selected="selected"' : '';
+				$html .= '<option value="' . $x . '"' . $sel . '>' . $x . ' months</option>';
+			}
+			
+			$html .= '</select>';
+		}
+		elseif ($invoice_type == 2) // Maintenance
+		{
+			$html .= '<p style="margin:0; display:none;"><input type="text" class="number-format" maxlength="3" name="period[]" value="' . $period['period'] . '" /> months</p>';
+		}
+		
+		echo $html;
+	}
+	
+	public function get_price($invoice_type, $item_id)
+	{
+		$html = '';
+		
+		if ($invoice_type == 1)
+		{
+			$table = 'dhm';
+			$suffix = ' / year';
+		}
+		elseif ($invoice_type == 2)
+		{
+			$table = 'maintenance';
+			$suffix = ' / month';
+		}
+		
+		$period = $this->model_invoice->get_price($table, $item_id);
+		
+		echo '<span>' . number_format($period['price']) . $suffix . '</span>';
+	}
 }
 
 

@@ -47,13 +47,13 @@ $(document).ready(function(){
 	
 	$('input.number-format').each(function(){
 		var angka = $(this).val().replace(/,/g, '');
-		var format = number_format(angka, 0, '', ',')
+		var format = number_format(angka, 0, '', ',');
 		$(this).val(format);
     });
 	
 	$('input.number-format').keyup(function(){
 		var angka = $(this).val().replace(/,/g, '');
-		var format = number_format(angka, 0, '', ',')
+		var format = number_format(angka, 0, '', ',');
 		
 		if ($(this).hasClass('number-format'))
 		$(this).val(format);
