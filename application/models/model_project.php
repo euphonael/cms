@@ -183,9 +183,8 @@ class Model_project extends CI_Model {
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('invoice_customer_name'))->get('client')->row_array();
 			$additional['invoice_client_id'] = $row['unique_id'];
 		}
-		elseif ($data['project_customer_type'] == 2)
+		elseif ($post['invoice_customer_type'] == 2)
 		{
-			echo 'b';
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('invoice_customer_name'))->get('company')->row_array();
 			$additional['invoice_company_id'] = $row['unique_id'];
 		}
@@ -194,11 +193,19 @@ class Model_project extends CI_Model {
 		
 		$this->db->insert('invoice', $data);
 		
+		// Get current project (Invoice project id)
+		
+		$current = $this->db->select('project_invoice_count')->where('unique_id', $post['invoice_item_id'])->get('project')->row_array();
+		
+		$this->db->where('unique_id', $post['invoice_item_id']);
+		$this->db->update('project', array('project_invoice_count' => $current['project_invoice_count'] + 1));
+		
 		$readable_date = array('readable_date' => date('d M Y'));
 		
 		$result = array_merge($data, $readable_date);
 		
 		echo json_encode($result);
+
 	}
 }
 

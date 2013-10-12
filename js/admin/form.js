@@ -276,4 +276,95 @@ $(document).ready(function(){
 			});
 		}
 	});
+	
+		$('#del-invoice-item').click(function(){
+		$('tbody tr.invoice-item:last-child').remove();
+	});
+	
+	$('#add-invoice-item').click(function(){
+		var current = $('tr.invoice-item').length;
+		
+		$('#temp-invoice').load(base_url + 'admin/invoice/add_item/' + current, function(){
+			$('tbody').append($(this).html());
+		});
+	});
+	
+	$(document).on('change', 'select.invoice_type', (function(){
+		var tr = $(this).closest('tr');
+		var type = $(this).val();
+		
+		$(tr).find('td.item').load(base_url + 'admin/invoice/get_type/' + type, function(){
+
+			$(tr).find('td.period *').fadeOut();
+			$(tr).find('span').fadeOut();
+			
+			if (type)
+			{
+				$('td.item *').fadeIn();
+			}
+			else
+			{
+
+				$('td.item *').fadeOut();
+			}
+		});
+		
+		$(tr).find('td.product').load(base_url + 'admin/invoice/get_product/' + type, function(){
+			if (type)
+			{
+				$('td.product *').fadeIn();
+				if (type == 1) $(this).find('option[value=2]').prop('selected', true); // Value 2 = DHM
+			}
+			else
+			{
+				$('td.product *').fadeOut();
+			}
+		});
+	}));
+	
+	$(document).on('change', 'select.invoice_item_id', (function(){
+		var tr = $(this).closest('tr');
+		var invoice_type = $(this).closest('tr').find('select.invoice_type').val();
+		var item_id = $(this).val();
+		
+		if (item_id)
+		{
+				$(tr).find('td.price').load(base_url + 'admin/invoice/get_price/' + invoice_type + '/' + item_id, function(){
+					$(this).fadeIn();
+				});
+				
+				$(tr).find('td.markup').load(base_url + 'admin/invoice/get_price/' + invoice_type + '/' + item_id + '/markup', function(){
+					$(this).fadeIn();
+				});
+				
+				if (invoice_type != 3)
+				{
+					$(tr).find('td.period').load(base_url + 'admin/invoice/get_period/' + invoice_type + '/' + item_id, function(){
+						
+						$(this).find(':hidden').fadeIn();
+						
+						if (invoice_type == 2) // Maintenance number format month
+						{
+							$(this).keyup(function(){
+								var angka = $(this).find('input.number-format').val().replace(/,/g, '');
+								var format = number_format(angka, 0, '', ',');
+								$(this).find('input.number-format').val(format);
+							});
+						}
+					});
+				}
+				else
+				{
+					$(tr).find('td.period').load(base_url + 'admin/invoice/get_top/' + item_id, function(){
+						$(this).find(':hidden').fadeIn();
+					});
+				}
+		}
+		else
+		{
+			$(tr).find('td.period *').fadeOut();
+			$(tr).find('td.price *').fadeOut();
+			$(tr).find('td.markup *').fadeOut();
+		}
+	}));
 });

@@ -11,8 +11,8 @@ class Model_invoice extends CI_Model {
 	
 	public function get($unique_id)
 	{
-		$query = $this->db->select('invoice.unique_id, invoice_number, invoice_customer_name, invoice_project_name, invoice_price, invoice_markup, invoice_note, invoice_currency, invoice_top, invoice_top_number, invoice_top_amount, invoice_create_date, invoice.flag, invoice.memo, product_name, product_code, bank_name, bank_account_holder, bank_account_number')->join('product', 'product.unique_id = invoice_product_id', 'left')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->where('invoice.unique_id', $unique_id)->get($this->db_table);
-		return $query->row_array();
+		$query = $this->db->select('invoice_type, invoice.unique_id, invoice_number, invoice_customer_name, invoice_project_name, invoice_price, invoice_markup, invoice_note, invoice_currency, invoice_top, invoice_top_number, invoice_top_amount, invoice_create_date, invoice.flag, invoice.memo, product_name, product_code, bank_name, bank_account_holder, bank_account_number')->join('product', 'product.unique_id = invoice_product_id', 'left')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->where('invoice.unique_id', $unique_id)->get($this->db_table);
+		return $query->result_array();
 	}
 	
 	public function get_admin()
@@ -57,14 +57,14 @@ class Model_invoice extends CI_Model {
 		}
 		elseif ($type == 3)
 		{
-			$query = $this->db->select('unique_id, project_name AS name')->where(array('flag !=' => 3))->get('project');
+			$query = $this->db->select('unique_id, project_name AS name')->where(array('flag !=' => 3))->where('project_invoice_count < project_top', NULL, FALSE)->get('project');
 		}
 		
 		if ($type) return $query->result_array();
 		else return false;
 	}
 	
-	public function get_period($table, $item_id)
+	public function get_period($table = '', $item_id)
 	{
 		$query = $this->db->select($table . '_period AS period')->where('unique_id', $item_id)->get($table);
 		return $query->row_array();
@@ -72,8 +72,31 @@ class Model_invoice extends CI_Model {
 	
 	public function get_price($table, $item_id)
 	{
-		$query = $this->db->select($table . '_price AS price, ' . $table . '_markup AS markup, ' . $table . '_period AS period')->where('unique_id', $item_id)->get($table);
+		if ($table != 'project')
+		{
+			$period = ', ' . $table . '_period AS period';
+		}
+		else
+		{
+			$period = ''; // table prokect
+		}
+		
+		$query = $this->db->select($table . '_price AS price, ' . $table . '_markup AS markup' . $period)->where('unique_id', $item_id)->get($table);
 		return $query->row_array();
+	}
+	
+	public function get_top($item_id)
+	{
+		// Get project id
+		$query = $this->db->select('project_invoice_count, project_top, project_top_value')->where('unique_id', $item_id)->get('project');
+		$row = $query->row_array();
+		
+		$existing_invoice = $row['project_invoice_count'];
+		$top = $row['project_top'];
+		$value = explode(',', $row['project_top_value']);
+		$current_top = $existing_invoice + 1;
+		
+		return '<span>' . number_format($value[$existing_invoice]) . ' (Payment ' . $current_top . ' / ' . $top . ')</span>';
 	}
 	
 	public function get_invoice($unique_id)
@@ -84,59 +107,151 @@ class Model_invoice extends CI_Model {
 	
 	public function insert()
 	{
-		$data = array(
-			'unique_id'				=> get_unique_id($this->db_table),
-			'project_name'			=> $this->input->post('project_name'),
-			'project_bank_id'		=> $this->input->post('project_bank_id'),
-			'project_currency'		=> $this->input->post('project_currency'),
-			'project_price'			=> str_replace(',', '', $this->input->post('project_price')),
-			'project_markup'		=> str_replace(',', '', $this->input->post('project_markup')),
-			'project_note'			=> $this->input->post('project_note'),
-			'project_top'			=> count($this->input->post('project_top')),
-			'project_customer_type'	=> $this->input->post('project_customer_type'),
-			'project_product_id'	=> $this->input->post('project_product_id'),
-			'project_sales_id'		=> $this->input->post('project_sales_id'),
-			'flag'					=> $this->input->post('flag'),
-			'memo'					=> $this->input->post('memo')
-		);
+		$post = $this->input->post();
 		
-		if ($this->input->post('project_top_type') == 1) // Percent
+		$count = 0;
+		foreach ($post['invoice_item_id'] as $foo)
 		{
-			$each = array();
-			
-			foreach ($this->input->post('project_top') as $item)
+			if ($foo) $count++; // Jumlah invoice item
+		}
+		
+		$unique_id = get_unique_id('invoice');
+
+		for ($i = 0; $i <= $count; $i++)
+		{
+			if ($post['invoice_type'][$i])
 			{
-				$each[] = ($data['project_price'] + $data['project_markup']) * $item / 100;
+				$data = array(
+					'unique_id'				=> $unique_id,
+					'invoice_type'			=> $post['invoice_type'][$i],
+					'invoice_item_id'		=> $post['invoice_item_id'][$i],
+					'invoice_product_id'	=> $post['invoice_product_id'][$i],
+					'invoice_number'		=> 'Auto generate by add invoice',
+					'invoice_create_date'	=> date('Y-m-d'),
+					'flag'					=> 1
+				);
+				
+				// Get type detail
+				if ($data['invoice_type'] == 1)
+				{
+					$row = $this->db->get_where('dhm', array('unique_id' => $data['invoice_item_id']))->row_array();
+					
+					$detail = array(
+						'invoice_customer_type' => $row['dhm_customer_type'],
+						'invoice_client_id'		=> $row['dhm_client_id'],
+						'invoice_company_id'	=> $row['dhm_company_id'],
+						'invoice_project_name'	=> $row['dhm_name'] . ' ' . date('M Y'),
+						'invoice_price'			=> $row['dhm_price'],
+						'invoice_markup'		=> $row['dhm_markup'],
+						'invoice_commission'	=> 0,
+						'invoice_top'			=> 1,
+						'invoice_top_number'	=> 1,
+						'invoice_top_percent'	=> 100,
+						'invoice_top_amount'	=> ($post['period'][$i] / 12 * $row['dhm_price']) + $row['dhm_markup'],
+						'invoice_bank_id'		=> $row['dhm_bank_id'],
+					);
+					
+					if ($row['dhm_customer_type'] == 1)
+						$cust = $this->db->select('client_name AS name')->where('unique_id', $row['dhm_client_id'])->get('client')->row_array();
+					elseif ($row['dhm_customer_type'] == 2)
+						$cust = $this->db->select('company_name AS name')->where('unique_id', $row['dhm_company_id'])->get('company')->row_array();
+	
+					$currency = $this->db->select('bank_currency')->where('unique_id', $row['dhm_bank_id'])->get('bank')->row_array();
+										
+					$detail['invoice_customer_name'] = $cust['name'];
+					$detail['invoice_currency'] = $currency['bank_currency'];
+					
+					$final = array_merge($data, $detail);
+					
+					$this->db->insert('invoice', $final);
+					
+					// Extend DHM
+					$this->db->where('unique_id', $data['invoice_item_id']);
+					$this->db->update('dhm', array('dhm_extend_counter' => $row['dhm_extend_counter'] + 1, 'dhm_extend_month' => $row['dhm_extend_month'] + $post['period'][$i]));
+				}
+				
+				elseif ($data['invoice_type'] == 2)
+				{
+					$row = $this->db->get_where('maintenance', array('unique_id' => $data['invoice_item_id']))->row_array();
+					
+					$detail = array(
+						'invoice_customer_type' => $row['maintenance_customer_type'],
+						'invoice_client_id'		=> $row['maintenance_client_id'],
+						'invoice_company_id'	=> $row['maintenance_company_id'],
+						'invoice_project_name'	=> $row['maintenance_name'] . ' ' . date('M Y'),
+						'invoice_price'			=> $row['maintenance_price'],
+						'invoice_markup'		=> $row['maintenance_markup'],
+						'invoice_commission'	=> 0,
+						'invoice_top'			=> 1,
+						'invoice_top_number'	=> 1,
+						'invoice_top_percent'	=> 100,
+						'invoice_top_amount'	=> ($post['period'][$i] * $row['maintenance_price']) + $row['maintenance_markup'],
+						'invoice_bank_id'		=> $row['maintenance_bank_id'],
+					);
+					
+					if ($row['maintenance_customer_type'] == 1)
+						$cust = $this->db->select('client_name AS name')->where('unique_id', $row['maintenance_client_id'])->get('client')->row_array();
+					elseif ($row['maintenance_customer_type'] == 2)
+						$cust = $this->db->select('company_name AS name')->where('unique_id', $row['maintenance_company_id'])->get('company')->row_array();
+	
+					$currency = $this->db->select('bank_currency')->where('unique_id', $row['maintenance_bank_id'])->get('bank')->row_array();
+										
+					$detail['invoice_customer_name'] = $cust['name'];
+					$detail['invoice_currency'] = $currency['bank_currency'];
+					
+					$final = array_merge($data, $detail);
+					
+					$this->db->insert('invoice', $final);
+					
+					// Extend Maintenance
+					$this->db->where('unique_id', $data['invoice_item_id']);
+					$this->db->update('maintenance', array('maintenance_extend_counter' => $row['maintenance_extend_counter'] + 1, 'maintenance_extend_month' => $row['maintenance_extend_month'] + $post['period'][$i]));
+				}
+				elseif ($data['invoice_type'] == 3)
+				{
+					$row = $this->db->get_where('project', array('unique_id' => $data['invoice_item_id']))->row_array();
+					
+					$amount = explode(',', $row['project_top_value']);
+					
+					$detail = array(
+						'invoice_customer_type' => $row['project_customer_type'],
+						'invoice_client_id'		=> $row['project_client_id'],
+						'invoice_company_id'	=> $row['project_company_id'],
+						'invoice_project_name'	=> $row['project_name'],
+						'invoice_price'			=> $row['project_price'],
+						'invoice_markup'		=> $row['project_markup'],
+						'invoice_commission'	=> 0,
+						'invoice_top'			=> $row['project_top'],
+						'invoice_top_number'	=> $row['project_invoice_count'] + 1,
+						'invoice_top_amount'	=> $amount[$row['project_invoice_count']],
+						'invoice_bank_id'		=> $row['project_bank_id'],
+					);
+					
+					if ($row['project_customer_type'] == 1)
+						$cust = $this->db->select('client_name AS name')->where('unique_id', $row['project_client_id'])->get('client')->row_array();
+					elseif ($row['project_customer_type'] == 2)
+						$cust = $this->db->select('company_name AS name')->where('unique_id', $row['project_company_id'])->get('company')->row_array();
+	
+					$currency = $this->db->select('bank_currency')->where('unique_id', $row['project_bank_id'])->get('bank')->row_array();
+										
+					$detail['invoice_customer_name'] = $cust['name'];
+					$detail['invoice_currency'] = $currency['bank_currency'];
+					
+					$final = array_merge($data, $detail);
+					
+					$this->db->insert('invoice', $final);
+					
+					// Update Project Invoice Count
+					$this->db->where('unique_id', $data['invoice_item_id']);
+					$this->db->update('project', array('project_invoice_count' => $row['project_invoice_count'] + 1));
+				}
 			}
 			
-			$data['project_top_value'] = implode(',', $each);
-		}
-		elseif ($this->input->post('project_top_type') == 2)
-		{
-			$value = array();
-			
-			foreach ($this->input->post('project_top') as $item)
-			{
-				$value[] = str_replace(',', '', $item);
-			}
-			
-			$data['project_top_value'] = implode(',', $value);
+			// Missing: Customer type, Customer Name, client_id, company_id, invoice project name, invoice_price, invoice_markup, invoice_commission, invoice_top, invoice_top_number, invoice_top_percent, invoice_top_amount, invoice_bank_id, invoice_currency, invoice_note
 		}
 		
-		if ($data['project_customer_type'] == 1)
-		{
-			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('project_client_name'))->get('client')->row_array();
-			$data['project_client_id'] = $row['unique_id'];
-		}
-		elseif ($data['project_customer_type'] == 2)
-		{
-			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('project_company_name'))->get('company')->row_array();
-			$data['project_company_id'] = $row['unique_id'];
-		}
 		
-		$this->db->insert($this->db_table, $data);
 		
-		log_action('INSERT', $this->db_table, $data['unique_id']);
 	}
 	
 	public function update($unique_id)

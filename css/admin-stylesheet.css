@@ -133,3 +133,13 @@ label.initial { margin:0 !important; }
 #extend-payment-details { display:none; }
 table#invoice_log input { width:100%; box-sizing:border-box; -moz-box-sizing:border-box; }
 table#invoice_log tr td:last-child { text-align:left !important; }
+
+table#add-invoice select { width:100%; box-sizing:border-box; -moz-box-sizing:border-box; }
+table#add-invoice input { width:15%; box-sizing:border-box; -moz-box-sizing:border-box; }
+select.invoice_item_id, select.invoice_product_id { display:none; }
+table#add-invoice td.price, table#add-invoice td.markup { text-align:center; }
+button#add-invoice-item { margin-left:0; }
+#temp-invoice { display:none; }
+#add-invoice_info, #add-invoice_paginate, #add-invoice_length, #add-invoice_filter { display:none; }
+
+#form-content div.invoice-item { float:left; margin-right:50px; }
