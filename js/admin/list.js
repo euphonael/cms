@@ -16,6 +16,12 @@ $(document).ready(function(){
 		var flag = $(this);
 		var notes = $(this).closest('td').siblings('td.memo');
 		
+		if (db_table == 'invoice')
+		{
+			var flag = $('tr[title=' + unique_id + '] span.flag');
+			var notes = $('tr[title=' + unique_id + '] td.memo');
+		}
+		
 		if (current_status == 'active')
 		{
 			var change_to = 'inactive';

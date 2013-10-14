@@ -31,7 +31,7 @@
         <tbody>
             <?php $x = 1; ?>
             <?php foreach ($result as $row) : ?>
-            <tr id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
+            <tr title="<?php echo $row['unique_id']; ?>" id="<?php echo $this->db_table; ?>-<?php echo $row['unique_id']; ?>">
                 <td><?php echo $x; ?></td>
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['invoice_number']; ?></a></td>
                 <?php if ($row['invoice_type'] == 1) $url = 'dhm'; elseif ($row['invoice_type'] == 2) $url = 'maintenance'; elseif ($row['invoice_type'] == 3) $url = 'project'; ?>
