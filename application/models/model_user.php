@@ -2,11 +2,15 @@
 
 class Model_user extends CI_Model {
 
-	public function list_data()
+	public function list_data($where = 'flag != 3')
 	{
-		$query = $this->db->select('unique_id, admin_username, admin_name, admin_join_date, admin_dob, admin_phone, admin_work_email, admin_job_position, admin_privilege, flag, memo')->order_by('unique_id', 'ASC')->where('flag !=', 3)->get($this->db_table);
+		$query = "SELECT `unique_id`, `admin_resign_date`, `admin_username`, `admin_name`, `admin_join_date`, `admin_dob`, `admin_phone`, `admin_work_email`, `admin_job_position`, `admin_privilege`, `flag`, `memo`, PERIOD_DIFF(date_format(NOW(), '%Y%m'), date_format(admin_join_date, '%Y%m')) AS total_days_now, PERIOD_DIFF(date_format(admin_resign_date, '%Y%m'), date_format(admin_join_date, '%Y%m')) AS total_days_resign FROM (`admin`) WHERE " . $where . " ORDER BY `unique_id` ASC";
 		
-		return $query->result_array();
+		
+#		$query = $this->db->select('unique_id, admin_resign_date, admin_username, admin_name, admin_join_date, admin_dob, admin_phone, admin_work_email, admin_job_position, admin_privilege, flag, memo')->select('PERIOD_DIFF(date_format(NOW(), \'%Y%m\'), date_format(admin_join_date, \'%Y%m\')) AS total_days_now', false)->select('PERIOD_DIFF(date_format(admin_resign_date, \'%Y%m\'), date_format(admin_join_date, \'%Y%m\')) AS total_days_resign', false)->order_by('unique_id', 'ASC')->where($where)->get($this->db_table);
+
+//FLOOR(TIME_TO_SEC(TIMEDIFF(tour_product.date_return, tour_product.date_departure))/86400) AS total_days		
+		return $query;
 	}
 	
 	public function get($unique_id)
@@ -120,6 +124,11 @@ class Model_user extends CI_Model {
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
+		
+		if ($this->input->post('admin_resign_date'))
+		{
+			$data['flag'] = 2;
+		}
 
 		if ($this->input->post('admin_password')) $data['admin_password'] = $this->input->post('admin_password');
 		

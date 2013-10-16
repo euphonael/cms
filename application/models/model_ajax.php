@@ -22,14 +22,23 @@ class Model_ajax extends CI_Model {
 		$this->db->update($this->input->post('db_table'), $data);
 	}
 	
-	public function delete_row()
-	{		
+	public function delete_row($project_id = '')
+	{
 		$data = array(
 			'flag'	=> 3
 		);
 		
 		$this->db->where('unique_id', $this->input->post('unique_id'));
 		$this->db->update($this->input->post('db_table'), $data);
+		
+		if ($this->input->post('db_table') == 'invoice')
+		{
+			$row = $this->db->select('project_invoice_count')->where('unique_id', $project_id)->get('project')->row_array();
+
+			// Update project invoice count
+			$this->db->where('unique_id', $project_id);
+			$this->db->update('project', array('project_invoice_count' => $row['project_invoice_count'] - 1));
+		}
 	}
 }
 

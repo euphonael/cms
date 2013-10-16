@@ -19,6 +19,44 @@ $(document).ready(function(){
         <div class="clear"></div>
     </div>
     
+    <form id="list-filter" method="post" action="<?php echo current_url(); ?>">
+        <div>
+            <p>
+                <label>Domain</label>
+                <select name="domain">
+                    <option value="">--</option>
+                    <?php foreach ($domain_list as $item) : ?>
+                    <option value="<?php echo $item['unique_id']; ?>" <?php if ($this->input->post('domain') == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['domain_name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>Hosting</label>
+                <select name="hosting">
+                    <option value="">--</option>
+                    <?php foreach ($hosting_list as $item) : ?>
+                    <option value="<?php echo $item['unique_id']; ?>" <?php if ($this->input->post('hosting') == $item['unique_id']) echo 'selected="selected"'; ?>><?php echo $item['hosting_name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+        </div>
+    	<div>
+        	<p>
+                <label>Flag</label>
+                <select name="flag">
+                    <option value="">--</option>
+                    <option value="1" <?php if ($this->input->post('flag') == 1) echo 'selected="selected"'; ?>>Active</option>
+                    <option value="2" <?php if ($this->input->post('flag') == 2) echo 'selected="selected"'; ?>>Inactive</option>
+                    <option value="3" <?php if ($this->input->post('flag') == 3) echo 'selected="selected"'; ?>>Deleted</option>
+                </select>
+            </p>
+        </div>
+        <div class="clear"></div>
+        <input type="submit" value="Search" />
+    </form>
+    
     <table id="<?php echo $this->db_table; ?>" class="table-data" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -28,6 +66,8 @@ $(document).ready(function(){
                 <th class="medium">Extend</th>
                 <th>Domain</th>
                 <th>Hosting</th>
+                <th>Username</th>
+                <th>Password</th>
                 <th>Bank</th>
                 <th>Start Date</th>
                 <th>End Date</th>
@@ -50,7 +90,9 @@ $(document).ready(function(){
                     <?php endif; ?>
                 </td>
                 <td><?php echo $row['domain_name']; ?></td>
-                <td><?php echo $row['hosting_name']; ?></td>
+                <td><a href="<?php echo prep_url($row['hosting_cpanel_url']); ?>" target="_blank"><?php echo $row['hosting_name']; ?></a></td>
+                <td><?php echo $row['hosting_cpanel_username']; ?></td>
+                <td><?php echo $row['hosting_cpanel_password']; ?></td>
                 <td><?php echo $row['bank_name']; ?></td>
                 <td><?php echo date('d M Y', strtotime($row['dhm_start'])); ?></td>
                 <td class="dhm-end-date"><?php echo date('d M Y', strtotime($row['dhm_end'])); ?></td>

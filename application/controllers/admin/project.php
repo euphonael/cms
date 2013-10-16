@@ -20,8 +20,86 @@ class Project extends MY_Controller {
 			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
 			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
 		);
-
-		$db_query = $this->model_project->list_data();
+		
+		if ($this->input->post('flag')) $where = "project.flag = '" . $this->input->post('flag') . "'";
+		else $where = "project.flag = 1";
+		
+		if ($this->input->post('customer_type'))
+		{
+			$where .= " AND project_customer_type = '" . $this->input->post('customer_type') . "'";
+			
+			if ($this->input->post('customer_type') == 1)
+			{
+				// Get client id
+				$client = $this->model_project->get_client_id($this->input->post('client'));
+				$where .= " AND project_client_id = '" . $client['unique_id'] . "'";
+			}
+			elseif ($this->input->post('customer_type') == 2)
+			{
+				// Get company id
+				$company = $this->model_project->get_company_id($this->input->post('company'));
+				$where .= " AND project_company_id = '" . $company['unique_id'] . "'";
+			}
+		}
+		
+		if ($this->input->post('start'))
+		{
+			if ( ! $this->input->post('end'))
+				$where .= " AND project_create_date = '" . $this->input->post('start') . "'";
+			
+			elseif ($this->input->post('end'))
+			{
+				$where .= " AND project_create_date >= '" . $this->input->post('start') . "'";
+				$where .= " AND project_create_date <= '" . $this->input->post('end') . "'";
+			}
+		}
+		
+		if ($this->input->post('amount'))
+		{	
+			$where .= " AND project_price >= " . $this->input->post('amount_start') . "";
+			$where .= " AND project_price <= " . $this->input->post('amount_end') . "";
+		}
+		
+		
+		if ($this->input->post('product'))
+		{
+			$where .= " AND project_product_id = '" . $this->input->post('product') . "'";
+		}
+		
+		if ($this->input->post('sales'))
+		{
+			$where .= " AND project_sales_id = '" . $this->input->post('sales') . "'";
+		}
+		
+		if ($this->input->post('payment'))
+		{			
+			if ($this->input->post('payment') == 'ALL')
+			{
+				$where .= " AND project_invoice_count = project_top";
+			}
+			else
+			{
+				$where .= " AND project_invoice_count = '" . $this->input->post('payment') . "'";
+			}
+		}
+		
+		$data['product_list'] = $this->model_project->get_product();
+		$data['admin_list'] = $this->model_project->get_admin();
+		foreach ($this->model_project->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
+		foreach ($this->model_project->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
+		
+		$db_query = $this->model_project->list_data($where);
 		
 		$data['result'] = $db_query;
 

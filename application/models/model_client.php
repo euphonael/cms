@@ -4,7 +4,7 @@ class Model_client extends CI_Model {
 
 	public function list_data()
 	{	
-		$query = $this->db->select('m.unique_id, f.company_name, client_mobile, client_name, client_address, client_country, client_city, client_phone, client_email, m.flag, m.memo')->where('m.flag !=', 3)->join('company f', 'client_company_id = f.unique_id', 'left')->get($this->db_table . ' m');
+		$query = $this->db->select('m.unique_id, f.company_name, client_mobile, client_name, client_address, client_country, client_city, client_phone, client_email, m.flag, m.memo')->where('m.flag', 1)->join('company f', 'client_company_id = f.unique_id', 'left')->get($this->db_table . ' m');
 		
 		return $query->result_array();
 	}

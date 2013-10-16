@@ -93,7 +93,7 @@
                     <legend>Staff Info</legend>
                     <p>
                         <label class="label-input" for="admin_work_email">Work E-mail</label>
-                        <input type="text" name="admin_work_email" id="admin_work_email" class="email" value="<?php echo form_value('admin_work_email', $row); ?>" />
+                        <input type="text" name="admin_work_email" id="admin_work_email" class="email required" value="<?php echo form_value('admin_work_email', $row); ?>" />
                         <?php echo form_error('admin_work_email'); ?>
                     </p>
                     <p>
@@ -118,6 +118,18 @@
                     <p>
                         <label class="label-input" for="admin_resign_date">Resign Date</label>
                         <input type="text" name="admin_resign_date" id="admin_resign_date" class="datepicker" value="<?php echo form_value('admin_resign_date', $row); ?>" />
+                    </p>
+                    
+                    <?php
+					
+					$end = ($row['admin_resign_date'] == '0000-00-00') ? new DateTime(date('Y-m-d')) : new DateTime($row['admin_resign_date']);
+					$start = new DateTime($row['admin_join_date']);
+					$diff = $start->diff($end);
+					
+					?>
+                    <p>
+                    	<label class="label-input">Has worked for</label>
+                        <input type="text" readonly="readonly" class="readonly" value="<?php echo $diff->format('%y') * 12 + $diff->format('%m'); ?> months" />
                     </p>
                 </fieldset>
                 

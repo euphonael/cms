@@ -19,6 +19,22 @@ $(document).ready(function(){
         <div class="clear"></div>
     </div>
     
+    <form id="list-filter" method="post" action="<?php echo current_url(); ?>">
+    	<div>
+        	<p>
+                <label>Flag</label>
+                <select name="flag">
+                    <option value="">--</option>
+                    <option value="1" <?php if ($this->input->post('flag') == 1) echo 'selected="selected"'; ?>>Active</option>
+                    <option value="2" <?php if ($this->input->post('flag') == 2) echo 'selected="selected"'; ?>>Inactive</option>
+                    <option value="3" <?php if ($this->input->post('flag') == 3) echo 'selected="selected"'; ?>>Deleted</option>
+                </select>
+            </p>
+        </div>
+        <div class="clear"></div>
+        <input type="submit" value="Search" />
+    </form>
+    
     <table id="<?php echo $this->db_table; ?>" class="table-data" cellpadding="0" cellspacing="0">
         <thead>
             <tr>

@@ -4,7 +4,7 @@
 body { font-size:12px; font-family:Arial; color:#000; margin:0; padding:0; }
 input::-moz-focus-inner { border:0; }
 
-div.clear { clear:both; }
+div.clear { clear:both; float:none !important; margin:0 !important; }
 span.clear { clear:both; display:block; }
 
 span.flag.inactive { background:#F00; }
@@ -13,7 +13,7 @@ span.flag.delete { background:#000; }
 
 textarea[readonly=readonly], input[readonly=readonly] { background:#EEE; }
 textarea { font-family:Arial; font-size:12px; resize:none; }
-button.inside-form, form#process-data div#action-wrapper > button, form.popup div#action-wrapper > button, form#process-data input[type=submit], form.popup input[type=submit], a.button { text-decoration:none; padding:0 10px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
+#list-filter input[type=submit], button.inside-form, form#process-data div#action-wrapper > button, form.popup div#action-wrapper > button, form#process-data input[type=submit], form.popup input[type=submit], a.button { text-decoration:none; padding:0 10px; display:block; text-align:center; height:25px; font-weight:bold; line-height:25px; font-size:12px; font-family:Arial; }
 button.delete { padding:2px; margin-left:15px; }
 textarea:focus, input:focus, a.button:focus, button:focus { border-color:#666 !important; }
 select, textarea, input[type=submit], input[type=password], input[type=text], a.button, button { padding:3px; border:1px solid #CCC; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
@@ -91,7 +91,7 @@ table.table-data > tbody > tr > td a.button.inside { background:#FFC500; color:#
 table.table-data > tbody > tr > td a.button.inside:hover { background:#99CC33; }
 
 /* Form Process (Add - Edit) */
-form.popup div#action-wrapper > input[type=submit], form#process-data div#action-wrapper > input[type=submit] { height:33px; float:left; }
+#list-filter input[type=submit], form.popup div#action-wrapper > input[type=submit], form#process-data div#action-wrapper > input[type=submit] { height:33px; float:left; }
 button.inside-form, form.popup div#action-wrapper > button, form#process-data div#action-wrapper > button { height:33px; float:left; }
 form#process-data div#action-wrapper > button[type=reset], form.popup div#action-wrapper > button[type=reset] { margin:0 15px; }
 button.inside-form { margin:5px 10px; }
@@ -143,3 +143,17 @@ button#add-invoice-item { margin-left:0; }
 #add-invoice_info, #add-invoice_paginate, #add-invoice_length, #add-invoice_filter { display:none; }
 
 #form-content div.invoice-item { float:left; margin-right:50px; }
+
+#list-filter p { position:relative; }
+#list-filter div { float:left; margin-right:15px; }
+#list-filter label { display:block; font-weight:bold; margin-bottom:5px; }
+#list-filter label.error { position:absolute; font-weight:normal; }
+#list-filter input[type=submit] { float:none; }
+#list-filter label.label { font-weight:normal; margin-top:2px; }
+#list-filter div.radio input, #list-filter label.label { float:left; margin-right:5px; }
+#slider-range { float:none !important; width:300px; margin-left:8px; }
+#list-filter input#amount { width:100%; }
+#ui-datepicker-div { z-index:999 !important; }
+#action-wrapper a.button.inside { margin-right:15px; }
+#invoice_detail_wrapper { margin:0 0 100px 0 !important; }
+#invoice_detail_wrapper > div { display:none; }

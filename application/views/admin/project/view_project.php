@@ -241,7 +241,7 @@ $(document).ready(function(){
 					?>
                 </td>
                 <td class="memo"><?php if (isset($invoice_list[$x]['memo'])) echo $invoice_list[$x]['memo']; ?></td>
-                <td class="del"><?php if (isset($invoice_list[$x]['invoice_number'])) echo '<input type="checkbox" />'; ?></td>
+                <td attr="<?php echo $row['unique_id']; ?>" class="del"><?php if (isset($invoice_list[$x]['invoice_number'])) echo '<input type="checkbox" />'; ?></td>
             </tr>
             <?php $x++; ?>
             <?php endfor; ?>

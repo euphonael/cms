@@ -2,9 +2,9 @@
 
 class Model_maintenance extends CI_Model {
 
-	public function list_data()
+	public function list_data($where)
 	{	
-		$query = $this->db->select('m.unique_id, m.maintenance_name, maintenance_period, client_name, m.maintenance_price, m.maintenance_start, com.company_name, ban.bank_name, m.flag, m.memo')->select('DATE_ADD(m.maintenance_start, INTERVAL m.maintenance_period + m.maintenance_extend_month MONTH) as maintenance_end', false)->select('DATEDIFF(NOW(), DATE_ADD(m.maintenance_start, INTERVAL m.maintenance_period + m.maintenance_extend_month MONTH)) AS date_diff', false)->where('m.flag !=', 3)->join('company com', 'com.unique_id = m.maintenance_company_id', 'left')->join('client', 'client.unique_id = maintenance_client_id', 'left')->join('bank ban', 'ban.unique_id = m.maintenance_bank_id', 'left')->order_by('maintenance_end', 'ASC')->get($this->db_table . ' m');
+		$query = $this->db->select('m.unique_id, m.maintenance_name, maintenance_period, client_name, m.maintenance_price, m.maintenance_start, com.company_name, ban.bank_name, m.flag, m.memo')->select('DATE_ADD(m.maintenance_start, INTERVAL m.maintenance_period + m.maintenance_extend_month MONTH) as maintenance_end', false)->select('DATEDIFF(NOW(), DATE_ADD(m.maintenance_start, INTERVAL m.maintenance_period + m.maintenance_extend_month MONTH)) AS date_diff', false)->where($where)->join('company com', 'com.unique_id = m.maintenance_company_id', 'left')->join('client', 'client.unique_id = maintenance_client_id', 'left')->join('bank ban', 'ban.unique_id = m.maintenance_bank_id', 'left')->order_by('maintenance_end', 'ASC')->get($this->db_table . ' m');
 		
 		return $query->result_array();
 	}
@@ -109,13 +109,14 @@ class Model_maintenance extends CI_Model {
 		$price = str_replace(',', '', $this->input->post('maintenance_price')) * $period;
 		$markup = str_replace(',', '', $this->input->post('maintenance_markup'));
 		$total = $price + $markup;
+		$invoice_number = generate_invoice_number($this->input->post('maintenance_bank_id'));
 		
 		$data = array(
 			'unique_id'				=> get_unique_id('invoice'),
 			'invoice_type'			=> 2,
 			'invoice_item_id'		=> $unique_id,
 			'invoice_customer_type'	=> $this->input->post('invoice_customer_type'),
-			'invoice_number'		=> 'Auto Generate - TEMP',
+			'invoice_number'		=> $invoice_number,
 			'invoice_project_name'	=> $this->input->post('invoice_project_name'),
 			'invoice_product_id'	=> $this->input->post('maintenance_product_id'),
 			'invoice_price'			=> $price,

@@ -2,9 +2,9 @@
 
 class Model_dhm extends CI_Model {
 
-	public function list_data()
+	public function list_data($where = array('m.flag' => 1))
 	{	
-		$query = $this->db->select('m.unique_id, m.dhm_name, m.dhm_price, m.dhm_start, client_name, com.company_name, dom.domain_name, hos.hosting_name, ban.bank_name, m.flag, m.memo')->select('DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH) as dhm_end', false)->select('DATEDIFF(NOW(), DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH)) AS date_diff', false)->where('m.flag !=', 3)->join('company com', 'com.unique_id = m.dhm_company_id', 'left')->join('domain dom', 'dom.unique_id = m.dhm_domain_id', 'left')->join('hosting hos', 'hos.unique_id = m.dhm_hosting_id', 'left')->join('client', 'client.unique_id = dhm_client_id', 'left')->join('bank ban', 'ban.unique_id = m.dhm_bank_id', 'left')->order_by('dhm_end', 'ASC')->get($this->db_table . ' m');
+		$query = $this->db->select('m.unique_id, m.dhm_name, m.dhm_price, m.dhm_start, client_name, com.company_name, dom.domain_name, hos.hosting_name, ban.bank_name, m.flag, m.memo, hosting_cpanel_username, hosting_cpanel_password, hosting_cpanel_url')->select('DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH) as dhm_end', false)->select('DATEDIFF(NOW(), DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH)) AS date_diff', false)->where($where)->join('company com', 'com.unique_id = m.dhm_company_id', 'left')->join('domain dom', 'dom.unique_id = m.dhm_domain_id', 'left')->join('hosting hos', 'hos.unique_id = m.dhm_hosting_id', 'left')->join('client', 'client.unique_id = dhm_client_id', 'left')->join('bank ban', 'ban.unique_id = m.dhm_bank_id', 'left')->order_by('dhm_end', 'ASC')->get($this->db_table . ' m');
 		
 		return $query->result_array();
 	}
@@ -119,14 +119,14 @@ class Model_dhm extends CI_Model {
 		$price = str_replace(',', '', $this->input->post('dhm_price')) * $period;
 		$markup = str_replace(',', '', $this->input->post('dhm_markup'));
 		$total = $price + $markup;
-		
+		$invoice_number = generate_invoice_number($this->input->post('dhm_bank_id'));
 		
 		$data = array(
 			'unique_id'				=> get_unique_id('invoice'),
 			'invoice_type'			=> 1,
 			'invoice_item_id'		=> $unique_id,
 			'invoice_customer_type'	=> $this->input->post('invoice_customer_type'),
-			'invoice_number'		=> 'Auto Generate - TEMP',
+			'invoice_number'		=> $invoice_number,
 			'invoice_project_name'	=> $this->input->post('invoice_project_name'),
 			'invoice_product_id'	=> '1', // Anggep aja ini DH01 (Domain Hosting)
 			'invoice_price'			=> $price,

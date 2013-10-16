@@ -20,8 +20,17 @@ class Dhm extends MY_Controller {
 			'css'	=> array('jquery.fancybox', 'alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
 			'js'	=> array('jquery.fancybox.pack', 'alertify', 'jquery.dataTables.min', 'admin/list')
 		);
+		
+		if ($this->input->post('flag')) $where['m.flag'] = $this->input->post('flag');
+		else $where['m.flag'] = 1;
+		
+		if ($this->input->post('domain')) $where['m.dhm_domain_id'] = $this->input->post('domain');
+		if ($this->input->post('hosting')) $where['m.dhm_hosting_id'] = $this->input->post('hosting');
 
-		$db_query = $this->model_dhm->list_data();
+		$db_query = $this->model_dhm->list_data($where);
+		
+		$data['domain_list'] = $this->model_dhm->get_domain();
+		$data['hosting_list'] = $this->model_dhm->get_hosting();
 		
 		$data['result'] = $db_query;
 

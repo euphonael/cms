@@ -2,11 +2,15 @@
 
 class Model_project extends CI_Model {
 
-	public function list_data()
-	{	
-		$query = $this->db->select('project.unique_id, project_name, project_markup, project_top_value, project_price, project_top, project_top_value, company_name, client_name, bank_name, project.flag, project.memo, admin_name, product_name')->where('project.flag !=', 3)->join('company com', 'com.unique_id = project_company_id', 'left')->join('client', 'client.unique_id = project_client_id', 'left')->join('product', 'product.unique_id = project_product_id', 'left')->join('admin', 'admin.unique_id = project_sales_id', 'left')->join('bank ban', 'ban.unique_id = project_bank_id', 'left')->get($this->db_table);
+	public function list_data($where)
+	{
+		$query = $this->db->select('project.unique_id, project_create_date, product_code, project_name, project_markup, project_top_value, project_price, project_invoice_count, project_top, project_top_value, company_name, client_name, bank_name, project.flag, project.memo, admin_name, product_name');
+		$query = $this->db->where($where);
+		
+		$query = $this->db->join('company com', 'com.unique_id = project_company_id', 'left')->join('client', 'client.unique_id = project_client_id', 'left')->join('product', 'product.unique_id = project_product_id', 'left')->join('admin', 'admin.unique_id = project_sales_id', 'left')->join('bank ban', 'ban.unique_id = project_bank_id', 'left')->get($this->db_table);
 		
 		return $query->result_array();
+		
 	}
 	
 	public function get($unique_id)
@@ -17,19 +21,19 @@ class Model_project extends CI_Model {
 	
 	public function get_admin()
 	{
-		$query = $this->db->select('unique_id, admin_name')->order_by('admin_name', 'asc')->where('flag !=', 3)->get('admin');
+		$query = $this->db->select('unique_id, admin_name')->order_by('admin_name', 'asc')->where(array('flag' => 1, 'admin_resign_date' => '0000-00-00'))->get('admin');
 		return $query->result_array();
 	}
 	
 	public function get_company()
 	{
-		$query = $this->db->select('company_name')->where('flag !=', 3)->get('company');
+		$query = $this->db->select('unique_id, company_name')->where('flag !=', 3)->get('company');
 		return $query->result_array();
 	}
 	
 	public function get_client()
 	{
-		$query = $this->db->select('client_name')->where('flag !=', 3)->get('client');
+		$query = $this->db->select('unique_id, client_name')->where('flag !=', 3)->get('client');
 		return $query->result_array();
 	}
 	
@@ -37,6 +41,18 @@ class Model_project extends CI_Model {
 	{
 		$query = $this->db->select('unique_id, product_name, product_code')->where('flag !=', 3)->get('product');
 		return $query->result_array();
+	}
+	
+	public function get_client_id($name)
+	{
+		$query = $this->db->select('unique_id')->where('client_name', $name)->get('client');
+		return $query->row_array();
+	}
+	
+	public function get_company_id($name)
+	{
+		$query = $this->db->select('unique_id')->where('company_name', $name)->get('company');
+		return $query->row_array();
 	}
 	
 	public function get_bank()
@@ -65,6 +81,7 @@ class Model_project extends CI_Model {
 			'project_customer_type'	=> $this->input->post('project_customer_type'),
 			'project_product_id'	=> $this->input->post('project_product_id'),
 			'project_sales_id'		=> $this->input->post('project_sales_id'),
+			'project_create_date'	=> date('Y-m-d'),
 			'flag'					=> $this->input->post('flag'),
 			'memo'					=> $this->input->post('memo')
 		);
@@ -169,7 +186,8 @@ class Model_project extends CI_Model {
 	{
 		$post = $this->input->post();
 		
-		$invoice_number = 'AUTO GENERATE - TEMP';
+		$this_item = $this->db->select('project_bank_id')->where('unique_id', $post['invoice_item_id'])->get('project')->row_array();
+		$invoice_number = generate_invoice_number($this_item['project_bank_id']);
 		
 		$additional = array(
 			'unique_id'				=> get_unique_id('invoice'),

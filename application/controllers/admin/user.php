@@ -21,9 +21,35 @@ class User extends MY_Controller {
 			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
 		);
 
-		$db_query = $this->model_user->list_data();
+		$where = "flag != 3";
 		
-		$data['result'] = $db_query;
+		if ($this->input->post('admin_status') == 1) $where .= " AND admin_resign_date = '0000-00-00'";
+		elseif ($this->input->post('admin_status') == 2) $where .= " AND admin_resign_date != '0000-00-00'";
+		
+		if ($this->input->post('admin_division')) $where .= " AND admin_division = '" . $this->input->post('admin_division') . "'";
+		
+		if ($this->input->post('duration_type'))
+		{
+			$sign = $this->input->post('duration_type');
+			if ($this->input->post('duration'))
+			{
+				/*
+				AND PERIOD_DIFF(date_format(NOW(), '%Y%m'), date_format(admin_join_date, '%Y%m')) = 31 OR PERIOD_DIFF(date_format(admin_resign_date, '%Y%m'), date_format(admin_join_date, '%Y%m')) = 31
+				*/
+				$where .= " 
+				AND PERIOD_DIFF(date_format(NOW(), '%Y%m'), date_format(admin_join_date, '%Y%m')) " . $sign . " '" . $this->input->post('duration') . "'
+				OR (PERIOD_DIFF(date_format(admin_resign_date, '%Y%m'), date_format(admin_join_date, '%Y%m')) " . $sign . " '" . $this->input->post('duration') . "'
+				AND PERIOD_DIFF(date_format(admin_resign_date, '%Y%m'), date_format(admin_join_date, '%Y%m')) > 0)
+				";
+			}
+		}
+		
+		$db_query = $this->model_user->list_data($where);
+		$data['division_list'] = $this->model_user->get_division();
+		
+#		echo $db_query;
+#		exit;
+		$data['result'] = $this->db->query($db_query)->result_array();
 
 		$this->show('admin/' . $this->url . '/list_' . $this->url, $data);
 	}

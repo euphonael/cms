@@ -4,7 +4,7 @@ class Model_company extends CI_Model {
 
 	public function list_data()
 	{	
-		$query = $this->db->select('company.unique_id, client_name, company_name, company_address, company_country, company_city, company_phone, company_email, company.flag, company.memo')->join('client', 'client.unique_id = company_client_id', 'left')->where('company.flag !=', 3)->get($this->db_table);
+		$query = $this->db->select('company.unique_id, client_name, company_name, company_address, company_country, company_city, company_phone, company_email, company.flag, company.memo')->join('client', 'client.unique_id = company_client_id', 'left')->where('company.flag', 1)->get($this->db_table);
 		
 		return $query->result_array();
 	}

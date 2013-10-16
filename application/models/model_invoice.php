@@ -2,16 +2,23 @@
 
 class Model_invoice extends CI_Model {
 
-	public function list_data()
+	public function list_data($where, $having1 = '', $having2 = '')
 	{	
-		$query = $this->db->select('invoice.unique_id, invoice_type, invoice_item_id, invoice_customer_name, invoice_project_name, invoice_number, invoice_price, invoice_markup, invoice_top, invoice_top_number, invoice_top_amount, product_code, bank_name, bank_account_holder, bank_account_number, invoice_currency, invoice_create_date, invoice_note, invoice.flag, invoice.memo')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->join('product', 'product.unique_id = invoice_product_id', 'left')->where('invoice.flag !=', 3)->get($this->db_table);
+		$query = $this->db->select('COUNT(invoice_top_amount) AS top_count, SUM(invoice_top_amount) AS total_top_amount, SUM(invoice_price) AS total_invoice_price, SUM(invoice_markup) AS total_invoice_markup, invoice.unique_id, invoice_paid, invoice_paid_date, invoice_type, invoice_item_id, invoice_customer_name, invoice_project_name, invoice_number, invoice_price, invoice_markup, invoice_top, invoice_top_number, invoice_top_amount, product_code, bank_name, bank_account_holder, bank_account_number, invoice_currency, invoice_create_date, invoice_note, invoice.flag, invoice.memo')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->group_by('invoice.unique_id')->join('product', 'product.unique_id = invoice_product_id', 'left');
+		
+		if ($having1) $query = $this->db->having($having1);
+		if ($having2) $query = $this->db->having($having2);
+		
+		$query = $this->db->where($where);
+		
+		$query = $this->db->get($this->db_table);
 		
 		return $query->result_array();
 	}
 	
 	public function get($unique_id)
 	{
-		$query = $this->db->select('invoice_type, invoice.unique_id, invoice_number, invoice_customer_name, invoice_project_name, invoice_price, invoice_markup, invoice_note, invoice_currency, invoice_top, invoice_top_number, invoice_top_amount, invoice_create_date, invoice.flag, invoice.memo, product_name, product_code, bank_name, bank_account_holder, bank_account_number')->join('product', 'product.unique_id = invoice_product_id', 'left')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->where('invoice.unique_id', $unique_id)->get($this->db_table);
+		$query = $this->db->select('invoice_type, invoice_create_date, bank_branch, bank_currency, bank_swift_code, invoice_customer_type, invoice_company_id, invoice_client_id, invoice_paid, invoice_paid_date, invoice.unique_id, invoice_number, invoice_customer_name, invoice_project_name, invoice_price, invoice_markup, invoice_note, invoice_currency, invoice_top, invoice_top_number, invoice_top_amount, invoice_create_date, invoice.flag, invoice.memo, product_name, product_code, bank_name, bank_account_holder, bank_account_number')->join('product', 'product.unique_id = invoice_product_id', 'left')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->where('invoice.unique_id', $unique_id)->get($this->db_table);
 		return $query->result_array();
 	}
 	
@@ -43,6 +50,44 @@ class Model_invoice extends CI_Model {
 	{
 		$query = $this->db->select('unique_id, bank_name, bank_account_holder, bank_account_number, bank_currency')->where('flag !=', 3)->get('bank');
 		return $query->result_array();
+	}
+	
+		public function get_client_id($name)
+	{
+		$query = $this->db->select('unique_id')->where('client_name', $name)->get('client');
+		return $query->row_array();
+	}
+	
+	public function get_company_id($name)
+	{
+		$query = $this->db->select('unique_id')->where('company_name', $name)->get('company');
+		return $query->row_array();
+	}
+
+	
+	public function pay($unique_id)
+	{
+		$data = array(
+			'invoice_paid'		=> 1,
+			'invoice_paid_date'	=> $this->input->post('invoice_paid_date'),
+			'invoice_paid_note'	=> $this->input->post('invoice_paid_note'),
+		);
+		
+		$this->db->where('unique_id', $unique_id);
+		$this->db->update('invoice', $data);
+		
+		$log = array(
+			'unique_id'					=> get_unique_id('invoice_log'),
+			'invoice_unique_id'			=> $unique_id,
+			'invoice_log_admin_id'		=> $this->session->userdata('admin_id'),
+			'invoice_log_admin_ip'		=> $this->input->ip_address(),
+			'invoice_log_description'	=> 'Paid on: ' . date('d M Y H:i:s'),
+			'invoice_log_datetime'		=> date('Y-m-d, H:i:s')
+		);
+
+		$this->db->insert('invoice_log', $log);
+		
+		return $data;
 	}
 	
 	public function get_type($type = '')
@@ -126,7 +171,6 @@ class Model_invoice extends CI_Model {
 					'invoice_type'			=> $post['invoice_type'][$i],
 					'invoice_item_id'		=> $post['invoice_item_id'][$i],
 					'invoice_product_id'	=> $post['invoice_product_id'][$i],
-					'invoice_number'		=> 'Auto generate by add invoice',
 					'invoice_create_date'	=> date('Y-m-d'),
 					'flag'					=> 1
 				);
@@ -160,6 +204,9 @@ class Model_invoice extends CI_Model {
 										
 					$detail['invoice_customer_name'] = $cust['name'];
 					$detail['invoice_currency'] = $currency['bank_currency'];
+					
+					$invoice_number = generate_invoice_number($detail['invoice_bank_id']);
+					$data['invoice_number'] = $invoice_number;
 					
 					$final = array_merge($data, $detail);
 					
@@ -198,6 +245,9 @@ class Model_invoice extends CI_Model {
 										
 					$detail['invoice_customer_name'] = $cust['name'];
 					$detail['invoice_currency'] = $currency['bank_currency'];
+
+					$invoice_number = generate_invoice_number($detail['invoice_bank_id']);
+					$data['invoice_number'] = $invoice_number;
 					
 					$final = array_merge($data, $detail);
 					
@@ -237,7 +287,11 @@ class Model_invoice extends CI_Model {
 					$detail['invoice_customer_name'] = $cust['name'];
 					$detail['invoice_currency'] = $currency['bank_currency'];
 					
+					$invoice_number = generate_invoice_number($detail['invoice_bank_id']);
+					$data['invoice_number'] = $invoice_number;
+					
 					$final = array_merge($data, $detail);
+					
 					
 					$this->db->insert('invoice', $final);
 					
@@ -246,8 +300,6 @@ class Model_invoice extends CI_Model {
 					$this->db->update('project', array('project_invoice_count' => $row['project_invoice_count'] + 1));
 				}
 			}
-			
-			// Missing: Customer type, Customer Name, client_id, company_id, invoice project name, invoice_price, invoice_markup, invoice_commission, invoice_top, invoice_top_number, invoice_top_percent, invoice_top_amount, invoice_bank_id, invoice_currency, invoice_note
 		}
 		
 		
@@ -291,42 +343,6 @@ class Model_invoice extends CI_Model {
 			echo 'success';
 		}
 		else echo 'fail';
-	}
-	
-	public function create_invoice()
-	{
-		$post = $this->input->post();
-		
-		$invoice_number = 'AUTO GENERATE - TEMP';
-		
-		$additional = array(
-			'unique_id'				=> get_unique_id('invoice'),
-			'invoice_number'		=> $invoice_number,
-			'invoice_create_date'	=> date('Y-m-d'),
-			'flag'					=> 1
-		);
-		
-		if ($post['invoice_customer_type'] == 1)
-		{
-			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('invoice_customer_name'))->get('client')->row_array();
-			$additional['invoice_client_id'] = $row['unique_id'];
-		}
-		elseif ($data['project_customer_type'] == 2)
-		{
-			echo 'b';
-			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('invoice_customer_name'))->get('company')->row_array();
-			$additional['invoice_company_id'] = $row['unique_id'];
-		}
-		
-		$data = array_merge($post, $additional);
-		
-		$this->db->insert('invoice', $data);
-		
-		$readable_date = array('readable_date' => date('d M Y'));
-		
-		$result = array_merge($data, $readable_date);
-		
-		echo json_encode($result);
 	}
 }
 

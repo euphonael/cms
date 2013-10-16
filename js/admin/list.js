@@ -3,10 +3,13 @@ $(document).ready(function(){
 	alertify.set({ buttonReverse: true });
 	
 	$('table.table-data').dataTable({
-		iDisplayLength: 50,
-		aLengthMenu: [50, 100, 150, 200]
+		iDisplayLength: 100,
+		aLengthMenu: [100, 200, 300, 400, 999]
 	});
 
+
+	$('#list-filter').validate();
+	
 	$(document).on('click', 'table.table-data tbody tr td span.flag', function(){
 		
 		var db_table = $(this).closest('table.table-data').attr('id');
@@ -18,8 +21,8 @@ $(document).ready(function(){
 		
 		if (db_table == 'invoice')
 		{
-			var flag = $('tr[title=' + unique_id + '] span.flag');
-			var notes = $('tr[title=' + unique_id + '] td.memo');
+			var flag = $('tr[rel=' + unique_id + '] span.flag');
+			var notes = $('tr[rel=' + unique_id + '] td.memo');
 		}
 		
 		if (current_status == 'active')
@@ -78,11 +81,12 @@ $(document).ready(function(){
 						var row = $(this).closest('tr');
 						var db_table = $(this).closest('table.table-data').attr('id');
 						var unique_id = $(this).closest('tr').attr('id').replace(db_table + '-', '');
+						var project_id = ($(this).closest('td').attr('attr')) ? $(this).closest('td').attr('attr') : 0;
 						
 						$.ajax({
 							type : 'POST',
 							data : { db_table : db_table, unique_id : unique_id },
-							url : base_url + 'admin/ajax/delete_row',
+							url : base_url + 'admin/ajax/delete_row/' + project_id,
 							success: function(html)
 							{
 								alertify.error("Items deleted");

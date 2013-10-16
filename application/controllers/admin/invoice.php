@@ -17,12 +17,92 @@ class Invoice extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'List ' . $this->title,
-			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
-			'js'	=> array('alertify', 'jquery.dataTables.min', 'admin/list')
+			'css'	=> array('jquery.fancybox', 'alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
+			'js'	=> array('jquery.fancybox.pack', 'alertify', 'jquery.dataTables.min', 'admin/list')
 		);
-
-		$db_query = $this->model_invoice->list_data();
 		
+		foreach ($this->model_invoice->get_client() as $item)
+		{
+			$client_list[] = $item['client_name'];
+		}
+		
+		$data['client_list'] = (isset($client_list)) ? json_encode($client_list) : array();
+		
+		foreach ($this->model_invoice->get_company() as $item)
+		{
+			$company_list[] = $item['company_name'];
+		}
+		
+		$data['company_list'] = (isset($company_list)) ? json_encode($company_list) : array();
+		
+		if ($this->input->post('flag')) $where = "invoice.flag = '" . $this->input->post('flag') . "'";
+		else $where = "invoice.flag = 1";
+		
+		if ($this->input->post('customer_type'))
+		{
+			$where .= " AND invoice_customer_type = '" . $this->input->post('customer_type') . "'";
+			
+			if ($this->input->post('customer_type') == 1)
+			{
+				// Get client id
+				$client = $this->model_invoice->get_client_id($this->input->post('client'));
+				$where .= " AND invoice_client_id = '" . $client['unique_id'] . "'";
+			}
+			elseif ($this->input->post('customer_type') == 2)
+			{
+				// Get company id
+				$company = $this->model_invoice->get_company_id($this->input->post('company'));
+				$where .= " AND invoice_company_id = '" . $company['unique_id'] . "'";
+			}
+		}
+		
+		if ($this->input->post('start'))
+		{
+			if ( ! $this->input->post('end'))
+				$where .= " AND invoice_create_date = '" . $this->input->post('start') . "'";
+			
+			elseif ($this->input->post('end'))
+			{
+				$where .= " AND invoice_create_date >= '" . $this->input->post('start') . "'";
+				$where .= " AND invoice_create_date <= '" . $this->input->post('end') . "'";
+			}
+		}
+		
+		$having1 = '';
+		$having2 = '';
+		if ($this->input->post('amount'))
+		{	
+			$having1 .= "SUM(invoice_top_amount) >= " . $this->input->post('amount_start') . "";
+			$having2 .= "SUM(invoice_top_amount) <= " . $this->input->post('amount_end') . "";
+		}
+		
+		
+		if ($this->input->post('product'))
+		{
+			$where .= " AND invoice_product_id = '" . $this->input->post('product') . "'";
+		}
+		
+		if ( ! $this->input->post('payment'))
+		{
+			$where .= " AND invoice_paid = 0";
+		}
+		else
+		{
+			if ($this->input->post('payment') == 1)
+			{
+				$where .= " AND invoice_paid = 1";
+			}
+			elseif ($this->input->post('payment') == 2)
+			{
+				$where .= " AND invoice_paid = 0";
+			}
+		}
+		
+		#echo $where;
+
+		$db_query = $this->model_invoice->list_data($where, $having1, $having2);
+		
+		$data['product_list'] = $this->model_invoice->get_product();
 		$data['result'] = $db_query;
 
 		$this->show('admin/' . $this->url . '/list_' . $this->url, $data);
@@ -45,7 +125,7 @@ class Invoice extends MY_Controller {
 		else
 		{
 			$this->model_invoice->insert();
-			#redirect(base_url('admin/' . $this->url));
+			redirect(base_url('admin/' . $this->url));
 		}
 	}
 	
@@ -53,8 +133,8 @@ class Invoice extends MY_Controller {
 	{
 		$data = array(
 			'title'	=> 'View ' . $this->title,
-			'css'	=> array('alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
-			'js'	=> array('alertify', 'admin/form', 'jquery.dataTables.min', 'admin/list')
+			'css'	=> array('jquery.fancybox', 'alertify.core', 'alertify.bootstrap', 'jquery.dataTables'),
+			'js'	=> array('jquery.fancybox.pack', 'alertify', 'admin/form', 'jquery.dataTables.min', 'admin/list')
 		);
 		
 		$data['Row'] = $this->model_invoice->get($unique_id);
@@ -181,6 +261,35 @@ class Invoice extends MY_Controller {
 		echo '<input type="hidden" name="period[]" value="project" />';
 	}
 	
+	public function pay($unique_id, $source = 'list')
+	{
+		$data = array(
+			'title'		=> 'Pay ' . $this->title,
+			'css'		=> array(),
+			'js'		=> array('admin/form'),
+			'source'	=> $source
+		);
+		
+		$data['row'] = $this->model_invoice->get($unique_id);
+		
+		if ( ! $data['row']) redirect(base_url('admin/' . $this->url));
+		
+		$this->form_validation->set_rules('invoice_paid_date', 'payment date', 'trim|required');
+		$this->form_validation->set_rules('invoice_paid_note', 'payment note', 'trim');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('admin/template/header', $data);
+			$this->load->view('admin/' . $this->url . '/' . $this->url . '_payment');
+			$this->load->view('admin/template/footer');
+		}
+		else
+		{
+			$result = $this->model_invoice->pay($unique_id);
+			echo date('d M Y', strtotime($result['invoice_paid_date']));
+		}
+	}
+	
 	public function add_item($current)
 	{
 		$new = $current + 1;
@@ -209,6 +318,42 @@ class Invoice extends MY_Controller {
 		echo '<td class="price"></td>';
 		echo '<td class="markup"></td>';
 		echo '</tr>';
+	}
+	
+	public function print_invoice($unique_id)
+	{	
+		$invoice = $this->model_invoice->get($unique_id);
+		
+		if ($invoice[0]['invoice_customer_type'] == 1) $type = 'client';
+		else $type = 'company';
+		
+		$customer = $this->db->get_where($type, array('unique_id' => $invoice[0]['invoice_' . $type . '_id']))->row_array();
+		
+		$data = array(
+			'row'	=> $invoice,
+			'cust'	=> $customer,
+			'type'	=> $type
+		);
+
+		$this->load->view('admin/invoice/print_invoice', $data);
+	}
+	
+	public function print_receipt($unique_id)
+	{	
+		$invoice = $this->model_invoice->get($unique_id);
+		
+		if ($invoice[0]['invoice_customer_type'] == 1) $type = 'client';
+		else $type = 'company';
+		
+		$customer = $this->db->get_where($type, array('unique_id' => $invoice[0]['invoice_' . $type . '_id']))->row_array();
+		
+		$data = array(
+			'row'	=> $invoice,
+			'cust'	=> $customer,
+			'type'	=> $type
+		);
+
+		$this->load->view('admin/invoice/print_receipt', $data);
 	}
 }
 

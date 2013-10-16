@@ -260,6 +260,7 @@ $(document).ready(function(){
 							if (html == 'success')
 							{
 								$('tr#add-new td.note').html($('#invoice_log_description').val());
+								$('tr#add-new').attr('id', '');
 								alertify.success('Log added');
 							}
 							else

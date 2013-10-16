@@ -14,9 +14,9 @@ class Ajax extends MY_Controller {
 		$this->model_ajax->toggle_status();
 	}
 	
-	public function delete_row()
+	public function delete_row($project_id = '')
 	{
-		$this->model_ajax->delete_row();
+		$this->model_ajax->delete_row($project_id);
 	}
 }
 

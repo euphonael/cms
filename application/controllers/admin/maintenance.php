@@ -21,7 +21,9 @@ class Maintenance extends MY_Controller {
 			'js'	=> array('jquery.fancybox.pack', 'alertify', 'jquery.dataTables.min', 'admin/list')
 		);
 
-		$db_query = $this->model_maintenance->list_data();
+		if ($this->input->post('flag')) $where['m.flag'] = $this->input->post('flag');
+		else $where['m.flag'] = 1;
+		$db_query = $this->model_maintenance->list_data($where);
 		
 		$data['result'] = $db_query;
 
