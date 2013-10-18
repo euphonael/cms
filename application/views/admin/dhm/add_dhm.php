@@ -1,28 +1,16 @@
 <script type="text/javascript">
 $(document).ready(function(){	
+	<?php if ($company_list) : ?>
 	$('#dhm_company_name').autocomplete({
-		source: <?php echo $company_list; ?>,
-		change: function(event, ui)
-		{
-			if(ui.item == null || ui.item == undefined)
-			{
-				$('#dhm_company_name').val('').focus();
-				alertify.error('You have to choose an existing company');
-			}
-		}
+		source: <?php echo $company_list; ?>
 	});
+	<?php endif; ?>
 	
+	<?php if ($client_list) : ?>
 	$('#dhm_client_name').autocomplete({
-		source: <?php echo $client_list; ?>,
-		change: function(event, ui)
-		{
-			if(ui.item == null || ui.item == undefined)
-			{
-				$('#dhm_client_name').val('').focus();
-				alertify.error('You have to choose an existing client');
-			}
-		}
+		source: <?php echo $client_list; ?>
 	});
+	<?php endif; ?>
 });
 </script>
 <div id="container">

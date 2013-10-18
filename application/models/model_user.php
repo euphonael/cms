@@ -125,7 +125,7 @@ class Model_user extends CI_Model {
 			'memo'					=> $this->input->post('memo')
 		);
 		
-		if ($this->input->post('admin_resign_date'))
+		if ( ! empty($this->input->post('admin_resign_date')) && $this->input->post('admin_resign_date') != '0000-00-00')
 		{
 			$data['flag'] = 2;
 		}
@@ -149,6 +149,20 @@ class Model_user extends CI_Model {
 		$this->db->update($this->db_table, $data);
 		
 		log_action('UPDATE', $this->db_table, $unique_id);
+	}
+	
+	public function check_username($input)
+	{
+		$query = $this->db->select('admin_id')->where(array('admin_username' => $input, 'flag !=' => 3))->get('admin')->num_rows();
+		
+		return $query;
+	}
+	
+	public function check_admin_work_email($input)
+	{
+		$query = $this->db->select('admin_id')->where(array('admin_work_email' => $input, 'flag !=' => 3))->get('admin')->num_rows();
+		
+		return $query;
 	}
 
 }

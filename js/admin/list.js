@@ -34,7 +34,24 @@ $(document).ready(function(){
 			var change_to = 'active';
 		}
 		
-		alertify.prompt("Changing status to <strong>" + change_to.toUpperCase() + "</strong>. Reason:", function(e, memo){
+		if (db_table == 'admin')
+		{
+			if (current_status == 'active')
+			{
+				var change_to = 'resigned';
+				var reason = 'Please input resign date (yyyy-mm-dd)';
+			}
+			else
+			{
+				var reason = 'Reason';
+			}
+		}
+		else
+		{
+			var reason = 'Reason';
+		}
+		
+		alertify.prompt("Changing status to <strong>" + change_to.toUpperCase() + "</strong>. " + reason + ":", function(e, memo){
 			if (e)
 			{
 				$(ajax_loader).fadeIn();
@@ -44,8 +61,10 @@ $(document).ready(function(){
 					url : base_url + 'admin/ajax/toggle_status',
 					success: function(html)
 					{
+						if (change_to == 'resigned') change_to = 'inactive';
 						$(flag).removeClass(current_status).addClass(change_to);
-						$(notes).html(memo);
+						
+						if (db_table != 'admin') $(notes).html(memo);
 						$(ajax_loader).fadeOut();
 						
 						if (change_to == 'active')
@@ -54,7 +73,14 @@ $(document).ready(function(){
 						}
 						else if (change_to == 'inactive')
 						{
-							alertify.error("Status changed to <strong>" + change_to.toUpperCase() + "</strong>");
+							if (db_table == 'admin')
+							{
+								alertify.error("Status changed to <strong>Resigned</strong>");
+							}
+							else
+							{
+								alertify.error("Status changed to <strong>" + change_to.toUpperCase() + "</strong>");
+							}
 						}
 					}
 				});

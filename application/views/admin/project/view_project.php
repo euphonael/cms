@@ -1,28 +1,16 @@
 <script type="text/javascript">
 $(document).ready(function(){	
+	<?php if ($company_list) : ?>
 	$('#project_company_name').autocomplete({
-		source: <?php echo $company_list; ?>,
-		change: function(event, ui)
-		{
-			if(ui.item == null || ui.item == undefined)
-			{
-				$('#project_company_name').val('').focus();
-				alertify.error('You have to choose an existing company');
-			}
-		}
+		source: <?php echo $company_list; ?>
 	});
+	<?php endif; ?>
 	
+	<?php if ($client_list) : ?>
 	$('#project_client_name').autocomplete({
-		source: <?php echo $client_list; ?>,
-		change: function(event, ui)
-		{
-			if(ui.item == null || ui.item == undefined)
-			{
-				$('#project_client_name').val('').focus();
-				alertify.error('You have to choose an existing client');
-			}
-		}
+		source: <?php echo $client_list; ?>
 	});
+	<?php endif; ?>
 });
 </script>
 <div id="container">
@@ -225,8 +213,17 @@ $(document).ready(function(){
             <tr <?php echo (isset($invoice_list[$x]['unique_id'])) ? 'id="invoice-' . $invoice_list[$x]['unique_id'] . '"' : ''; ?> <?php if (isset($invoice_list[$x]['unique_id'])) echo 'class="has-invoice"'; ?>>
             	<td id="payment-<?php echo $i; ?>" class="payment-number"><?php echo $i; ?></td>
                 <td class="top">
-                	<?php if (isset($invoice_list[$x]['invoice_number'])) echo $invoice_list[$x]['invoice_number'];
-					else echo '<a id="project-top-' . $i . '" class="button inside">Generate</a>'; ?>
+                	<?php
+                    if (isset($invoice_list[$x]['invoice_number']))
+					{
+						echo $invoice_list[$x]['invoice_number'];
+					}
+					else
+					{
+						if ($row['project_invoice_count'] == $i - 1)
+						echo '<a id="project-top-' . $i . '" class="button inside">Generate</a>';
+					}
+					?>
                 </td>
                 <td class="amount"><?php echo number_format($value[$x]); ?></td>
                 <td class="date"><?php if (isset($invoice_list[$x]['invoice_create_date'])) echo date('d M Y', strtotime($invoice_list[$x]['invoice_create_date'])); ?></td>

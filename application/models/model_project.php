@@ -15,7 +15,7 @@ class Model_project extends CI_Model {
 	
 	public function get($unique_id)
 	{
-		$query = $this->db->select('project.unique_id, project_top_value, project_name, project_price, project_bank_id, project_sales_id, project_product_id, project_customer_type, project_markup, project_note, project_currency, client_name AS project_client_name, company_name AS project_company_name, project_top, project.flag, project.memo')->join('bank', 'bank.unique_id = project_bank_id', 'left')->join('company', 'company.unique_id = project_company_id', 'left')->join('client', 'client.unique_id = project_client_id', 'left')->where('project.unique_id', $unique_id)->get($this->db_table);
+		$query = $this->db->select('project.unique_id, project_invoice_count, project_top_value, project_name, project_price, project_bank_id, project_sales_id, project_product_id, project_customer_type, project_markup, project_note, project_currency, client_name AS project_client_name, company_name AS project_company_name, project_top, project.flag, project.memo')->join('bank', 'bank.unique_id = project_bank_id', 'left')->join('company', 'company.unique_id = project_company_id', 'left')->join('client', 'client.unique_id = project_client_id', 'left')->where('project.unique_id', $unique_id)->get($this->db_table);
 		return $query->row_array();
 	}
 	
@@ -112,12 +112,36 @@ class Model_project extends CI_Model {
 		if ($data['project_customer_type'] == 1)
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('project_client_name'))->get('client')->row_array();
-			$data['project_client_id'] = $row['unique_id'];
+			
+			if ($row) $data['project_client_id'] = $row['unique_id'];
+			else
+			{
+				$client = array(
+					'unique_id'		=> get_unique_id('client'),
+					'client_name'	=> $this->input->post('project_client_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('client', $client);
+				$data['project_client_id'] = $this->db->insert_id();
+			}
 		}
 		elseif ($data['project_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('project_company_name'))->get('company')->row_array();
-			$data['project_company_id'] = $row['unique_id'];
+			
+			if ($row) $data['project_company_id'] = $row['unique_id'];
+			else
+			{
+				$company = array(
+					'unique_id'		=> get_unique_id('company'),
+					'company_name'	=> $this->input->post('project_company_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('company', $company);
+				$data['project_company_id'] = $this->db->insert_id();
+			}
 		}
 		
 		$this->db->insert($this->db_table, $data);
@@ -168,12 +192,43 @@ class Model_project extends CI_Model {
 		if ($data['project_customer_type'] == 1)
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('project_client_name'))->get('client')->row_array();
-			$data['project_client_id'] = $row['unique_id'];
+			
+			$data['project_company_id'] = 0;
+			
+			if ($row)
+			{
+				$data['project_client_id'] = $row['unique_id'];
+			}
+			else
+			{
+				$client = array(
+					'unique_id'		=> get_unique_id('client'),
+					'client_name'	=> $this->input->post('project_client_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('client', $client);
+				$data['project_client_id'] = $this->db->insert_id();
+			}
 		}
 		elseif ($data['project_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('project_company_name'))->get('company')->row_array();
-			$data['project_company_id'] = $row['unique_id'];
+			
+			$data['project_client_id'] = 0;
+			
+			if ($row) $data['project_company_id'] = $row['unique_id'];
+			else
+			{
+				$company = array(
+					'unique_id'		=> get_unique_id('company'),
+					'company_name'	=> $this->input->post('project_company_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('company', $company);
+				$data['project_company_id'] = $this->db->insert_id();
+			}
 		}
 
 		$this->db->where('unique_id', $unique_id);

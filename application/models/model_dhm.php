@@ -65,12 +65,40 @@ class Model_dhm extends CI_Model {
 		if ($data['dhm_customer_type'] == 1)
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('dhm_client_name'))->get('client')->row_array();
-			$data['dhm_client_id'] = $row['unique_id'];
+			if ($row)
+			{
+				$data['dhm_client_id'] = $row['unique_id'];
+			}
+			else
+			{
+				$client = array(
+					'unique_id'		=> get_unique_id('client'),
+					'client_name'	=> $this->input->post('dhm_client_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('client', $client);
+				$data['dhm_client_id'] = $this->db->insert_id();
+			}
 		}
 		elseif ($data['dhm_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('dhm_company_name'))->get('company')->row_array();
-			$data['dhm_company_id'] = $row['unique_id'];
+			if ($row)
+			{
+				$data['dhm_company_id'] = $row['unique_id'];
+			}
+			else
+			{
+				$company = array(
+					'unique_id'		=> get_unique_id('company'),
+					'company_name'	=> $this->input->post('dhm_company_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('company', $company);
+				$data['dhm_company_id'] = $this->db->insert_id();
+			}
 		}
 		
 		$this->db->insert($this->db_table, $data);
@@ -97,14 +125,44 @@ class Model_dhm extends CI_Model {
 		if ($data['dhm_customer_type'] == 1)
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('dhm_client_name'))->get('client')->row_array();
-			$data['dhm_client_id'] = $row['unique_id'];
 			$data['dhm_company_id'] = 0;
+			
+			if ($row)
+			{
+				$data['dhm_client_id'] = $row['unique_id'];
+			}
+			else
+			{
+				$client = array(
+					'unique_id'		=> get_unique_id('client'),
+					'client_name'	=> $this->input->post('dhm_client_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('client', $client);
+				$data['dhm_client_id'] = $this->db->insert_id();
+			}
 		}
 		elseif ($data['dhm_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('dhm_company_name'))->get('company')->row_array();
-			$data['dhm_company_id'] = $row['unique_id'];
 			$data['dhm_client_id'] = 0;
+			
+			if ($row)
+			{
+				$data['dhm_company_id'] = $row['unique_id'];
+			}
+			else
+			{
+				$company = array(
+					'unique_id'		=> get_unique_id('company'),
+					'company_name'	=> $this->input->post('dhm_company_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('company', $company);
+				$data['dhm_company_id'] = $this->db->insert_id();
+			}
 		}
 
 		$this->db->where('unique_id', $unique_id);

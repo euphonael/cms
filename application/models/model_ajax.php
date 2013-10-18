@@ -18,6 +18,19 @@ class Model_ajax extends CI_Model {
 			'memo'	=> $this->input->post('memo')
 		);
 		
+		if ($this->input->post('db_table') == 'admin')
+		{
+			if ($new_status == 2)
+			{
+				$data['memo'] = '';
+				$data['admin_resign_date'] = $this->input->post('memo');
+			}
+			elseif ($new_status == 1)
+			{
+				$data['admin_resign_date'] = '0000-00-00';
+			}
+		}
+		
 		$this->db->where('unique_id', $this->input->post('unique_id'));
 		$this->db->update($this->input->post('db_table'), $data);
 	}

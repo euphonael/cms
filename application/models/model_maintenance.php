@@ -57,12 +57,36 @@ class Model_maintenance extends CI_Model {
 		if ($data['maintenance_customer_type'] == 1)
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('maintenance_client_name'))->get('client')->row_array();
-			$data['maintenance_client_id'] = $row['unique_id'];
+			
+			if ($row) $data['maintenance_client_id'] = $row['unique_id'];
+			else
+			{
+				$client = array(
+					'unique_id'		=> get_unique_id('client'),
+					'client_name'	=> $this->input->post('maintenance_client_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('client', $client);
+				$data['maintenance_client_id'] = $this->db->insert_id();
+			}
 		}
 		elseif ($data['maintenance_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('maintenance_company_name'))->get('company')->row_array();
-			$data['maintenance_company_id'] = $row['unique_id'];
+			
+			if ($row) $data['maintenance_company_id'] = $row['unique_id'];
+			else
+			{
+				$company = array(
+					'unique_id'		=> get_unique_id('company'),
+					'company_name'	=> $this->input->post('maintenance_company_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('company', $company);
+				$data['maintenance_company_id'] = $this->db->insert_id();
+			}
 		}
 		
 		$this->db->insert($this->db_table, $data);
@@ -87,14 +111,39 @@ class Model_maintenance extends CI_Model {
 		if ($data['maintenance_customer_type'] == 1)
 		{
 			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('maintenance_client_name'))->get('client')->row_array();
-			$data['maintenance_client_id'] = $row['unique_id'];
+			
 			$data['maintenance_company_id'] = 0;
+			
+			if ($row) $data['maintenance_client_id'] = $row['unique_id'];
+			else
+			{
+				$client = array(
+					'unique_id'		=> get_unique_id('client'),
+					'client_name'	=> $this->input->post('maintenance_client_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('client', $client);
+				$data['maintenance_client_id'] = $this->db->insert_id();
+			}
 		}
 		elseif ($data['maintenance_customer_type'] == 2)
 		{
 			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('maintenance_company_name'))->get('company')->row_array();
-			$data['maintenance_company_id'] = $row['unique_id'];
+			
 			$data['maintenance_client_id'] = 0;
+			if ($row) $data['maintenance_company_id'] = $row['unique_id'];
+			else
+			{
+				$company = array(
+					'unique_id'		=> get_unique_id('company'),
+					'company_name'	=> $this->input->post('maintenance_company_name'),
+					'flag'			=> 1
+				);
+				
+				$this->db->insert('company', $company);
+				$data['maintenance_company_id'] = $this->db->insert_id();
+			}
 		}
 
 		$this->db->where('unique_id', $unique_id);

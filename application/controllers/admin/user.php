@@ -65,13 +65,13 @@ class User extends MY_Controller {
 		$data['module_list'] = $this->model_user->get_module();
 		$data['division_list'] = $this->model_user->get_division();
 		
-		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username]');
+		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|callback_check_admin_username');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|required|md5');
 		$this->form_validation->set_rules('admin_repassword', 'admin_repassword', 'required');
 		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
 		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email]');
-		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|required|is_unique[admin.admin_work_email]');
+		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|required|callback_check_admin_work_email');
 		$this->form_validation->set_rules('admin_division', 'division', 'required');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
 		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
@@ -89,6 +89,32 @@ class User extends MY_Controller {
 		}
 	}
 	
+	public function check_admin_username($input)
+	{
+		if ($this->model_user->check_username($input) == 1)
+		{
+			$this->form_validation->set_message('check_admin_username', 'Username is already taken');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	
+	public function check_admin_work_email($input)
+	{
+		if ($this->model_user->check_admin_work_email($input) == 1)
+		{
+			$this->form_validation->set_message('check_admin_work_email', 'E-mail is already taken');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	
 	public function view($unique_id)
 	{
 		$data = array(
@@ -103,12 +129,12 @@ class User extends MY_Controller {
 		$data['module_list'] = $this->model_user->get_module();
 		$data['division_list'] = $this->model_user->get_division();
 		
-		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|is_unique[admin.admin_username.unique_id.' . $unique_id . ']');
+		$this->form_validation->set_rules('admin_username', 'Username', 'trim|required|callback_check_admin_username');
 		$this->form_validation->set_rules('admin_password', 'Password', 'matches[admin_repassword]|md5');
 		$this->form_validation->set_rules('admin_name', 'name', 'trim|required');
 		$this->form_validation->set_rules('admin_phone', 'phone', 'trim');
 		$this->form_validation->set_rules('admin_personal_email', 'E-mail', 'trim|valid_email|is_unique[admin.admin_personal_email.unique_id.' . $unique_id . ']]');
-		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|required|is_unique[admin.admin_work_email.unique_id.' . $unique_id . ']]');
+		$this->form_validation->set_rules('admin_work_email', 'E-mail', 'trim|valid_email|required|callback_check_admin_work_email');
 		$this->form_validation->set_rules('admin_division', 'division', 'required');
 		$this->form_validation->set_rules('admin_job_position', 'job position', 'trim|required');
 		$this->form_validation->set_rules('admin_privilege', 'privilege', 'required');
