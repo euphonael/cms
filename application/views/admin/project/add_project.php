@@ -131,15 +131,17 @@ $(document).ready(function(){
                         <?php echo form_error('project_customer_type'); ?>
                     </p>
 
-                    <p id="project_client_name_wrap" <?php if (set_value('project_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'class="hidden"'; ?>>
+<?php $set_value_customer_type = set_value('dhm_customer_type'); ?>
+
+                    <p id="project_client_name_wrap" <?php if (set_value('project_customer_type') == 2 || empty($set_value_customer_type)) echo 'class="hidden"'; ?>>
                         <label class="label-input" for="project_client_name">Client Name</label>
-                        <input type="text" name="project_client_name" id="project_client_name" <?php if (set_value('project_customer_type') == 2 || empty(set_value('project_customer_type'))) echo 'disabled="disabled"'; ?> value="<?php echo set_value('project_client_name'); ?>" class="required" />
+                        <input type="text" name="project_client_name" id="project_client_name" <?php if (set_value('project_customer_type') == 2 || empty($set_value_customer_type)) echo 'disabled="disabled"'; ?> value="<?php echo set_value('project_client_name'); ?>" class="required" />
                         <?php echo form_error('project_client_name'); ?>
                     </p>
                     
-                    <p id="project_company_name_wrap" <?php if (set_value('project_customer_type') == 1 || empty(set_value('project_customer_type'))) echo 'class="hidden"'; ?>>
+                    <p id="project_company_name_wrap" <?php if (set_value('project_customer_type') == 1 || empty($set_value_customer_type)) echo 'class="hidden"'; ?>>
                         <label class="label-input" for="project_company_name">Company Name</label>
-                        <input type="text" name="project_company_name" id="project_company_name" <?php if (set_value('project_customer_type') == 2 || empty(set_value('project_customer_type'))) echo 'disabled="disabled"'; ?> value="<?php echo set_value('project_company_name'); ?>" class="required" />
+                        <input type="text" name="project_company_name" id="project_company_name" <?php if (set_value('project_customer_type') == 2 || empty($set_value_customer_type)) echo 'disabled="disabled"'; ?> value="<?php echo set_value('project_company_name'); ?>" class="required" />
                         <?php echo form_error('project_company_name'); ?>
                     </p>
                 </fieldset>
@@ -154,10 +156,12 @@ $(document).ready(function(){
 	                    <div class="clear"></div>
                     </div>
                     
+                    <?php $set_value_top_type = set_value('project_top_type'); ?>
+                    
                     <p>
                         <label class="label-input">Payment Type</label>
                         <span class="radio-options">
-                            <input type="radio" name="project_top_type" value="1" id="type_percent" class="project_top_type required" <?php if (set_value('project_top_type') == 1 || empty(set_value('project_top_type'))) echo 'checked="checked"'; ?> />
+                            <input type="radio" name="project_top_type" value="1" id="type_percent" class="project_top_type required" <?php if (set_value('project_top_type') == 1 || empty($set_value_top_type)) echo 'checked="checked"'; ?> />
                             <label class="radio" for="type_percent">Percent (%)</label>
                             <input type="radio" name="project_top_type" value="2" id="type_value" class="project_top_type" <?php if (set_value('project_top_type') == 2) echo 'checked="checked"'; ?> />
                             <label class="radio" for="type_value">Fixed Amount</label>

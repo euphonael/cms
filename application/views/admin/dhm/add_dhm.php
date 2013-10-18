@@ -95,15 +95,16 @@ $(document).ready(function(){
                         <?php echo form_error('dhm_customer_type'); ?>
                     </p>
 
-                    <p id="dhm_client_name_wrap" <?php if (set_value('dhm_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'class="hidden"'; ?>>
+					<?php $set_value_customer_type = set_value('dhm_customer_type'); ?>
+                    <p id="dhm_client_name_wrap" <?php if (set_value('dhm_customer_type') == 2 || empty($set_value_customer_type)) echo 'class="hidden"'; ?>>
                         <label class="label-input" for="dhm_client_name">Client Name</label>
-                        <input type="text" name="dhm_client_name" id="dhm_client_name" <?php if (set_value('dhm_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'disabled="disabled"'; ?> value="<?php echo set_value('dhm_client_name'); ?>" class="required" />
+                        <input type="text" name="dhm_client_name" id="dhm_client_name" <?php if (set_value('dhm_customer_type') == 2 || empty($set_value_customer_type)) echo 'disabled="disabled"'; ?> value="<?php echo set_value('dhm_client_name'); ?>" class="required" />
                         <?php echo form_error('dhm_client_name'); ?>
                     </p>
                     
-                    <p id="dhm_company_name_wrap" <?php if (set_value('dhm_customer_type') == 1 || empty(set_value('dhm_customer_type'))) echo 'class="hidden"'; ?>>
+                    <p id="dhm_company_name_wrap" <?php if (set_value('dhm_customer_type') == 1 || empty($set_value_customer_type)) echo 'class="hidden"'; ?>>
                         <label class="label-input" for="dhm_company_name">Company Name</label>
-                        <input type="text" name="dhm_company_name" id="dhm_company_name" <?php if (set_value('dhm_customer_type') == 2 || empty(set_value('dhm_customer_type'))) echo 'disabled="disabled"'; ?> value="<?php echo set_value('dhm_company_name'); ?>" class="required" />
+                        <input type="text" name="dhm_company_name" id="dhm_company_name" <?php if (set_value('dhm_customer_type') == 2 || empty($set_value_customer_type)) echo 'disabled="disabled"'; ?> value="<?php echo set_value('dhm_company_name'); ?>" class="required" />
                         <?php echo form_error('dhm_company_name'); ?>
                     </p>
                     

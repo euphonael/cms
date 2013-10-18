@@ -39,12 +39,35 @@ $(document).ready(function(){
 		history.go(-1);
 	});
 	
+	var this_date = new Date();
+	var year = this_date.getFullYear();
+	
+	var dob_from = year - 40;
+	var dob_to = year - 15;
+	
+	$('#admin_join_date, #admin_resign_date').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		minDate: "2010-05-24",
+		yearRange: "2010:" + year
+	});
+	
+	$('#admin_dob').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		yearRange: dob_from +':'+ dob_to,
+		defaultDate: '0000-00-00'
+	});
+	
+	
 	$('.datepicker').datepicker({
 		dateFormat: 'yy-mm-dd',
 		changeMonth: true,
 		changeYear: true
 	});
-	
+
 	$('input.number-format').each(function(){
 		var angka = $(this).val().replace(/,/g, '');
 		var format = number_format(angka, 0, '', ',');

@@ -141,13 +141,14 @@ if ( ! function_exists('default_checked'))
 {
 	function default_checked($fieldname, $row, $value)
 	{
-		if (empty(set_value($fieldname)))
+		$set_value = set_value($fieldname);
+		if (empty($set_value))
 		{
 			if ($row[$fieldname] == $value) echo 'checked="checked"';
 		}
 		else
 		{
-			if (set_value($fieldname) == $value) echo 'checked="checked"';
+			if ($set_value == $value) echo 'checked="checked"';
 		}
 	}
 }
@@ -156,13 +157,14 @@ if ( ! function_exists('default_selected'))
 {
 	function default_selected($fieldname, $row, $value)
 	{
-		if (empty(set_value($fieldname)))
+		$set_value = set_value($fieldname);
+		if (empty($set_value))
 		{
 			if ($row[$fieldname] == $value) echo 'selected="selected"';
 		}
 		else
 		{
-			if (set_value($fieldname) == $value) echo 'selected="selected"';
+			if ($set_value == $value) echo 'selected="selected"';
 		}
 	}
 }

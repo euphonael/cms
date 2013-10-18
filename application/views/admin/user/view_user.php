@@ -129,7 +129,7 @@
 					?>
                     <p>
                     	<label class="label-input">Has worked for</label>
-                        <input type="text" readonly="readonly" class="readonly" value="<?php echo $diff->format('%y') * 12 + $diff->format('%m'); ?> months" />
+                        <input type="text" readonly="readonly" class="readonly" value="<?php echo $diff->format('%y') . ' year ' . $diff->format('%m'); ?> months" />
                     </p>
                 </fieldset>
                 
