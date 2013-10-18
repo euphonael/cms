@@ -18,6 +18,7 @@ $(document).ready(function(){
 		var ajax_loader = $(this).siblings('img');
 		var flag = $(this);
 		var notes = $(this).closest('td').siblings('td.memo');
+		var resign = $(this).closest('td').siblings('td.resign');
 		
 		if (db_table == 'invoice')
 		{
@@ -64,7 +65,14 @@ $(document).ready(function(){
 						if (change_to == 'resigned') change_to = 'inactive';
 						$(flag).removeClass(current_status).addClass(change_to);
 						
-						if (db_table != 'admin') $(notes).html(memo);
+						if (db_table != 'admin')
+						{
+							$(notes).html(memo);
+						}
+						else
+						{
+							$(resign).html(memo);
+						}
 						$(ajax_loader).fadeOut();
 						
 						if (change_to == 'active')

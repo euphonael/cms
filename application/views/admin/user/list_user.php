@@ -55,6 +55,7 @@
                 <th>Name</th>
                 <th>Username</th>
                 <th>Join Date</th>
+                <th>Resign Date</th>
                 <th>Work Duration</th>
                 <th>Birthday</th>
                 <th>Phone</th>
@@ -75,6 +76,7 @@
                 <td><a href="<?php echo base_url('admin/' . $this->url . '/view/' . $row['unique_id']); ?>"><?php echo $row['admin_name']; ?></a></td>
                 <td><?php echo $row['admin_username']; ?></td>
                 <td><?php if ($row['admin_join_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_join_date'])); ?></td>
+                <td class="resign"><?php if ($row['admin_resign_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_resign_date'])); else echo '-'; ?></td>
                 <td><?php echo floor($period / 12) . ' year ' . floor($period % 12) . ' months'; ?></td>
                 <td><?php if ($row['admin_dob'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_dob'])); ?></td>
                 <td><?php echo $row['admin_phone']; ?></td>
