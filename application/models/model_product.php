@@ -4,7 +4,7 @@ class Model_product extends CI_Model {
 
 	public function list_data()
 	{	
-		$query = $this->db->select('unique_id, product_name, product_code, flag, memo')->where('flag !=', 3)->get($this->db_table);
+		$query = $this->db->select('unique_id, product_name, product_code, flag, memo')->order_by('product_code', 'asc')->where('flag !=', 3)->get($this->db_table);
 		
 		return $query->result_array();
 	}
