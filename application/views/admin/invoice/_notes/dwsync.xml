@@ -4,6 +4,6 @@
 <file name="view_invoice.php" server="C:/xampp/htdocs/cms/" local="130263975979196000" remote="130263975970000000" />
 <file name="add_invoice.php" server="C:/xampp/htdocs/cms/" local="130260376436392000" remote="130260376430000000" />
 <file name="invoice_payment.php" server="C:/xampp/htdocs/cms/" local="130263989000486000" remote="130263989000000000" />
-<file name="print_invoice.php" server="C:/xampp/htdocs/cms/" local="130263833132646000" remote="130263833130000000" />
-<file name="print_receipt.php" server="C:/xampp/htdocs/cms/" local="130263833182236000" remote="130263833180000000" />
+<file name="print_invoice.php" server="C:/xampp/htdocs/cms/" local="130268142388490000" remote="130268142380000000" />
+<file name="print_receipt.php" server="C:/xampp/htdocs/cms/" local="130268145203200000" remote="130268145200000000" />
 </dwsync>

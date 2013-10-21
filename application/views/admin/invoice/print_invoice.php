@@ -4,17 +4,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Invoice No: <?=$row[0]['invoice_number']?></title>
 </head>
-<body style="margin:15px auto 0; padding:0;font-family:Verdana;font-size:12px;width:595px;height:842px;position:relative;" onload="window.print();">
+<body style="margin:0 auto; padding:0;font-family:Verdana;font-size:12px;width:595px;height:842px;position:relative;" onload="window.print();">
 
-<hr id="markertop" style="margin:0;padding:0;position:absolute;border:none;border-top:1px solid #CCC;width:10px;height:1px;right:-20px;top:301px;">
+<hr id="markertop" style="margin:0;padding:0;position:absolute;border:none;border-top:1px solid #CCC;width:10px;height:1px;right:-20px;top:316px;">
 
+<!--
 <hr id="markerbottom" style="margin:0;padding:0;position:absolute;border:none;border-top:1px solid #CCC;width:10px;height:1px;right:-20px;top:675px;">
-
-<div id="header" style="margin:0;padding:0;height:155px;border-bottom:1px solid #CCC; width:595px;">
+-->
+<div id="header" style="margin:0;padding:0;height:75px;border-bottom:1px solid #CCC; width:595px;">
 	<div>
-	<a id="logo" href="http://www.gositus.com" target="_blank" style="margin:0;padding:0;outline:none;text-decoration:none;display:block;float:left;margin-top:5px; margin-right:15px;"><img src="<?php echo base_url('images/logo.png'); ?>" style="margin:0;padding:0;border:none;"></a>
+	<a id="logo" href="http://www.gositus.com" target="_blank" style="margin:0;padding:0;outline:none;text-decoration:none;display:block;float:left; margin-right:15px;"><img src="<?php echo base_url('images/new-logo.png'); ?>" style="margin:0;padding:0;border:none;"></a>
     <div id="company" style="margin:0;padding:0;float:right;font-size:11px;margin-left:5px;margin-top:5px;">
-    	<p style="margin:0;padding:0; text-align:right; line-height:1.6; font-size:11px; color:#666;">
+    	<p style="margin:0;padding:0; text-align:right; font-size:9px; color:#666; line-height:11px;">
         	www.gositus.com<br style="margin:0; padding:0;">
             <strong>phone</strong> (021) 8023 8800<br style="margin:0; padding:0;">
             <strong>fax</strong> (021) 6983 0191<br style="margin:0; padding:0;">
@@ -28,13 +29,11 @@
 
     </div>
 
-   	<h1 style="display:block; font-weight:bold; font-variant:small-caps; float:right; margin:0;padding:0;color:#3399cc;font-size:30px; margin-top:10px;">Invoice</h1>
-
     <div class="clear" style="margin:0;padding:0;clear:both;"></div>
 </div>
 
 <div id="content" style="margin:0;padding:0;margin-top:15px; width:595px;">
-	<div id="billing" style="float:left; margin:0; padding:0;">
+	<div id="billing" style="float:left; margin:0; padding:0; height:150px;">
     	<strong style="margin:0;padding:0;line-height:1.3;display:block;">Bill To:</strong>
         <p style="margin:0;padding:0;line-height:1.6;">
 			<?php
@@ -60,11 +59,10 @@
 			?>
         </p>
     </div>
-
     
-
     <div style="float:right; margin:0; padding:0; text-align:right;">
-        <p style="margin:0;padding:0;line-height:1.3;font-size:13px;">
+	   	<h1 style="display:block; line-height:15px; font-weight:bold; font-variant:small-caps; margin:0;padding:0;color:#3399cc;font-size:30px;">Invoice</h1>
+        <p style="margin:0;padding:0;line-height:1.3;font-size:13px; margin-top:15px;">
     Date: <?=date('d F Y', strtotime($row[0]['invoice_create_date']))?><br style="margin:0; padding:0;">
     Invoice: <?=$row[0]['invoice_number']?><br style="margin:0; padding:0;">
     Due Date: <?=date('d F Y', strtotime($row[0]['invoice_create_date'] . ' + 7 days'))?>        </p>
@@ -72,7 +70,7 @@
 
     <div style="margin:0; padding:0; clear:both;"></div>
 
-    <table cellspacing="0" cellpadding="0" style="margin:0;padding:0;border-top:2px solid #2b93d1;width:595px;margin-top:20px;">
+    <table cellspacing="0" cellpadding="0" style="margin:0;padding:0;border-top:2px solid #2b93d1;width:595px;margin-top:25px;">
 	    <thead style="margin:0; padding:0;"><tr style="margin:0; padding:0;">
             <tr>
                 <th class="first" style="margin:0;padding:0;border-bottom:1px solid #2b93d1;color:#4f81bd;border-left:2px solid #2b93d1;">ID</th>
@@ -140,7 +138,7 @@
 
 <?php $amount = ($row[0]['invoice_currency'] == "Rp.") ? terbilang($price) . ' Rupiah' : spellnumber($price) . ' Dollars'; ?>
 
-<div id="footer" style="margin:0;padding:0;margin-top:50px; height:355px;position:relative; width:595px;">
+<div id="footer" style="margin:0;padding:0;margin-top:50px; height:315px;position:relative; width:595px;">
 	<p id="amount" style="margin:0;padding:0;line-height:1.3;display:block;">
     	Amount:<br style="margin:0; padding:0;"><em style="margin:0; padding:0; text-transform:capitalize;"><?=$amount?></em>
     </p>
