@@ -1,6 +1,6 @@
 <?php
 $max = 0;
-foreach ($result as $row) :
+foreach ($countmax as $row) :
 
 if ($max < $row['total_top_amount']) $max = $row['total_top_amount'];
 
@@ -179,12 +179,11 @@ $(document).ready(function(){
                 <th>Product</th>
                 <th>Customer</th>
                 <th>Bank</th>
-                <th>Amount</th>
-                <th>Price</th>
+                <th>Real</th>
                 <th>Markup</th>
-                <th>Total</th>
+                <th>Amount</th>
                 <th>Payment</th>
-                <th>Date</th>
+                <th>Create Date</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>
@@ -244,10 +243,10 @@ $(document).ready(function(){
                 <td><?php echo $row['invoice_customer_name']; ?></td>
                 <td><?php echo $row['bank_name']; ?></td>
                 
+
+                <td><?php echo number_format(price_detail($row['unique_id'], 'real')); ?></td>
+                <td><?php echo number_format(price_detail($row['unique_id'], 'markup')); ?></td>
                 <td><strong><?php echo number_format($row['total_top_amount']); ?></strong></td>
-                <td><?php echo number_format($row['total_invoice_price']); ?></td>
-                <td><?php echo number_format($row['total_invoice_markup']); ?></td>
-                <td><?php echo number_format($row['total_invoice_price'] + $row['total_invoice_markup']); ?></td>
                 <td><?php echo ($row['top_count'] == 1) ? $row['invoice_top_number'] . '/' . $row['invoice_top'] : '-'; ?></td>
                 <td><?php echo date('d M Y', strtotime($row['invoice_create_date'])); ?></td>
                 <?php table_end($row); ?>
@@ -274,17 +273,17 @@ $(document).ready(function(){
             </tr>
         	<tr>
             	<th width="100"></th>
-            	<th width="100">Price</th>
+            	<th width="100">Real</th>
                 <th width="100">Markup</th>
-                <th width="100">Total</th>
+                <th width="100">Amount</th>
             </tr>
         </thead>
         <tbody>
-        	<tr>
-            	<td>Total</td>
-            	<td><?php echo number_format($price); ?></td>
-                <td><?php echo number_format($markup); ?></td>
-                <td><?php echo number_format($total); ?></td>
+            <tr>
+            	<td>AR</td>
+                <td><?php echo number_format($ar_price); ?></td>
+                <td><?php echo number_format($ar_markup); ?></td>
+                <td><?php echo number_format($ar_total); ?></td>
             </tr>
             <tr>
             	<td>Paid</td>
@@ -292,11 +291,11 @@ $(document).ready(function(){
                 <td><?php echo number_format($paid_markup); ?></td>
                 <td><?php echo number_format($paid_total); ?></td>
             </tr>
-            <tr>
-            	<td>AR</td>
-                <td><?php echo number_format($ar_price); ?></td>
-                <td><?php echo number_format($ar_markup); ?></td>
-                <td><?php echo number_format($ar_total); ?></td>
+        	<tr>
+            	<td>Total</td>
+            	<td><?php echo number_format($price); ?></td>
+                <td><?php echo number_format($markup); ?></td>
+                <td><?php echo number_format($total); ?></td>
             </tr>
         </tbody>
     </table>

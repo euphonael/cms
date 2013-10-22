@@ -4,7 +4,7 @@ class Model_dhm extends CI_Model {
 
 	public function list_data($where = array('m.flag' => 1))
 	{	
-		$query = $this->db->select('m.unique_id, m.dhm_name, m.dhm_price, m.dhm_start, client_name, com.company_name, dom.domain_name, hos.hosting_name, ban.bank_name, m.flag, m.memo, hosting_cpanel_username, hosting_cpanel_password, hosting_cpanel_url')->select('DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH) as dhm_end', false)->select('DATEDIFF(NOW(), DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH)) AS date_diff', false)->where($where)->join('company com', 'com.unique_id = m.dhm_company_id', 'left')->join('domain dom', 'dom.unique_id = m.dhm_domain_id', 'left')->join('hosting hos', 'hos.unique_id = m.dhm_hosting_id', 'left')->join('client', 'client.unique_id = dhm_client_id', 'left')->join('bank ban', 'ban.unique_id = m.dhm_bank_id', 'left')->order_by('dhm_end', 'ASC')->get($this->db_table . ' m');
+		$query = $this->db->select('m.unique_id, hos.unique_id AS hosting_unique_id, dhm_markup, m.dhm_name, m.dhm_price, m.dhm_start, client_name, com.company_name, dom.domain_name, hos.hosting_name, ban.bank_name, m.flag, m.memo, hosting_cpanel_username, hosting_cpanel_password, hosting_cpanel_url')->select('DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH) as dhm_end', false)->select('DATEDIFF(NOW(), DATE_ADD(m.dhm_start, INTERVAL m.dhm_period + m.dhm_extend_month MONTH)) AS date_diff', false)->where($where)->join('company com', 'com.unique_id = m.dhm_company_id', 'left')->join('domain dom', 'dom.unique_id = m.dhm_domain_id', 'left')->join('hosting hos', 'hos.unique_id = m.dhm_hosting_id', 'left')->join('client', 'client.unique_id = dhm_client_id', 'left')->join('bank ban', 'ban.unique_id = m.dhm_bank_id', 'left')->order_by('dhm_end', 'ASC')->get($this->db_table . ' m');
 		
 		return $query->result_array();
 	}
@@ -171,7 +171,7 @@ class Model_dhm extends CI_Model {
 		log_action('UPDATE', $this->db_table, $unique_id);
 	}
 	
-	public function extend($unique_id)
+	public function create_invoice($unique_id)
 	{
 		$period = $this->input->post('dhm_period') / 12;
 		$price = str_replace(',', '', $this->input->post('dhm_price')) * $period;
@@ -192,7 +192,7 @@ class Model_dhm extends CI_Model {
 			'invoice_commission'	=> '0', // Anggep sementara 0. Nanti default mau 5% dari PRICE kan?
 			'invoice_top'			=> '1', // Karena extend, by default 1
 			'invoice_top_number'	=> '1', // Karena extend, by default 1
-			'invoice_top_percent'	=> '100', // Karena extend, default 100%
+			'invoice_top_percent'	=> '0', // Karena extend, default 100%
 			'invoice_top_amount'	=> $total, // Total dari price + markup
 			'invoice_bank_id'		=> $this->input->post('dhm_bank_id'),
 			'invoice_currency'		=> $this->input->post('bank_currency'),
@@ -203,29 +203,38 @@ class Model_dhm extends CI_Model {
 		
 		if ($data['invoice_customer_type'] == 1)
 		{
-			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('dhm_client_name'))->get('client')->row_array();
+			$row = $this->db->select('unique_id, client_company_id')->where('client_name', $this->input->post('dhm_client_name'))->get('client')->row_array();
 			$data['invoice_client_id'] = $row['unique_id'];
 			$data['invoice_customer_name'] = $this->input->post('dhm_client_name');
+			$data['invoice_company_id'] = $row['client_company_id'];
 		}
 		elseif ($data['invoice_customer_type'] == 2)
 		{
-			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('dhm_company_name'))->get('company')->row_array();
+			$row = $this->db->select('unique_id, company_client_id')->where('company_name', $this->input->post('dhm_company_name'))->get('company')->row_array();
 			$data['invoice_company_id'] = $row['unique_id'];
 			$data['invoice_customer_name'] = $this->input->post('dhm_company_name');
+			$data['invoice_client_id'] = $row['company_client_id'];
 		}
 		
 		$this->db->insert('invoice', $data);
+	}
+	
+	public function extend($unique_id)
+	{
 		
 		/* Update DHM */
 		$dhm_row = $this->get($unique_id);
 		
 		$update_dhm = array(
 			'dhm_extend_counter'	=> $dhm_row['dhm_extend_counter'] + 1,
-			'dhm_extend_month'		=> $dhm_row['dhm_extend_month'] + $this->input->post('dhm_period')
+			'dhm_extend_month'		=> $dhm_row['dhm_extend_month'] + $this->input->post('period')
 		);
 		
 		$this->db->where('unique_id', $unique_id);
 		$this->db->update('dhm', $update_dhm);
+		
+		$this->db->where('invoice_id', $this->input->post('invoice_id'));
+		$this->db->update('invoice', array('invoice_clear' => 1));
 		
 		// Get End Date
 		$dhm = $this->db->select('DATE_ADD(dhm_start, INTERVAL dhm_period + dhm_extend_month MONTH) as dhm_end', false)->where('unique_id', $unique_id)->get('dhm')->row_array();

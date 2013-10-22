@@ -18,7 +18,7 @@ class Model_invoice extends CI_Model {
 	
 	public function get($unique_id)
 	{
-		$query = $this->db->select('invoice_type, invoice_create_date, bank_branch, bank_currency, bank_swift_code, invoice_customer_type, invoice_company_id, invoice_client_id, invoice_paid, invoice_paid_date, invoice.unique_id, invoice_number, invoice_customer_name, invoice_project_name, invoice_price, invoice_markup, invoice_note, invoice_currency, invoice_top, invoice_top_number, invoice_top_amount, invoice_create_date, invoice.flag, invoice.memo, product_name, product_code, bank_name, bank_account_holder, bank_account_number')->join('product', 'product.unique_id = invoice_product_id', 'left')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->where('invoice.unique_id', $unique_id)->get($this->db_table);
+		$query = $this->db->select('invoice_id, invoice_type, invoice_create_date, bank_branch, bank_currency, bank_swift_code, invoice_customer_type, invoice_company_id, invoice_client_id, invoice_paid, invoice_paid_date, invoice.unique_id, invoice_number, invoice_customer_name, invoice_project_name, invoice_price, invoice_markup, invoice_note, invoice_currency, invoice_top, invoice_top_number, invoice_top_amount, invoice_create_date, invoice.flag, invoice.memo, product_name, product_code, bank_name, bank_account_holder, bank_account_number')->join('product', 'product.unique_id = invoice_product_id', 'left')->join('bank', 'bank.unique_id = invoice_bank_id', 'left')->where('invoice.unique_id', $unique_id)->get($this->db_table);
 		return $query->result_array();
 	}
 	
@@ -105,7 +105,28 @@ class Model_invoice extends CI_Model {
 			$query = $this->db->select('unique_id, project_name AS name')->where(array('flag !=' => 3))->where('project_invoice_count < project_top', NULL, FALSE)->get('project');
 		}
 		
-		if ($type) return $query->result_array();
+		if ($type == 2 || $type == 3) return $query->result_array();
+		elseif ($type == 1)
+		{
+			$return = array();
+			// Untuk setiap DHM
+			foreach ($query->result_array() as $row)
+			{
+				// Apa ada invoice yg udah di create tapi blom dibayar 
+				$check = $this->db->get_where('invoice', array('invoice_type' => 1, 'invoice_paid' => 0, 'invoice_item_id' => $row['unique_id'], 'flag !=' => 3))->row_array();
+				
+				if ( ! $check)
+				{
+					$subcheck = $this->db->get_where('invoice', array('invoice_type' => 1, 'invoice_paid' => 1, 'invoice_item_id' => $row['unique_id'], 'flag !=' => 3, 'invoice_clear' => 0))->row_array();
+					
+					if ( ! $subcheck)
+					array_push($return, $row);
+				}
+			}
+			
+			return $return;
+			
+		}
 		else return false;
 	}
 	
@@ -182,23 +203,28 @@ class Model_invoice extends CI_Model {
 					
 					$detail = array(
 						'invoice_customer_type' => $row['dhm_customer_type'],
-						'invoice_client_id'		=> $row['dhm_client_id'],
-						'invoice_company_id'	=> $row['dhm_company_id'],
 						'invoice_project_name'	=> $row['dhm_name'] . ' ' . date('M Y'),
 						'invoice_price'			=> $row['dhm_price'],
 						'invoice_markup'		=> $row['dhm_markup'],
 						'invoice_commission'	=> 0,
 						'invoice_top'			=> 1,
 						'invoice_top_number'	=> 1,
-						'invoice_top_percent'	=> 100,
 						'invoice_top_amount'	=> ($post['period'][$i] / 12 * $row['dhm_price']) + $row['dhm_markup'],
 						'invoice_bank_id'		=> $row['dhm_bank_id'],
 					);
 					
-					if ($row['dhm_customer_type'] == 1)
-						$cust = $this->db->select('client_name AS name')->where('unique_id', $row['dhm_client_id'])->get('client')->row_array();
-					elseif ($row['dhm_customer_type'] == 2)
-						$cust = $this->db->select('company_name AS name')->where('unique_id', $row['dhm_company_id'])->get('company')->row_array();
+					if ($row['dhm_customer_type'] == 1) // if client
+					{
+						$cust = $this->db->select('client_name AS name, client_company_id')->where('unique_id', $row['dhm_client_id'])->get('client')->row_array();
+						$detail['invoice_company_id'] = $cust['client_company_id'];
+						$detail['invoice_client_id'] = $row['dhm_client_id'];
+					}
+					elseif ($row['dhm_customer_type'] == 2) // Company
+					{
+						$cust = $this->db->select('company_name AS name, company_client_id')->where('unique_id', $row['dhm_company_id'])->get('company')->row_array();
+						$detail['invoice_client_id'] = $cust['company_client_id'];
+						$detail['invoice_company_id'] = $row['dhm_company_id'];
+					}
 	
 					$currency = $this->db->select('bank_currency')->where('unique_id', $row['dhm_bank_id'])->get('bank')->row_array();
 										
@@ -206,15 +232,11 @@ class Model_invoice extends CI_Model {
 					$detail['invoice_currency'] = $currency['bank_currency'];
 					
 					$invoice_number = generate_invoice_number($detail['invoice_bank_id']);
-					$data['invoice_number'] = $invoice_number;
+
 					
 					$final = array_merge($data, $detail);
 					
 					$this->db->insert('invoice', $final);
-					
-					// Extend DHM
-					$this->db->where('unique_id', $data['invoice_item_id']);
-					$this->db->update('dhm', array('dhm_extend_counter' => $row['dhm_extend_counter'] + 1, 'dhm_extend_month' => $row['dhm_extend_month'] + $post['period'][$i]));
 				}
 				
 				elseif ($data['invoice_type'] == 2)
@@ -223,23 +245,28 @@ class Model_invoice extends CI_Model {
 					
 					$detail = array(
 						'invoice_customer_type' => $row['maintenance_customer_type'],
-						'invoice_client_id'		=> $row['maintenance_client_id'],
-						'invoice_company_id'	=> $row['maintenance_company_id'],
 						'invoice_project_name'	=> $row['maintenance_name'] . ' ' . date('M Y'),
 						'invoice_price'			=> $row['maintenance_price'],
 						'invoice_markup'		=> $row['maintenance_markup'],
 						'invoice_commission'	=> 0,
 						'invoice_top'			=> 1,
 						'invoice_top_number'	=> 1,
-						'invoice_top_percent'	=> 100,
-						'invoice_top_amount'	=> ($post['period'][$i] * $row['maintenance_price']) + $row['maintenance_markup'],
+						'invoice_top_amount'	=> ($row['maintenance_price']) + $row['maintenance_markup'],
 						'invoice_bank_id'		=> $row['maintenance_bank_id'],
 					);
 					
 					if ($row['maintenance_customer_type'] == 1)
-						$cust = $this->db->select('client_name AS name')->where('unique_id', $row['maintenance_client_id'])->get('client')->row_array();
+					{
+						$cust = $this->db->select('client_name AS name, client_company_id')->where('unique_id', $row['maintenance_client_id'])->get('client')->row_array();
+						$detail['invoice_company_id'] = $cust['client_company_id'];
+						$detail['invoice_client_id'] = $row['maintenance_client_id'];
+					}
 					elseif ($row['maintenance_customer_type'] == 2)
-						$cust = $this->db->select('company_name AS name')->where('unique_id', $row['maintenance_company_id'])->get('company')->row_array();
+					{
+						$cust = $this->db->select('company_name AS name, company_client_id')->where('unique_id', $row['maintenance_company_id'])->get('company')->row_array();
+						$detail['invoice_client_id'] = $cust['company_client_id'];
+						$detail['invoice_company_id'] = $row['maintenance_company_id'];
+					}
 	
 					$currency = $this->db->select('bank_currency')->where('unique_id', $row['maintenance_bank_id'])->get('bank')->row_array();
 										
@@ -247,7 +274,6 @@ class Model_invoice extends CI_Model {
 					$detail['invoice_currency'] = $currency['bank_currency'];
 
 					$invoice_number = generate_invoice_number($detail['invoice_bank_id']);
-					$data['invoice_number'] = $invoice_number;
 					
 					$final = array_merge($data, $detail);
 					
@@ -265,8 +291,6 @@ class Model_invoice extends CI_Model {
 					
 					$detail = array(
 						'invoice_customer_type' => $row['project_customer_type'],
-						'invoice_client_id'		=> $row['project_client_id'],
-						'invoice_company_id'	=> $row['project_company_id'],
 						'invoice_project_name'	=> $row['project_name'],
 						'invoice_price'			=> $row['project_price'],
 						'invoice_markup'		=> $row['project_markup'],
@@ -278,9 +302,17 @@ class Model_invoice extends CI_Model {
 					);
 					
 					if ($row['project_customer_type'] == 1)
-						$cust = $this->db->select('client_name AS name')->where('unique_id', $row['project_client_id'])->get('client')->row_array();
+					{
+						$cust = $this->db->select('client_name AS name, client_company_id')->where('unique_id', $row['project_client_id'])->get('client')->row_array();
+						$detail['invoice_company_client'] = $cust['client_company_id'];
+						$detail['invoice_client_id'] = $row['project_client_id'];
+					}
 					elseif ($row['project_customer_type'] == 2)
-						$cust = $this->db->select('company_name AS name')->where('unique_id', $row['project_company_id'])->get('company')->row_array();
+					{
+						$cust = $this->db->select('company_name AS name, company_client_id')->where('unique_id', $row['project_company_id'])->get('company')->row_array();
+						$detail['invoice_client_id'] = $cust['company_client_id'];
+						$detail['invoice_company_id'] = $row['project_company_id'];
+					}
 	
 					$currency = $this->db->select('bank_currency')->where('unique_id', $row['project_bank_id'])->get('bank')->row_array();
 										
@@ -288,7 +320,6 @@ class Model_invoice extends CI_Model {
 					$detail['invoice_currency'] = $currency['bank_currency'];
 					
 					$invoice_number = generate_invoice_number($detail['invoice_bank_id']);
-					$data['invoice_number'] = $invoice_number;
 					
 					$final = array_merge($data, $detail);
 					
@@ -302,8 +333,8 @@ class Model_invoice extends CI_Model {
 			}
 		}
 		
-		
-		
+		$this->db->where('unique_id', $unique_id);
+		$this->db->update('invoice', array('invoice_number' => $invoice_number));
 	}
 	
 	public function update($unique_id)

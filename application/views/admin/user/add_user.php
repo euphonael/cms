@@ -96,7 +96,7 @@
                         <label class="label-input" for="admin_join_date">Join Date</label>
                         <input type="text" name="admin_join_date" id="admin_join_date" class="datepicker" value="<?php if (set_value('admin_join_date')) echo set_value('admin_join_date'); else echo date('Y-m-d'); ?>" />
                     </p>
-                    <p>
+                    <p style="display:none;">
                         <label class="label-input" for="admin_resign_date">Resign Date</label>
                         <input type="text" name="admin_resign_date" id="admin_resign_date" class="datepicker" value="<?php echo set_value('admin_resign_date'); ?>" />
                     </p>

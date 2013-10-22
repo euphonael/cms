@@ -2,7 +2,7 @@
 /* CSS Document */
 
 body { font-size:12px; font-family:Arial; color:#000; margin:0; padding:0; }
-a, a:link, a:visited { color:blue; }
+a, a:link, a:visited { color:blue; outline:none; }
 input::-moz-focus-inner { border:0; }
 
 div.clear { clear:both; float:none !important; margin:0 !important; }
@@ -158,3 +158,6 @@ button#add-invoice-item { margin-left:0; }
 #action-wrapper a.button.inside { margin-right:15px; }
 #invoice_detail_wrapper { margin:0 0 100px 0 !important; }
 #invoice_detail_wrapper > div { display:none; }
+
+a.button.inside.extend { background:#09F !important; }
+a.button.inside.extend:hover { background:#9C3 !important; }

@@ -185,10 +185,12 @@ $(document).ready(function(){
     
 	<div id="content-heading">
     	<h2>Project Invoice</h2>
+        <?php /*
         <div id="action-wrapper">
             <button class="delete" id="delete-invoice" title="Delete selected items"><img src="<?php echo base_url('images/icon-delete.png'); ?>" /></button>
             <div class="clear"></div>
         </div>
+		*/ ?>
         
         <div class="clear"></div>
     </div>
@@ -200,11 +202,13 @@ $(document).ready(function(){
             	<th class="medium">Payment</th>
                 <th>Invoice Number</th>
                 <th>Amount</th>
-                <th>Date</th>
+                <th>Create Date</th>
                 <th>Note</th>
+                <?php /*
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>
+				*/ ?>
             </tr>
         </thead>
         <tbody>
@@ -216,7 +220,7 @@ $(document).ready(function(){
                 	<?php
                     if (isset($invoice_list[$x]['invoice_number']))
 					{
-						echo $invoice_list[$x]['invoice_number'];
+						echo '<a href="' . base_url('admin/invoice/view/' . $invoice_list[$x]['unique_id']) . '">' . $invoice_list[$x]['invoice_number'] . '</a>';
 					}
 					else
 					{
@@ -228,6 +232,7 @@ $(document).ready(function(){
                 <td class="amount"><?php echo number_format($value[$x]); ?></td>
                 <td class="date"><?php if (isset($invoice_list[$x]['invoice_create_date'])) echo date('d M Y', strtotime($invoice_list[$x]['invoice_create_date'])); ?></td>
                 <td class="note"><?php if (isset($invoice_list[$x]['invoice_note'])) echo $invoice_list[$x]['invoice_note']; ?></td>
+                <?php /*
                 <td class="status">
                 	<?php
                     if (isset($invoice_list[$x]['flag'])) :
@@ -239,6 +244,7 @@ $(document).ready(function(){
                 </td>
                 <td class="memo"><?php if (isset($invoice_list[$x]['memo'])) echo $invoice_list[$x]['memo']; ?></td>
                 <td attr="<?php echo $row['unique_id']; ?>" class="del"><?php if (isset($invoice_list[$x]['invoice_number'])) echo '<input type="checkbox" />'; ?></td>
+				*/ ?>
             </tr>
             <?php $x++; ?>
             <?php endfor; ?>

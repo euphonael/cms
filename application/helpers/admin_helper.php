@@ -1,5 +1,48 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+if ( ! function_exists('price_single'))
+{
+	function price_single($invoice_id, $type = '')
+	{
+		$ci =& get_instance();
+		$query = $ci->db->select('invoice_top_amount, invoice_price, invoice_markup')->where('invoice_id', $invoice_id)->get('invoice')->result_array();
+		
+		$result = array('markup' => '', 'real' => '', 'amount' => '');
+		foreach ($query as $item)
+		{
+			$result['markup'] += ($item['invoice_top_amount'] / ($item['invoice_price'] + $item['invoice_markup'])) * $item['invoice_markup'];
+			$result['real'] += ($item['invoice_top_amount'] / ($item['invoice_price'] + $item['invoice_markup'])) * $item['invoice_price'];
+
+		}
+		
+		if ($type == 'markup') return $result['markup'];
+		elseif ($type == 'real') return $result['real'];
+		else return $result;
+	}
+}
+
+
+if ( ! function_exists('price_detail'))
+{
+	function price_detail($invoice_unique_id, $type = '')
+	{
+		$ci =& get_instance();
+		$query = $ci->db->select('invoice_top_amount, invoice_price, invoice_markup')->where('unique_id', $invoice_unique_id)->get('invoice')->result_array();
+		
+		$result = array('markup' => '', 'real' => '', 'amount' => '');
+		foreach ($query as $item)
+		{
+
+				$result['markup'] += ($item['invoice_top_amount'] / ($item['invoice_price'] + $item['invoice_markup'])) * $item['invoice_markup'];
+				$result['real'] += ($item['invoice_top_amount'] / ($item['invoice_price'] + $item['invoice_markup'])) * $item['invoice_price'];
+
+		}
+		
+		if ($type == 'markup') return $result['markup'];
+		elseif ($type == 'real') return $result['real'];
+		else return $result;
+	}
+}
 if ( ! function_exists('spellnumber'))
 {
 	function spellnumber($number)

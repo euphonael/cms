@@ -18,7 +18,7 @@
                     <legend>Login Details</legend>
                     <p>
                         <label class="label-input" for="admin_username">Username</label>
-                        <input type="text" name="admin_username" id="admin_username" class="required" value="<?php echo form_value('admin_username', $row); ?>" />
+                        <input type="text" name="admin_username" id="admin_username" readonly="readonly" class="required" value="<?php echo form_value('admin_username', $row); ?>" />
                         <?php echo form_error('admin_username'); ?>
                     </p>
                     <p>
@@ -106,6 +106,7 @@
                         </select>
                         <?php echo form_error('admin_division'); ?>
                     </p>
+                    
                     <p>
                         <label class="label-input" for="admin_job_position">Job Position</label>
                         <input type="text" name="admin_job_position" id="admin_job_position" class="required" value="<?php echo form_value('admin_job_position', $row); ?>" />
@@ -113,11 +114,11 @@
                     </p>
                     <p>
                         <label class="label-input" for="admin_join_date">Join Date</label>
-                        <input type="text" name="admin_join_date" id="admin_join_date" class="datepicker" value="<?php echo form_value('admin_join_date', $row); ?>" />
+                        <input type="text" name="admin_join_date" id="admin_join_date" readonly="readonly" class="datepicker" value="<?php echo date('d M Y', strtotime($row['admin_join_date'])); ?>" />
                     </p>
-                    <p>
+                    <p <?php if ($row['flag'] != 2) echo 'style="display:none;"'; ?>>
                         <label class="label-input" for="admin_resign_date">Resign Date</label>
-                        <input type="text" name="admin_resign_date" id="admin_resign_date" class="datepicker" value="<?php echo form_value('admin_resign_date', $row); ?>" />
+                        <input type="text" name="admin_resign_date" id="admin_resign_date" readonly="readonly" class="datepicker" value="<?php echo date('d M Y', strtotime($row['admin_resign_date'])); ?>" />
                     </p>
                     
                     <?php

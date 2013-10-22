@@ -9,7 +9,7 @@ $(document).ready(function(){
 				success: function(html)
 				{
 					parent.$.fancybox.close();
-					parent.alertify.success('Domain: <strong><?php echo $row['dhm_name']; ?></strong><br />Extended to: <strong>' + html + '</strong>');
+					parent.alertify.success('Invoice created for: <strong><?php echo $row['dhm_name']; ?></strong>');
 					parent.$('#dhm-<?php echo $row['unique_id']; ?> td.dhm-end-date').html(html);
 					parent.$('#dhm-<?php echo $row['unique_id']; ?> td.dhm-extend').html('');
 				}

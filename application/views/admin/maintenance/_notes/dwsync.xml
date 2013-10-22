@@ -4,4 +4,7 @@
 <file name="list_maintenance.php" server="C:/xampp/htdocs/cms/" local="130262107723306000" remote="130262107720000000" />
 <file name="view_maintenance.php" server="C:/xampp/htdocs/cms/" local="130265626671034000" remote="130265626670000000" />
 <file name="maintenance_extend.php" server="C:/xampp/htdocs/cms/" local="130257950882640000" remote="130257950880000000" />
+<file name="view_maintenance.php" server="Z:/newdhms/" local="130268217480000000" remote="130268217480000000" />
+<file name="add_maintenance.php" server="Z:/newdhms/" local="130268208144502000" remote="130268208140000000" />
+<file name="list_maintenance.php" server="Z:/newdhms/" local="130268217159632000" remote="130268217150000000" />
 </dwsync>

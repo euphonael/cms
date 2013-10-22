@@ -62,6 +62,10 @@ $(document).ready(function(){
                         <input type="text" name="dhm_markup" id="dhm_markup" class="number-format" value="<?php echo form_value('dhm_markup', $row); ?>" />
                         <?php echo form_error('dhm_markup'); ?>
                     </p>
+                    <p>
+                    	<label class="label-input">Extend Counter</label>
+                        <input type="text" readonly="readonly" value="<?php echo $row['dhm_extend_counter']; ?>" />
+                    </p>
                 </fieldset>
             </div>
             

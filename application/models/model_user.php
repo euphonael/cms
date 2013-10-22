@@ -125,7 +125,7 @@ class Model_user extends CI_Model {
 			'memo'					=> $this->input->post('memo')
 		);
 		
-		if ( ! empty($this->input->post('admin_resign_date')) && $this->input->post('admin_resign_date') != '0000-00-00')
+		if ($this->input->post('admin_resign_date') && $this->input->post('admin_resign_date') != '0000-00-00')
 		{
 			$data['flag'] = 2;
 		}

@@ -77,7 +77,7 @@
                 <td><?php echo $row['admin_username']; ?></td>
                 <td><?php if ($row['admin_join_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_join_date'])); ?></td>
                 <td class="resign"><?php if ($row['admin_resign_date'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_resign_date'])); else echo '-'; ?></td>
-                <td><?php echo floor($period / 12) . ' year ' . floor($period % 12) . ' months'; ?></td>
+                <td><?php if ($row['unique_id'] != 1) echo floor($period / 12) . ' year ' . floor($period % 12) . ' months'; ?></td>
                 <td><?php if ($row['admin_dob'] != '0000-00-00') echo date('d M Y', strtotime($row['admin_dob'])); ?></td>
                 <td><?php echo $row['admin_phone']; ?></td>
                 <td><?php echo $row['admin_work_email']; ?></td>

@@ -46,7 +46,7 @@ $(document).ready(function(){
                 <th>Period</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Price / month</th>
+                <th>Price</th>
                 <th class="medium">Status</th>
                 <th>Memo</th>
                 <th class="small">Del</th>

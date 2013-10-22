@@ -90,15 +90,7 @@ $(document).ready(function(){
 						$amount = $amount + $item['invoice_top_amount'];
 					}
 					?>
-                    <p>
-                        <label class="label-input">Total Price</label>
-                        <input type="text" value="<?php echo number_format($price); ?>" readonly="readonly" />
-                    </p>
-                    
-                    <p>
-                        <label class="label-input">Total Mark up</label>
-                        <input type="text" value="<?php echo number_format($markup); ?>" readonly="readonly" />
-                    </p>
+
                 </fieldset>
             </div>
             
@@ -130,20 +122,20 @@ $(document).ready(function(){
     <table id="invoice_detail" class="table-data" cellpadding="0" cellspacing="0">
     	<thead>
         	<tr>
-            	<th>ID</th>
+            	<th>Type</th>
                 <th>Product Description</th>
-                <th>Price</th>
+                <th>Real</th>
                 <th>Markup</th>
-                <th>Total</th>
+                <th>Amount</th>
             </tr>
         </thead>
         <tbody>
         	<?php foreach ($Row as $item) : ?>
         	<tr>
-            	<td><?php echo $item['product_code']; ?></td>
-                <td><?php echo $item['product_name']; ?></td>
-                <td align="center"><?php echo number_format($item['invoice_price']); ?></td>
-                <td align="center"><?php echo number_format($item['invoice_markup']); ?></td>
+            	<td><?php if ($item['invoice_type'] == 1) echo 'DHM'; elseif ($item['invoice_type'] == 2) echo 'Maintenance'; elseif ($item['invoice_type'] == 3) echo 'Project'; else echo '-'; ?></td>
+                <td><?php echo $item['product_code']; ?> <?php echo $item['product_name']; ?></td>
+                <td><?php echo number_format(price_single($item['invoice_id'], 'real')); ?></td>
+                <td align="center"><?php echo number_format(price_single($item['invoice_id'], 'markup')); ?></td>
                 <td><?php echo number_format($item['invoice_top_amount']); ?></td>
             </tr>
             <?php endforeach; ?>

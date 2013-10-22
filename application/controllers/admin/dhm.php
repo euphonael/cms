@@ -161,8 +161,13 @@ class Dhm extends MY_Controller {
 	
 	public function extend($unique_id)
 	{
+		$this->model_dhm->extend($unique_id);
+	}
+	
+	public function create_invoice($unique_id)
+	{
 		$data = array(
-			'title'	=> 'Extend ' . $this->title,
+			'title'	=> 'Create Invoice for ' . $this->title,
 			'css'	=> array(),
 			'js'	=> array('admin/form')
 		);
@@ -191,7 +196,7 @@ class Dhm extends MY_Controller {
 		}
 		else
 		{
-			$this->model_dhm->extend($unique_id);
+			$this->model_dhm->create_invoice($unique_id);
 		}
 	}
 }

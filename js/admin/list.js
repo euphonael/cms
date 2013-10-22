@@ -7,6 +7,36 @@ $(document).ready(function(){
 		aLengthMenu: [100, 200, 300, 400, 999]
 	});
 
+	$('a.button.inside.extend').click(function(){
+		
+		var invoice_id = $(this).attr('name');
+		var period = $(this).attr('rel');
+		var dhm_id = $(this).closest('tr').attr('id').replace('dhm-', '');
+		
+		var ini = $(this);
+
+		var range = $(this).closest('tr').find('td.dhm-start').attr('rel');
+		var end = $(this).closest('tr').find('td.dhm-end-date');
+
+		
+		alertify.confirm("Extend this DHM by <strong style=\"font-size:14px;\">" + period + " months</strong>?", function(e){
+			if (e)
+			{
+				$.ajax({
+					type : 'POST',
+					url : base_url + 'admin/dhm/extend/' + dhm_id,
+					data : { period : period, invoice_id : invoice_id },
+					success: function(html){
+						$(end).html(html);
+						alertify.success("DHM Successfully Extended");
+						$(ini).remove();
+					}
+				});
+			}
+		});
+		
+		return false;
+	});
 
 	$('#list-filter').validate();
 	

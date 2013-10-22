@@ -50,7 +50,7 @@ $(document).ready(function(){
                         <label class="error initial" for="maintenance_period"></label>
                     </p>
                     <p>
-                        <label class="label-input" for="maintenance_price">Price / month</label>
+                        <label class="label-input" for="maintenance_price">Price</label>
                         <input type="text" name="maintenance_price" id="maintenance_price" class="number-format required" value="<?php echo form_value('maintenance_price', $row); ?>" />
                         <?php echo form_error('maintenance_price'); ?>
                     </p>
@@ -58,6 +58,10 @@ $(document).ready(function(){
                         <label class="label-input" for="maintenance_markup">Mark-up</label>
                         <input type="text" name="maintenance_markup" id="maintenance_markup" class="number-format" value="<?php echo form_value('maintenance_markup', $row); ?>" />
                         <?php echo form_error('maintenance_markup'); ?>
+                    </p>
+                    <p>
+                    	<label class="label-input">Extend Counter</label>
+                        <input type="text" readonly="readonly" value="<?php echo $row['maintenance_extend_counter']; ?>" />
                     </p>
                 </fieldset>
             </div>

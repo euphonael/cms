@@ -95,7 +95,9 @@ class Model_maintenance extends CI_Model {
 	}
 	
 	public function update($unique_id)
-	{		
+	{
+		$current = $this->db->select('maintenance_price')->where('unique_id', $unique_id)->get('maintenance')->row_array();
+		
 		$data = array(
 			'maintenance_name'			=> $this->input->post('maintenance_name'),
 			'maintenance_customer_type'	=> $this->input->post('maintenance_customer_type'),
@@ -155,7 +157,7 @@ class Model_maintenance extends CI_Model {
 	public function extend($unique_id)
 	{
 		$period = $this->input->post('maintenance_period');
-		$price = str_replace(',', '', $this->input->post('maintenance_price')) * $period;
+		$price = str_replace(',', '', $this->input->post('maintenance_price'));
 		$markup = str_replace(',', '', $this->input->post('maintenance_markup'));
 		$total = $price + $markup;
 		$invoice_number = generate_invoice_number($this->input->post('maintenance_bank_id'));
@@ -173,7 +175,7 @@ class Model_maintenance extends CI_Model {
 			'invoice_commission'	=> '0', // Anggep sementara 0. Nanti default mau 5% dari PRICE kan?
 			'invoice_top'			=> '1', // Karena extend, by default 1
 			'invoice_top_number'	=> '1', // Karena extend, by default 1
-			'invoice_top_percent'	=> '100', // Karena extend, default 100%
+			'invoice_top_percent'	=> '0', // Karena extend, default 100%
 			'invoice_top_amount'	=> $total, // Total dari price + markup
 			'invoice_bank_id'		=> $this->input->post('maintenance_bank_id'),
 			'invoice_currency'		=> $this->input->post('bank_currency'),
@@ -184,15 +186,17 @@ class Model_maintenance extends CI_Model {
 		
 		if ($data['invoice_customer_type'] == 1)
 		{
-			$row = $this->db->select('unique_id')->where('client_name', $this->input->post('maintenance_client_name'))->get('client')->row_array();
+			$row = $this->db->select('unique_id, client_company_id')->where('client_name', $this->input->post('maintenance_client_name'))->get('client')->row_array();
 			$data['invoice_client_id'] = $row['unique_id'];
 			$data['invoice_customer_name']= $this->input->post('maintenance_client_name');
+			$data['invoice_company_id'] = $row['client_company_id'];
 		}
 		elseif ($data['invoice_customer_type'] == 2)
 		{
-			$row = $this->db->select('unique_id')->where('company_name', $this->input->post('maintenance_company_name'))->get('company')->row_array();
+			$row = $this->db->select('unique_id, company_client_id')->where('company_name', $this->input->post('maintenance_company_name'))->get('company')->row_array();
 			$data['invoice_company_id'] = $row['unique_id'];
 			$data['invoice_customer_name']= $this->input->post('maintenance_company_name');
+			$data['invoice_client_id'] = $row['company_client_id'];
 		}
 		
 		$this->db->insert('invoice', $data);

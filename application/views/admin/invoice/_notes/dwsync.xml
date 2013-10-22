@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="list_invoice.php" server="C:/xampp/htdocs/cms/" local="130263972048666000" remote="130263972040000000" />
-<file name="view_invoice.php" server="C:/xampp/htdocs/cms/" local="130263975979196000" remote="130263975970000000" />
+<file name="list_invoice.php" server="C:/xampp/htdocs/cms/" local="130268813511188000" remote="130268813510000000" />
+<file name="view_invoice.php" server="C:/xampp/htdocs/cms/" local="130268829710788000" remote="130268829710000000" />
 <file name="add_invoice.php" server="C:/xampp/htdocs/cms/" local="130260376436392000" remote="130260376430000000" />
 <file name="invoice_payment.php" server="C:/xampp/htdocs/cms/" local="130263989000486000" remote="130263989000000000" />
 <file name="print_invoice.php" server="C:/xampp/htdocs/cms/" local="130268142388490000" remote="130268142380000000" />
 <file name="print_receipt.php" server="C:/xampp/htdocs/cms/" local="130268145203200000" remote="130268145200000000" />
+<file name="list_invoice.php" server="Z:/newdhms/" local="130268227432772000" remote="130268227430000000" />
+<file name="add_invoice.php" server="Z:/newdhms/" local="130260376430000000" remote="130260376430000000" />
+<file name="view_invoice.php" server="Z:/newdhms/" local="130268225685912000" remote="130268225680000000" />
 </dwsync>

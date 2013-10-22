@@ -104,6 +104,7 @@ class Invoice extends MY_Controller {
 		
 		$data['product_list'] = $this->model_invoice->get_product();
 		$data['result'] = $db_query;
+		$data['countmax'] = $this->model_invoice->list_data('invoice.flag != 3');
 
 		$this->show('admin/' . $this->url . '/list_' . $this->url, $data);
 	}
@@ -240,7 +241,7 @@ class Invoice extends MY_Controller {
 		elseif ($invoice_type == 2)
 		{
 			$table = 'maintenance';
-			$suffix = ' / month';
+			$suffix = '';
 		}
 		elseif ($invoice_type == 3)
 		{
